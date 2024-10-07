@@ -20,7 +20,7 @@ export default function Home() {
             </code>
             .
           </li>
-          <li>Save and see your changes instantly.</li>
+          <li>Esta materia de SI1 nos va a consumir vivos.</li>
           <li>Miren chicos, pude hacer el deployment con GitHub Pages.</li>
           <li>Sólo falta poner el backend en un servidor. Tal vez Vercel.</li>
         </ol>
