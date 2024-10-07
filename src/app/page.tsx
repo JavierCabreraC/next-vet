@@ -21,7 +21,8 @@ export default function Home() {
             .
           </li>
           <li>Save and see your changes instantly.</li>
-          <li>Rodrigo mirá, hice deployment.</li>
+          <li>Miren chicos, pude hacer el deployment con GitHub Pages.</li>
+          <li>Sólo falta poner el backend en un servidor. Tal vez Vercel.</li>
         </ol>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
