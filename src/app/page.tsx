@@ -166,12 +166,14 @@
 
 
 
+
+
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
 interface LoginResponse {
   access_token: string;
@@ -270,4 +272,3 @@ const VetClinicWelcomePage: React.FC = () => {
 };
 
 export default VetClinicWelcomePage;
-
