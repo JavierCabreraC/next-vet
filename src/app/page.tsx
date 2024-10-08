@@ -126,7 +126,7 @@ const VetClinicWelcomePage = () => {
         {showLogin ? (
           <Card className="w-full max-w-md mx-auto">
             <CardHeader>
-              <h2 className="text-2xl font-semibold">Login</h2>
+              <h2 className="text-2xl font-semibold">Iniciar Sesión</h2>
             </CardHeader>
             <CardContent>
               <form className="space-y-4">
@@ -149,6 +149,9 @@ const VetClinicWelcomePage = () => {
             <h2 className="text-2xl font-semibold mb-4">Bienvenidos a la página genérica de Zoo-Life</h2>
             <p className="mb-4">¡Brindamos atención de primera para sus mascotas!</p>
             <p className="mb-4">Esta materia será mi muerte...</p>
+            <p className="mb-4">AAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHH</p>
+            <p className="mb-4">QUIERO CAFÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉ</p>
+            <p className="mb-4">AAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHH</p>
             <Button>Servicios</Button>
           </div>
         )}
