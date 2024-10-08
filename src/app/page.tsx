@@ -116,7 +116,7 @@ const VetClinicWelcomePage = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-4">
       <header className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-blue-600">Pawsome Vet Clinic</h1>
+        <h1 className="text-3xl font-bold text-blue-600">Clínica Veterinaria Zoo-Life</h1>
         <Button onClick={() => setShowLogin(!showLogin)}>
           {showLogin ? 'Close' : 'Login'}
         </Button>
