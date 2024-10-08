@@ -165,25 +165,65 @@
 // export default VetClinicWelcomePage;
 
 
+// ********************************************************************************************************************************************
+// ********************************************************************************************************************************************
+// ********************************************************************************************************************************************
 
 
-import React from 'react';
+// import React from 'react';
+// import LoginForm from '@/components/ui/LoginForm';
+
+
+
+// const VetClinicWelcomePage: React.FC = () => {
+//   return (
+//     <div className="min-h-screen bg-gray-100 p-4">
+//       <header className="flex justify-between items-center mb-8">
+//         <h1 className="text-3xl font-bold text-blue-600">Pawsome Vet Clinic</h1>
+//       </header>
+
+//       <main>
+//         <LoginForm />
+//       </main>
+//     </div>
+//   );
+// };
+
+// export default VetClinicWelcomePage;
+
+
+'use client';
+
+import React, { useState } from 'react';
 import LoginForm from '@/components/ui/LoginForm';
+import { Button } from '@/components/ui/button';
 
 
 
 const VetClinicWelcomePage: React.FC = () => {
+  const [showLogin, setShowLogin] = useState(false);
+
   return (
     <div className="min-h-screen bg-gray-100 p-4">
       <header className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-blue-600">Pawsome Vet Clinic</h1>
+        <Button onClick={() => setShowLogin(true)}>Login</Button>
       </header>
 
       <main>
-        <LoginForm />
+        {showLogin ? (
+          <LoginForm onClose={() => setShowLogin(false)} />
+        ) : (
+          <div className="text-center">
+            <h2 className="text-2xl font-semibold mb-4">Bienvenido a la Página Genérica de Zoo-Life</h2>
+            <p className="mb-4">¡Proveemos de la mejor atención a sus bolas de pelos!</p>
+            <Button onClick={() => setShowLogin(true)}>Ver Servicios Ofertados</Button>
+          </div>
+        )}
       </main>
     </div>
   );
 };
 
 export default VetClinicWelcomePage;
+
