@@ -176,7 +176,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
+              placeholder="Ingrese su correo electrónico"
               className="mt-1"
               required
             />
@@ -188,7 +188,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
+              placeholder="Ingrese su contraseña"
               className="mt-1"
               required
             />

@@ -206,8 +206,8 @@ const VetClinicWelcomePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-4">
       <header className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-blue-600">Pawsome Vet Clinic</h1>
-        <Button onClick={() => setShowLogin(true)}>Login</Button>
+        <h1 className="text-3xl font-bold text-blue-600">Clínica Veterinaria Zoo-Life</h1>
+        <Button onClick={() => setShowLogin(true)}>Iniciar Sesión</Button>
       </header>
 
       <main>
@@ -215,8 +215,10 @@ const VetClinicWelcomePage: React.FC = () => {
           <LoginForm onClose={() => setShowLogin(false)} />
         ) : (
           <div className="text-center">
-            <h2 className="text-2xl font-semibold mb-4">Bienvenido a la Página Genérica de Zoo-Life</h2>
+            <h2 className="text-2xl font-semibold mb-4">Bienvenido a la Página Genérica y sin vida de Zoo-Life</h2>
             <p className="mb-4">¡Proveemos de la mejor atención a sus bolas de pelos!</p>
+            <p className="mb-4">Dios qué materia tan estresante</p>
+            <p className="mb-4">SI1 será mi muerte...</p>
             <Button onClick={() => setShowLogin(true)}>Ver Servicios Ofertados</Button>
           </div>
         )}
