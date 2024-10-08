@@ -104,60 +104,170 @@
 //   );
 // }
 
+
+
+// 'use client';
+// import React, { useState } from 'react';
+// import { Button } from '@/components/ui/button';
+// import { Input } from '@/components/ui/input';
+// import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
+
+// const VetClinicWelcomePage = () => {
+//   const [showLogin, setShowLogin] = useState(false);
+
+//   return (
+//     <div className="min-h-screen bg-gray-100 p-4">
+//       <header className="flex justify-between items-center mb-8">
+//         <h1 className="text-3xl font-bold text-blue-600">Clínica Veterinaria Zoo-Life</h1>
+//         <Button onClick={() => setShowLogin(!showLogin)}>
+//           {showLogin ? 'Close' : 'Login'}
+//         </Button>
+//       </header>
+
+//       <main>
+//         {showLogin ? (
+//           <Card className="w-full max-w-md mx-auto">
+//             <CardHeader>
+//               <h2 className="text-2xl font-semibold">Iniciar Sesión</h2>
+//             </CardHeader>
+//             <CardContent>
+//               <form className="space-y-4">
+//                 <div>
+//                   <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+//                   <Input type="email" id="email" placeholder="Enter your email" className="mt-1" />
+//                 </div>
+//                 <div>
+//                   <label htmlFor="password" className="block text-sm font-medium text-gray-700">Contraseña</label>
+//                   <Input type="password" id="password" placeholder="Enter your password" className="mt-1" />
+//                 </div>
+//               </form>
+//             </CardContent>
+//             <CardFooter>
+//               <Button className="w-full">Iniciar Sesión</Button>
+//             </CardFooter>
+//           </Card>
+//         ) : (
+//           <div className="text-center">
+//             <h2 className="text-2xl font-semibold mb-4">Bienvenidos a la página genérica de Zoo-Life</h2>
+//             <p className="mb-4">¡Brindamos atención de primera para sus mascotas!</p>
+//             <p className="mb-4">Esta materia será mi muerte...</p>
+//             <p className="mb-4">AAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHH</p>
+//             <p className="mb-4">QUIERO CAFÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉ</p>
+//             <p className="mb-4">AAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHH</p>
+//             <Button>Servicios</Button>
+//           </div>
+//         )}
+//       </main>
+//     </div>
+//   );
+// };
+
+// export default VetClinicWelcomePage;
+
+
+
 'use client';
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
 
-const VetClinicWelcomePage = () => {
-  const [showLogin, setShowLogin] = useState(false);
+interface LoginResponse {
+  access_token: string;
+  rol: 'Administrador' | 'Veterinario' | 'Cliente';
+}
+
+const VetClinicWelcomePage: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const router = useRouter();
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:3000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Login failed');
+      }
+
+      const data: LoginResponse = await response.json();
+      localStorage.setItem('token', data.access_token);
+
+      switch (data.rol) {
+        case 'Administrador':
+          router.push('/admin');
+          break;
+        case 'Veterinario':
+          router.push('/vetdoc');
+          break;
+        case 'Cliente':
+          router.push('/cliente');
+          break;
+        default:
+          setError('Unknown role');
+      }
+    } catch (err) {
+      setError('Login failed. Please try again.');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">
       <header className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-blue-600">Clínica Veterinaria Zoo-Life</h1>
-        <Button onClick={() => setShowLogin(!showLogin)}>
-          {showLogin ? 'Close' : 'Login'}
-        </Button>
+        <h1 className="text-3xl font-bold text-blue-600">Pawsome Vet Clinic</h1>
       </header>
 
       <main>
-        {showLogin ? (
-          <Card className="w-full max-w-md mx-auto">
-            <CardHeader>
-              <h2 className="text-2xl font-semibold">Iniciar Sesión</h2>
-            </CardHeader>
-            <CardContent>
-              <form className="space-y-4">
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                  <Input type="email" id="email" placeholder="Enter your email" className="mt-1" />
-                </div>
-                <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-700">Contraseña</label>
-                  <Input type="password" id="password" placeholder="Enter your password" className="mt-1" />
-                </div>
-              </form>
-            </CardContent>
-            <CardFooter>
-              <Button className="w-full">Iniciar Sesión</Button>
-            </CardFooter>
-          </Card>
-        ) : (
-          <div className="text-center">
-            <h2 className="text-2xl font-semibold mb-4">Bienvenidos a la página genérica de Zoo-Life</h2>
-            <p className="mb-4">¡Brindamos atención de primera para sus mascotas!</p>
-            <p className="mb-4">Esta materia será mi muerte...</p>
-            <p className="mb-4">AAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHH</p>
-            <p className="mb-4">QUIERO CAFÉÉÉÉÉÉÉÉÉÉÉÉÉÉÉ</p>
-            <p className="mb-4">AAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHH</p>
-            <Button>Servicios</Button>
-          </div>
-        )}
+        <Card className="w-full max-w-md mx-auto">
+          <CardHeader>
+            <h2 className="text-2xl font-semibold">Login</h2>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                <Input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="mt-1"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+                <Input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  className="mt-1"
+                  required
+                />
+              </div>
+              {error && <p className="text-red-500">{error}</p>}
+              <Button type="submit" className="w-full">Sign In</Button>
+            </form>
+          </CardContent>
+        </Card>
       </main>
     </div>
   );
 };
 
 export default VetClinicWelcomePage;
+
