@@ -219,7 +219,7 @@ const VetClinicWelcomePage: React.FC = () => {
             <p className="mb-4">¡Proveemos de la mejor atención a sus bolas de pelos!</p>
             <p className="mb-4">Dios qué materia tan estresante</p>
             <p className="mb-4">SI1 será mi muerte...</p>
-            <Button onClick={() => setShowLogin(true)}>Ver Servicios Ofertados</Button>
+            <Button onClick={() => setShowLogin(true)}>Servicios Ofertados</Button>
           </div>
         )}
       </main>
