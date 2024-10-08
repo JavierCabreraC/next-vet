@@ -135,20 +135,21 @@ const VetClinicWelcomePage = () => {
                   <Input type="email" id="email" placeholder="Enter your email" className="mt-1" />
                 </div>
                 <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+                  <label htmlFor="password" className="block text-sm font-medium text-gray-700">Contraseña</label>
                   <Input type="password" id="password" placeholder="Enter your password" className="mt-1" />
                 </div>
               </form>
             </CardContent>
             <CardFooter>
-              <Button className="w-full">Sign In</Button>
+              <Button className="w-full">Iniciar Sesión</Button>
             </CardFooter>
           </Card>
         ) : (
           <div className="text-center">
-            <h2 className="text-2xl font-semibold mb-4">Welcome to Pawsome Vet Clinic</h2>
-            <p className="mb-4">We provide top-notch care for your furry friends!</p>
-            <Button>Book an Appointment</Button>
+            <h2 className="text-2xl font-semibold mb-4">Bienvenidos a la página genérica de Zoo-Life</h2>
+            <p className="mb-4">¡Brindamos atención de primera para sus mascotas!</p>
+            <p className="mb-4">Esta materia será mi muerte...</p>
+            <Button>Servicios</Button>
           </div>
         )}
       </main>
