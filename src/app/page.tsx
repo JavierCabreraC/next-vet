@@ -220,7 +220,7 @@ const VetClinicWelcomePage: React.FC = () => {
           setError('Unknown role');
       }
     } catch (err) {
-      setError('Login failed. Please try again.');
+      setError(`Login failed: ${err instanceof Error ? err.message : 'Unknown error'}`);
     }
   };
 
