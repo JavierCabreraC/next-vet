@@ -23,8 +23,7 @@ const VetClinicWelcomePage: React.FC = () => {
           <div className="text-center">
             <h2 className="text-2xl font-semibold mb-4">Bienvenido a la Página Genérica y sin vida de Zoo-Life</h2>
             <p className="mb-4">¡Proveemos de la mejor atención a sus bolas de pelos!</p>
-            <p className="mb-4">Dios qué materia tan estresante</p>
-            <p className="mb-4">SI1 será mi muerte...</p>
+            <p className="mb-4">Dios qué materia tan estresante...</p>
             <Button onClick={() => setShowLogin(true)}>Servicios Ofertados</Button>
           </div>
         )}

@@ -41,7 +41,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
         });
       
         if (!response.ok) {
-            // Intentar extraer el mensaje de error del backend
             const errorData: LoginErrorResponse = await response.json();
             setError(errorData.message || 'Datos incorrectos. Intente de nuevo.');  // Mostrar el mensaje específico del backend
             return;
@@ -49,6 +48,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
       
         const data: LoginResponse = await response.json();
         localStorage.setItem('token', data.access_token);
+        localStorage.setItem('role', data.rol);
       
         switch (data.rol) {
             case 'Administrador':
@@ -101,7 +101,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
             />
           </div>
           {error && <p className="text-red-500">{error}</p>}
-          <Button type="submit" className="w-full">Sign In</Button>
+          <Button type="submit" className="w-full">Iniciar Sesión</Button>
         </form>
       </CardContent>
     </Card>
