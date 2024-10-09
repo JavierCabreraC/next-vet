@@ -108,13 +108,19 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
+
+
 interface LoginResponse {
-  access_token: string;
-  rol: 'Administrador' | 'Veterinario' | 'Cliente';
+    access_token: string;
+    rol: 'Administrador' | 'Veterinario' | 'Cliente';
+}
+
+interface LoginErrorResponse {
+    message: string;
 }
 
 interface LoginFormProps {
-  onClose: () => void;
+    onClose: () => void;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
@@ -128,36 +134,39 @@ const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:3000/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Login failed');
-      }
-
-      const data: LoginResponse = await response.json();
-      localStorage.setItem('token', data.access_token);
-
-      switch (data.rol) {
-        case 'Administrador':
-          router.push('/admin');
-          break;
-        case 'Veterinario':
-          router.push('/vetdoc');
-          break;
-        case 'Cliente':
-          router.push('/cliente');
-          break;
-        default:
-          setError('Unknown role');
-      }
+        const response = await fetch('http://localhost:3333/auth/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+        });
+      
+        if (!response.ok) {
+            // Intentar extraer el mensaje de error del backend
+            const errorData: LoginErrorResponse = await response.json();
+            setError(errorData.message || 'Datos incorrectos. Intente de nuevo.');  // Mostrar el mensaje específico del backend
+            return;
+        }
+      
+        const data: LoginResponse = await response.json();
+        localStorage.setItem('token', data.access_token);
+      
+        switch (data.rol) {
+            case 'Administrador':
+                router.push('/admin');
+                break;
+            case 'Veterinario':
+                router.push('/vetdoc');
+                break;
+            case 'Cliente':
+                router.push('/cliente');
+                break;
+            default:
+                setError('Unknown role');
+        }
     } catch (err) {
-      setError(`Login failed: ${err instanceof Error ? err.message : 'Unknown error'}`);
+        setError(`Login failed: ${err instanceof Error ? err.message : 'Unknown error'}`);
     }
   };
 

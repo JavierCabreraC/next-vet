@@ -228,4 +228,3 @@ const VetClinicWelcomePage: React.FC = () => {
 };
 
 export default VetClinicWelcomePage;
-
