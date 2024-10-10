@@ -1,55 +1,12 @@
 'use client';
 
-// import React, { useState } from 'react';
-// import { Button } from '../components/ui/button';
-// import LoginForm from '../components/ui/LoginForm';
-// import ChangePasswordForm from '../components/ui/ChangePassword';
-
-
-
-// const VetClinicWelcomePage: React.FC = () => {
-//     const [showLogin, setShowLogin] = useState(false);
-//     const [showChangePassword, setShowChangePassword] = useState(false);
-
-//     return (
-//         <div className="min-h-screen bg-gray-100 p-4">
-//             <header className="flex justify-between items-center mb-8">
-//                 <h1 className="text-3xl font-bold text-blue-600">Clínica Veterinaria Zoo-Life</h1>
-//                 <div>
-//                     <Button onClick={() => setShowLogin(true)} className="mr-2">Iniciar Sesión</Button>
-//                     <Button onClick={() => setShowChangePassword(true)}>Cambiar Contraseña</Button>
-//                 </div>
-//             </header>   
-//             <main>
-//                 {showLogin && (
-//                     <LoginForm onClose={() => setShowLogin(false)} />
-//                 )}
-//                 {showChangePassword && (
-//                     <ChangePasswordForm onClose={() => setShowChangePassword(false)} />
-//                 )}
-//                 {!showLogin && !showChangePassword && (
-//                     <div className="text-center">
-//                         <h2 className="text-2xl font-semibold mb-4">Bienvenido a la Página Genérica y sin vida de Zoo-Life</h2>
-//                         <p className="mb-4">¡Proveemos de la mejor atención a sus bolas de pelos!</p>
-//                         <p className="mb-4">Recuerde, todas las mascotas van al cielo</p>
-//                         <p className="mb-4">Cualquier queja con Rodrigo</p>
-//                         <Button onClick={() => setShowLogin(true)}>Servicios Ofertados</Button>
-//                     </div>
-//                 )}
-//             </main>
-//         </div>
-//     );
-// };
-
-// export default VetClinicWelcomePage;
-
-// Diseño mejorado
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import LoginForm from '@/components/ui/LoginForm';
 import ChangePasswordForm from '@/components/ui/ChangePassword';
 import { PawPrint, Calendar, Stethoscope } from 'lucide-react';
+
+
 
 const VetClinicWelcomePage: React.FC = () => {
     const [showLogin, setShowLogin] = useState(false);
@@ -66,8 +23,8 @@ const VetClinicWelcomePage: React.FC = () => {
                         </span>
                     </h1>
                     <nav>
-                        <Button variant="ghost" onClick={() => setShowLogin(true)} className="mr-2">Iniciar Sesión</Button>
-                        <Button variant="outline" onClick={() => setShowChangePassword(true)}>Cambiar Contraseña</Button>
+                        <Button variant="outline" onClick={() => setShowLogin(true)} className="mr-2">Iniciar Sesión</Button>
+                        <Button variant="outline" onClick={() => setShowChangePassword(true)} className="mr-2">Cambiar Contraseña</Button>
                     </nav>
                 </div>
             </header>   
@@ -81,7 +38,7 @@ const VetClinicWelcomePage: React.FC = () => {
                 {!showLogin && !showChangePassword && (
                     <div className="text-center">
                         <h2 className="text-4xl font-semibold mb-6 text-gray-800">Bienvenido a Zoo-Life</h2>
-                        <p className="text-xl mb-8 text-gray-600">Cuidamos de sus mascotas como si fueran nuestras, lo que sea para pasar la materia</p>
+                        <p className="text-xl mb-8 text-gray-600">Cuidamos de sus mascotas como si fueran nuestras.</p>
                         
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                             <ServiceCard 
@@ -109,7 +66,7 @@ const VetClinicWelcomePage: React.FC = () => {
             </main>
             <footer className="bg-blue-600 text-white mt-12 py-6">
                 <div className="container mx-auto text-center">
-                    <p>&copy; 2024 Clínica Veterinaria Zoo-Life. Todos los derechos reservados, hasta pasar la materia.</p>
+                    <p>&copy; 2024 Clínica Veterinaria Zoo-Life. Todos los derechos reservados.</p>
                 </div>
             </footer>
         </div>

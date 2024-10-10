@@ -38,6 +38,21 @@ type MascotaForm = {
 
 type FormTypes = PersonalForm | ClienteForm | MascotaForm;
 
+interface AdminCardProps {
+    icon: React.ReactNode;
+    title: string;
+    description: string;
+    onClick: () => void;
+}
+
+const AdminCard: React.FC<AdminCardProps> = ({ icon, title, description, onClick }) => (
+    <div className="bg-white p-6 rounded-lg shadow-md transition-transform hover:scale-105 cursor-pointer" onClick={onClick}>
+        <div className="text-blue-500 mb-4">{icon}</div>
+        <h3 className="text-xl font-semibold mb-2">{title}</h3>
+        <p className="text-gray-600">{description}</p>
+    </div>
+);
+
 const AdminPage: React.FC = () => {
     const router = useRouter();
     const { isAuthenticated, loading } = useAuth(['Administrador']);
@@ -55,19 +70,15 @@ const AdminPage: React.FC = () => {
         Nombre: '', Sexo: '', FechaDeNacimiento: '', Observaciones: '', 
         ClienteID: 0, RazaID: 0
     });
-
     if (loading) {
         return <div className="flex justify-center items-center h-screen">Cargando...</div>;
     }
-
     if (!isAuthenticated) {
         return <div className="flex justify-center items-center h-screen">Acceso Denegado</div>;
     }
-
     const handleLogout = () => {
         logout(router);
     };
-
     const handleSubmit = async (formType: 'personal' | 'cliente' | 'mascota') => {
         const token = localStorage.getItem('token');
         let url = '';
@@ -192,7 +203,7 @@ const AdminPage: React.FC = () => {
                     <AdminCard 
                         icon={<PawPrint size={40} />}
                         title="Registrar Mascota"
-                        description="Añadir una nueva mascota a un cliente existente"
+                        description="Registrar una nueva mascota a un cliente existente"
                         onClick={() => setShowMascotaForm(true)}
                     />
                 </div>
@@ -208,20 +219,5 @@ const AdminPage: React.FC = () => {
         </div>
     );
 };
-
-interface AdminCardProps {
-    icon: React.ReactNode;
-    title: string;
-    description: string;
-    onClick: () => void;
-}
-
-const AdminCard: React.FC<AdminCardProps> = ({ icon, title, description, onClick }) => (
-    <div className="bg-white p-6 rounded-lg shadow-md transition-transform hover:scale-105 cursor-pointer" onClick={onClick}>
-        <div className="text-blue-500 mb-4">{icon}</div>
-        <h3 className="text-xl font-semibold mb-2">{title}</h3>
-        <p className="text-gray-600">{description}</p>
-    </div>
-);
 
 export default AdminPage;
