@@ -19,15 +19,15 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({ onClose }) => {
         setMessage('');   
         try {
             const response = await fetch('http://localhost:3333/auth/updateHash', {
-              method: 'PATCH',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                email: email,
-                hashActual: currentPassword,
-                hashNuevo: newPassword,
-              }),
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    hashActual: currentPassword,
+                    hashNuevo: newPassword,
+                }),
             }); 
             const data = await response.json(); 
             if (response.ok) {
@@ -43,7 +43,7 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({ onClose }) => {
             console.log(error);
             setMessage('Error de conexión');
         }
-    };  
+    };
     return (
       <Card className="w-full max-w-md mx-auto">
         <CardHeader className="flex justify-between items-center">
