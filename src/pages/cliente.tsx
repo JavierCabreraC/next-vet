@@ -2,7 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
-// import { logout } from '@/utils/auth';
+import { logout } from '@/utils/auth';
 
 
 
@@ -20,9 +20,7 @@ const ClientePage: React.FC = () => {
     }
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('role');
-        router.push('/');
+        logout(router);  // Llamar la función de logout
     };
 
     return (

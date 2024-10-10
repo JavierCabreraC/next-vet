@@ -2,18 +2,14 @@ import React from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/button';
-// import { logout } from '@/utils/auth';
+import { logout } from '@/utils/auth';
 
 
 
 const AdminPage: React.FC = () => {
     const router = useRouter();
 
-    // const handleLogout = () => {
-    //     logout(router);  // Llamar la función de logout
-    // };
-
-    const { isAuthenticated, loading } = useAuth(['Veterinario']);  // Solo veterinarios pueden acceder
+    const { isAuthenticated, loading } = useAuth(['Administrador']);  // Solo admins pueden acceder
 
     if (loading) {
         return <p>Cargando...</p>;  // Mientras se verifica el rol, se muestra un mensaje de carga
@@ -24,9 +20,7 @@ const AdminPage: React.FC = () => {
     }
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('role');
-        router.push('/');
+        logout(router);  // Llamar la función de logout
     };
 
     return (
