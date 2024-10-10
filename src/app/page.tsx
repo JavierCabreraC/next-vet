@@ -43,6 +43,8 @@
 
 // export default VetClinicWelcomePage;
 
+// Diseño mejorado
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import LoginForm from '@/components/ui/LoginForm';
