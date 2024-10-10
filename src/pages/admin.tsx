@@ -8,7 +8,6 @@ import { logout } from '@/utils/auth';
 import { UserPlus, Users, PawPrint, ClipboardList, LogOut } from 'lucide-react';
 
 
-
 // Tipos para los formularios
 type PersonalForm = {
     NombreCompleto: string;
@@ -37,6 +36,36 @@ type MascotaForm = {
 };
 
 type FormTypes = PersonalForm | ClienteForm | MascotaForm;
+
+interface Personal extends Record<string, unknown> {
+    PersonalID: number;
+    NombreCompleto: string;
+    Telefono: string;
+    Direccion: string;
+    FechaContratacion: string;
+    Activo: boolean;
+    Email: string;
+    CargoID: number;
+    ProfesionID: number;
+}
+
+interface Cliente extends Record<string, unknown> {
+    ClienteID: number;
+    NombreCompleto: string;
+    Telefono: string;
+    Direccion: string;
+    Email: string;
+}
+
+interface Mascota extends Record<string, unknown> {
+    MascotaID: number;
+    Nombre: string;
+    Sexo: string;
+    FechaNacimiento: string;
+    Observaciones: string;
+    ClienteID: number;
+    RazaID?: number;
+}
 
 interface AdminCardProps {
     icon: React.ReactNode;
@@ -70,6 +99,17 @@ const AdminPage: React.FC = () => {
         Nombre: '', Sexo: '', FechaDeNacimiento: '', Observaciones: '', 
         ClienteID: 0, RazaID: 0
     });
+
+    // Estados actualizados con tipos específicos
+    const [personalList, setPersonalList] = useState<Personal[]>([]);
+    const [clienteList, setClienteList] = useState<Cliente[]>([]);
+    const [mascotaList, setMascotaList] = useState<Mascota[]>([]);
+    const [showPersonalModal, setShowPersonalModal] = useState(false);
+    const [showClienteModal, setShowClienteModal] = useState(false);
+    const [showMascotaModal, setShowMascotaModal] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(5);
+
     if (loading) {
         return <div className="flex justify-center items-center h-screen">Cargando...</div>;
     }
@@ -131,6 +171,98 @@ const AdminPage: React.FC = () => {
             console.error('Error al enviar el formulario:', error);
             alert('Error al enviar el formulario');
         }
+    };
+
+    const fetchData = async <T,>(endpoint: string, setData: React.Dispatch<React.SetStateAction<T[]>>) => {
+        const token = localStorage.getItem('token');
+        try {
+            const response = await fetch(`http://localhost:3333${endpoint}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ JWT: token })
+            });
+            if (response.ok) {
+                const data: T[] = await response.json();
+                setData(data);
+            } else {
+                console.error('Error fetching data');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    const handleViewList = async (type: 'personal' | 'clientes' | 'mascotas') => {
+        switch (type) {
+            case 'personal':
+                await fetchData<Personal>('/admin/personal', setPersonalList);
+                setShowPersonalModal(true);
+                break;
+            case 'clientes':
+                await fetchData<Cliente>('/clientes/', setClienteList);
+                setShowClienteModal(true);
+                break;
+            case 'mascotas':
+                await fetchData<Mascota>('/mascotas', setMascotaList);
+                setShowMascotaModal(true);
+                break;
+        }
+        setCurrentPage(1);
+    };
+
+    const renderPagination = (totalItems: number) => {
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        return (
+            <div className="flex justify-center mt-4">
+                {Array.from({ length: totalPages }, (_, i) => (
+                    <Button
+                        key={i}
+                        onClick={() => setCurrentPage(i + 1)}
+                        variant={currentPage === i + 1 ? "default" : "outline"}
+                        className="mx-1"
+                    >
+                        {i + 1}
+                    </Button>
+                ))}
+            </div>
+        );
+    };
+
+    const renderModal = <T extends Record<string, unknown>>(title: string, data: T[], onClose: () => void) => {
+        const indexOfLastItem = currentPage * itemsPerPage;
+        const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+        const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+        return (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                <div className="bg-white p-6 rounded-lg w-3/4 max-h-[80vh] overflow-y-auto">
+                    <h2 className="text-2xl font-bold mb-4">{title}</h2>
+                    <table className="w-full">
+                        <thead>
+                            <tr>
+                                {Object.keys(currentItems[0] || {}).map((key) => (
+                                    <th key={key} className="text-left p-2">{key}</th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {currentItems.map((item, index) => (
+                                <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
+                                    {Object.values(item).map((value, valueIndex) => (
+                                        <td key={valueIndex} className="p-2">{value?.toString()}</td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    {renderPagination(data.length)}
+                    <Button onClick={onClose} className="mt-4">Cerrar</Button>
+                </div>
+            </div>
+        );
     };
 
     const renderForm = <T extends FormTypes>(
@@ -203,19 +335,22 @@ const AdminPage: React.FC = () => {
                     <AdminCard 
                         icon={<PawPrint size={40} />}
                         title="Registrar Mascota"
-                        description="Registrar una nueva mascota a un cliente existente"
+                        description="Añadir una nueva mascota a un cliente existente"
                         onClick={() => setShowMascotaForm(true)}
                     />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <Button onClick={() => alert('Funcionalidad no implementada')} className="w-full">Ver Lista de Personal</Button>
-                    <Button onClick={() => alert('Funcionalidad no implementada')} className="w-full">Ver Lista de Clientes</Button>
-                    <Button onClick={() => alert('Funcionalidad no implementada')} className="w-full">Ver Lista de Mascotas</Button>
+                    <Button onClick={() => handleViewList('personal')} className="w-full">Ver Lista de Personal</Button>
+                    <Button onClick={() => handleViewList('clientes')} className="w-full">Ver Lista de Clientes</Button>
+                    <Button onClick={() => handleViewList('mascotas')} className="w-full">Ver Lista de Mascotas</Button>
                 </div>
             </main>
             {showPersonalForm && renderForm('Registrar Personal', personalForm, setPersonalForm, () => setShowPersonalForm(false))}
             {showClienteForm && renderForm('Registrar Cliente', clienteForm, setClienteForm, () => setShowClienteForm(false))}
             {showMascotaForm && renderForm('Registrar Mascota', mascotaForm, setMascotaForm, () => setShowMascotaForm(false))}
+            {showPersonalModal && renderModal<Personal>('Lista de Personal', personalList, () => setShowPersonalModal(false))}
+            {showClienteModal && renderModal<Cliente>('Lista de Clientes', clienteList, () => setShowClienteModal(false))}
+            {showMascotaModal && renderModal<Mascota>('Lista de Mascotas', mascotaList, () => setShowMascotaModal(false))}
         </div>
     );
 };
