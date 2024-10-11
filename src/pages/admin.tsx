@@ -1,3 +1,4 @@
+import '@/app/globals.css';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/button';
@@ -175,6 +176,28 @@ const AdminPage: React.FC = () => {
         }
     };
 
+    // const fetchData = async <T,>(endpoint: string, setData: React.Dispatch<React.SetStateAction<T[]>>) => {
+    //     const token = localStorage.getItem('token');
+    //     try {
+    //         const response = await fetch(`http://localhost:3333${endpoint}`, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${token}`
+    //             },
+    //             // body: JSON.stringify({ JWT: token })
+    //         });
+    //         if (response.ok) {
+    //             const data: T[] = await response.json();
+    //             setData(data);
+    //         } else {
+    //             console.error('Error fetching data');
+    //         }
+    //     } catch (error) {
+    //         console.error('Error:', error);
+    //     }
+    // };
+
     const fetchData = async <T,>(endpoint: string, setData: React.Dispatch<React.SetStateAction<T[]>>) => {
         const token = localStorage.getItem('token');
         try {
@@ -184,7 +207,6 @@ const AdminPage: React.FC = () => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({ JWT: token })
             });
             if (response.ok) {
                 const data: T[] = await response.json();
