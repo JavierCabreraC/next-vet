@@ -122,21 +122,23 @@ const AdminPage: React.FC = () => {
     const handleSubmit = async (formType: 'personal' | 'cliente' | 'mascota') => {
         const token = localStorage.getItem('token');
         let url = '';
-        let body = {};
+        let body: Record<string, unknown> = {};
         switch (formType) {
             case 'personal':
                 url = 'http://localhost:3333/admin/personal';
-                body = personalForm;
+                body = { ...personalForm };
                 break;
             case 'cliente':
                 url = 'http://localhost:3333/admin/cliente';
-                body = clienteForm;
+                body = { ...clienteForm };
                 break;
             case 'mascota':
                 url = 'http://localhost:3333/admin/mascota';
-                body = mascotaForm;
+                body = { ...mascotaForm };
                 break;
         }
+        // Añadir el JWT al cuerpo de la solicitud
+        body.JWT = token;
         try {
             const response = await fetch(url, {
                 method: 'POST',
