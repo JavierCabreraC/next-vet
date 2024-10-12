@@ -222,15 +222,15 @@ const AdminPage: React.FC = () => {
     const handleViewList = async (type: 'personal' | 'clientes' | 'mascotas') => {
         switch (type) {
             case 'personal':
-                await fetchData<Personal>('/admin/personal', setPersonalList);
+                await fetchData<Personal>('/admin/personal/', setPersonalList);
                 setShowPersonalModal(true);
                 break;
             case 'clientes':
-                await fetchData<Cliente>('/clientes/', setClienteList);
+                await fetchData<Cliente>('/admin/clientes/', setClienteList);
                 setShowClienteModal(true);
                 break;
             case 'mascotas':
-                await fetchData<Mascota>('/mascotas', setMascotaList);
+                await fetchData<Mascota>('/admin/mascotas/', setMascotaList);
                 setShowMascotaModal(true);
                 break;
         }
