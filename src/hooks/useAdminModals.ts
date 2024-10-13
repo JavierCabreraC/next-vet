@@ -1,0 +1,79 @@
+import { useState } from 'react';
+import { Personal, Cliente, Mascota } from '@/types/admin';
+
+
+
+export const useAdminModals = () => {
+    const [showPersonalForm, setShowPersonalForm] = useState(false);
+    const [showClienteForm, setShowClienteForm] = useState(false);
+    const [showMascotaForm, setShowMascotaForm] = useState(false);
+    const [personalList, setPersonalList] = useState<Personal[]>([]);
+    const [clienteList, setClienteList] = useState<Cliente[]>([]);
+    const [mascotaList, setMascotaList] = useState<Mascota[]>([]);
+    const [showPersonalModal, setShowPersonalModal] = useState(false);
+    const [showClienteModal, setShowClienteModal] = useState(false);
+    const [showMascotaModal, setShowMascotaModal] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(5);
+
+    const fetchData = async <T,>(endpoint: string, setData: React.Dispatch<React.SetStateAction<T[]>>) => {
+        const token = localStorage.getItem('token');
+        try {
+            const response = await fetch(`http://localhost:3333${endpoint}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+            if (response.ok) {
+                const data: T[] = await response.json();
+                setData(data);
+            } else {
+                console.error('Error fetching data');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    const handleViewList = async (type: 'personal' | 'clientes' | 'mascotas') => {
+        switch (type) {
+            case 'personal':
+                await fetchData<Personal>('/admin/personal/', setPersonalList);
+                setShowPersonalModal(true);
+                break;
+            case 'clientes':
+                await fetchData<Cliente>('/admin/clientes/', setClienteList);
+                setShowClienteModal(true);
+                break;
+            case 'mascotas':
+                await fetchData<Mascota>('/admin/mascotas/', setMascotaList);
+                setShowMascotaModal(true);
+                break;
+        }
+        setCurrentPage(1);
+    };
+
+    return {
+        showPersonalForm,
+        setShowPersonalForm,
+        showClienteForm,
+        setShowClienteForm,
+        showMascotaForm,
+        setShowMascotaForm,
+        personalList,
+        clienteList,
+        mascotaList,
+        showPersonalModal,
+        setShowPersonalModal,
+        showClienteModal,
+        setShowClienteModal,
+        showMascotaModal,
+        setShowMascotaModal,
+        currentPage,
+        setCurrentPage,
+        itemsPerPage,
+        handleViewList
+    };
+};
