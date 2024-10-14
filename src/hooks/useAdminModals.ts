@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Personal, Cliente, Mascota } from '@/types/admin';
+import { Personal, Cliente, Mascota, Bitacora } from '@/types/admin';
 
 
 
@@ -15,6 +15,8 @@ export const useAdminModals = () => {
     const [showMascotaModal, setShowMascotaModal] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(5);
+    const [bitacoraList, setBitacoraList] = useState<Bitacora[]>([]);
+    const [showBitacoraModal, setShowBitacoraModal] = useState(false);
 
     const fetchData = async <T,>(endpoint: string, setData: React.Dispatch<React.SetStateAction<T[]>>) => {
         const token = localStorage.getItem('token');
@@ -37,7 +39,7 @@ export const useAdminModals = () => {
         }
     };
 
-    const handleViewList = async (type: 'personal' | 'clientes' | 'mascotas') => {
+    const handleViewList = async (type: 'personal' | 'clientes' | 'mascotas' | 'bitacora') => {
         switch (type) {
             case 'personal':
                 await fetchData<Personal>('/admin/personal/', setPersonalList);
@@ -50,6 +52,10 @@ export const useAdminModals = () => {
             case 'mascotas':
                 await fetchData<Mascota>('/admin/mascotas/', setMascotaList);
                 setShowMascotaModal(true);
+                break;
+            case 'bitacora':
+                await fetchData<Bitacora>('/admin/logs', setBitacoraList);
+                setShowBitacoraModal(true);
                 break;
         }
         setCurrentPage(1);
@@ -74,6 +80,9 @@ export const useAdminModals = () => {
         currentPage,
         setCurrentPage,
         itemsPerPage,
-        handleViewList
+        handleViewList,
+        bitacoraList,
+        showBitacoraModal,
+        setShowBitacoraModal,
     };
 };

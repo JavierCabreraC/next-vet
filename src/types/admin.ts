@@ -7,7 +7,6 @@ export interface Personal extends Record<string, unknown> {
     Email: string;
     CargoID: number;
     ProfesionID: number;
-    // Activo: boolean;
 }
 
 export interface Cliente extends Record<string, unknown> {
@@ -26,6 +25,14 @@ export interface Mascota extends Record<string, unknown> {
     Observaciones: string;
     ClienteID: number;
     RazaID?: number;
+}
+
+export interface Bitacora extends Record<string, unknown> {
+    BitacoraID: number;
+    UsuarioID: number;
+    TipoAccionBitacoraID: number;
+    FechaHora: string;
+    IPDir: string;
 }
 
 export interface AdminCardProps {

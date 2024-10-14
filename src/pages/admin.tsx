@@ -12,18 +12,19 @@ import ResponseModal from '@/components/ResponseModal';
 const AdminPage: React.FC = () => {
     const router = useRouter();
     const { isAuthenticated, loading } = useAuth(['Administrador']);
-    const { 
+    const {
         personalForm, setPersonalForm, clienteForm, setClienteForm, 
         mascotaForm, setMascotaForm, handleSubmit, responseModal, setResponseModal 
-      } = useAdminForms();
+    } = useAdminForms();
     const {
         showPersonalForm, setShowPersonalForm,
         showClienteForm, setShowClienteForm,
         showMascotaForm, setShowMascotaForm,
-        personalList, clienteList, mascotaList,
+        personalList, clienteList, mascotaList, bitacoraList,
         showPersonalModal, setShowPersonalModal,
         showClienteModal, setShowClienteModal,
         showMascotaModal, setShowMascotaModal,
+        showBitacoraModal, setShowBitacoraModal,
         currentPage, setCurrentPage, itemsPerPage,
         handleViewList
     } = useAdminModals();
@@ -91,6 +92,14 @@ const AdminPage: React.FC = () => {
                 title: "Lista de Mascotas",
                 data: mascotaList,
                 onClose: () => setShowMascotaModal(false),
+                currentPage,
+                setCurrentPage,
+                itemsPerPage
+            })}
+            {showBitacoraModal && renderModal({
+                title: "Registros de Bitácora",
+                data: bitacoraList,
+                onClose: () => setShowBitacoraModal(false),
                 currentPage,
                 setCurrentPage,
                 itemsPerPage
