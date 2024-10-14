@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { PersonalForm, ClienteForm, MascotaForm } from '@/types/admin';
+import { ApiResponse } from '@/types/responses';
 
 
 
@@ -16,6 +17,16 @@ export const useAdminForms = () => {
     const [mascotaForm, setMascotaForm] = useState<MascotaForm>({
         Nombre: '', Sexo: '', FechaDeNacimiento: '', Observaciones: '', 
         ClienteID: 0, RazaID: 0
+    });
+
+    const [responseModal, setResponseModal] = useState<{
+        isOpen: boolean;
+        response: ApiResponse | null;
+        title: string;
+    }>({
+        isOpen: false,
+        response: null,
+        title: '',
     });
 
     const handleSubmit = async (formType: 'personal' | 'cliente' | 'mascota') => {
@@ -44,15 +55,19 @@ export const useAdminForms = () => {
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(body)
             });   
-
+      
             if (response.ok) {
-                alert(`${formType} registrado con éxito`);
-                // Resetear el formulario
+                const responseData: ApiResponse = await response.json();
+                setResponseModal({
+                    isOpen: true,
+                    response: responseData,
+                    title: `Registro de ${formType} exitoso`,
+                });
                 switch (formType) {
                     case 'personal':
                         setPersonalForm({NombreCompleto: '', Telefono: '', Direccion: '', Email: '', FechaContratacion: '', CargoID: 0, ProfesionID: 0});
@@ -65,12 +80,20 @@ export const useAdminForms = () => {
                         break;
                 }
             } else {
-                const errorData = await response.json();
-                alert(`Error: ${errorData.message}`);
+                const errorData: ApiResponse = await response.json();
+                setResponseModal({
+                    isOpen: true,
+                    response: errorData,
+                    title: 'Error en el registro',
+                });
             }
         } catch (error) {
             console.error('Error al enviar el formulario:', error);
-            alert('Error al enviar el formulario');
+            setResponseModal({
+                isOpen: true,
+                response: null,
+                title: 'Error',
+            });
         }
     };
 
@@ -81,6 +104,8 @@ export const useAdminForms = () => {
         setClienteForm,
         mascotaForm,
         setMascotaForm,
-        handleSubmit
+        handleSubmit,
+        responseModal,
+        setResponseModal
     };
 };

@@ -5,6 +5,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { logout } from '@/utils/auth';
 import { AdminActions, AdminCards, AdminHeader, renderForm, renderModal } from '@/components/admin/index.admincomp';
 import { useAdminForms, useAdminModals } from '@/hooks/index.auth';
+import ResponseModal from '@/components/ResponseModal';
 
 
 
@@ -13,8 +14,8 @@ const AdminPage: React.FC = () => {
     const { isAuthenticated, loading } = useAuth(['Administrador']);
     const { 
         personalForm, setPersonalForm, clienteForm, setClienteForm, 
-        mascotaForm, setMascotaForm, handleSubmit 
-    } = useAdminForms();
+        mascotaForm, setMascotaForm, handleSubmit, responseModal, setResponseModal 
+      } = useAdminForms();
     const {
         showPersonalForm, setShowPersonalForm,
         showClienteForm, setShowClienteForm,
@@ -94,6 +95,12 @@ const AdminPage: React.FC = () => {
                 setCurrentPage,
                 itemsPerPage
             })}
+            <ResponseModal 
+                isOpen={responseModal.isOpen}
+                onClose={() => setResponseModal(prev => ({ ...prev, isOpen: false }))}
+                response={responseModal.response}
+                title={responseModal.title}
+            />
         </div>
     );
 };

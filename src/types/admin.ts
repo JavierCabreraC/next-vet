@@ -4,10 +4,10 @@ export interface Personal extends Record<string, unknown> {
     Telefono: string;
     Direccion: string;
     FechaContratacion: string;
-    Activo: boolean;
     Email: string;
     CargoID: number;
     ProfesionID: number;
+    // Activo: boolean;
 }
 
 export interface Cliente extends Record<string, unknown> {
