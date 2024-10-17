@@ -141,7 +141,6 @@ const AdminPage: React.FC = () => {
                 currentPage,
                 setCurrentPage,
                 itemsPerPage
-                // onEdit: (item) => handleEdit(item, 'bitacora')
             })}
             <UpdateModal
                 isOpen={showUpdateModal}

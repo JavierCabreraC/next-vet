@@ -18,7 +18,6 @@ const CreateClienteForm = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Llamar al endpoint para crear cliente
         const response = await fetch('http://localhost:3333/admin/cliente', {
             method: 'POST',
             headers: {
