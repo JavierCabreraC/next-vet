@@ -7,7 +7,6 @@ import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
 
-
 interface LoginResponse {
     access_token: string;
     rol: 'Administrador' | 'Veterinario' | 'Cliente';

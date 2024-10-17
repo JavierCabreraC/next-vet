@@ -1,10 +1,9 @@
 import '@/app/globals.css';
 import React from 'react';
 import { useRouter } from 'next/router';
-import { useAuth } from '@/hooks/useAuth';
 import { logout } from '@/utils/auth';
 import { AdminActions, AdminCards, AdminHeader, renderForm, renderModal } from '@/components/admin/index.admincomp';
-import { useAdminForms, useAdminModals } from '@/hooks/index.auth';
+import { useAdminForms, useAdminModals, useAuth } from '@/hooks/index.auth';
 import ResponseModal from '@/components/ResponseModal';
 
 

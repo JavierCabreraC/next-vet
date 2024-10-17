@@ -1,11 +1,8 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/index.ui';
 import { ClipboardList, LogOut } from 'lucide-react';
+import { AdminHeaderProps } from '@/types/index.types';
 
-
-interface AdminHeaderProps {
-    onLogout: () => void;
-}
 
 export const AdminHeader: React.FC<AdminHeaderProps> = ({ onLogout }) => {
     return (

@@ -2,7 +2,6 @@
 import React from 'react';
 
 
-
 interface DialogProps {
     open: boolean;
     onOpenChange: () => void;

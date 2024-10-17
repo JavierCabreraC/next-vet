@@ -1,15 +1,7 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/index.ui';
+import { RenderModalProps } from '@/types/index.types';
 
-
-interface RenderModalProps<T extends Record<string, unknown>> {
-    title: string;
-    data: T[];
-    onClose: () => void;
-    currentPage: number;
-    setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-    itemsPerPage?: number;
-}
 
 export const renderModal = <T extends Record<string, unknown>>({
     title,

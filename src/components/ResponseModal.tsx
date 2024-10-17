@@ -1,16 +1,7 @@
 import React from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { ApiResponse } from '@/types/responses';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, Button } from "@/components/ui/index.ui";
+import { ResponseModalProps } from '@/types/index.types';
 
-
-
-interface ResponseModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    response: ApiResponse | null;
-    title: string;
-}
 
 const ResponseModal: React.FC<ResponseModalProps> = ({ isOpen, onClose, response, title }) => {
     if (!response) return null;

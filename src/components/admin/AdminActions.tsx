@@ -1,10 +1,7 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/index.ui';
+import { AdminActionsProps } from '@/types/index.types';
 
-
-interface AdminActionsProps {
-    onViewList: (type: 'personal' | 'clientes' | 'mascotas' | 'bitacora') => void;
-}
 
 export const AdminActions: React.FC<AdminActionsProps> = ({ onViewList }) => {
     return (

@@ -1,11 +1,10 @@
 import '@/app/globals.css';
 import React from 'react';
 import { useRouter } from 'next/router';
-import { Button } from '@/components/ui/button';
-import { useAuth } from '@/hooks/useAuth';
+import { Button } from '@/components/ui/index.ui';
+import { useAuth } from '@/hooks/index.auth';
 import { logout } from '@/utils/auth';
 import { Stethoscope, Calendar, Clipboard, LogOut } from 'lucide-react';
-
 
 
 const VetDocPage: React.FC = () => {

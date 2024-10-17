@@ -1,6 +1,6 @@
 import React from 'react';
 import { UserPlus, Users, PawPrint } from 'lucide-react';
-import { AdminCardProps } from '@/types/admin';
+import { AdminCardProps, AdminCardsProps } from '@/types/index.types';
 
 
 const AdminCard: React.FC<AdminCardProps> = ({ icon, title, description, onClick }) => (
@@ -10,12 +10,6 @@ const AdminCard: React.FC<AdminCardProps> = ({ icon, title, description, onClick
         <p className="text-gray-600">{description}</p>
     </div>
 );
-
-interface AdminCardsProps {
-    onShowPersonalForm: () => void;
-    onShowClienteForm: () => void;
-    onShowMascotaForm: () => void;
-}
 
 export const AdminCards: React.FC<AdminCardsProps> = ({
     onShowPersonalForm,

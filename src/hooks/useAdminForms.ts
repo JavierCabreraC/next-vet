@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { PersonalForm, ClienteForm, MascotaForm } from '@/types/admin';
-import { ApiResponse } from '@/types/responses';
+import { PersonalForm, ClienteForm, MascotaForm, ApiResponse } from '@/types/index.types';
 
 
 export const useAdminForms = () => {
@@ -97,14 +96,10 @@ export const useAdminForms = () => {
     };
 
     return {
-        personalForm,
-        setPersonalForm,
-        clienteForm,
-        setClienteForm,
-        mascotaForm,
-        setMascotaForm,
-        handleSubmit,
-        responseModal,
-        setResponseModal
+        personalForm, setPersonalForm,
+        clienteForm, setClienteForm,
+        mascotaForm, setMascotaForm,
+        responseModal, setResponseModal,
+        handleSubmit
     };
 };

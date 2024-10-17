@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Personal, Cliente, Mascota, Bitacora } from '@/types/admin';
+import { Personal, Cliente, Mascota, Bitacora } from '@/types/index.types';
 
 
 export const useAdminModals = () => {
@@ -61,27 +61,15 @@ export const useAdminModals = () => {
     };
 
     return {
-        showPersonalForm,
-        setShowPersonalForm,
-        showClienteForm,
-        setShowClienteForm,
-        showMascotaForm,
-        setShowMascotaForm,
-        personalList,
-        clienteList,
-        mascotaList,
-        showPersonalModal,
-        setShowPersonalModal,
-        showClienteModal,
-        setShowClienteModal,
-        showMascotaModal,
-        setShowMascotaModal,
-        currentPage,
-        setCurrentPage,
-        itemsPerPage,
-        handleViewList,
-        bitacoraList,
-        showBitacoraModal,
-        setShowBitacoraModal,
+        showPersonalForm, setShowPersonalForm,
+        showClienteForm, setShowClienteForm,
+        showMascotaForm, setShowMascotaForm,
+        personalList, clienteList, mascotaList, bitacoraList,
+        showPersonalModal, setShowPersonalModal,
+        showClienteModal, setShowClienteModal,
+        showMascotaModal, setShowMascotaModal,
+        showBitacoraModal, setShowBitacoraModal,
+        currentPage, setCurrentPage,
+        itemsPerPage, handleViewList
     };
 };

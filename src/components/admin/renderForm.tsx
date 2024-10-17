@@ -1,17 +1,7 @@
 import React from 'react';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { FormTypes } from '@/types/admin';
+import { Card, CardHeader, CardContent, Button, Input } from '@/components/ui/index.ui';
+import { FormTypes, RenderFormProps } from '@/types/index.types';
 
-
-interface RenderFormProps<T extends FormTypes> {
-    title: string;
-    form: T;
-    setForm: React.Dispatch<React.SetStateAction<T>>;
-    onClose: () => void;
-    handleSubmit: (formType: 'personal' | 'cliente' | 'mascota') => void;
-}
 
 export const renderForm = <T extends FormTypes>({
     title,

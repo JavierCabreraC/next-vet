@@ -4,7 +4,6 @@ import { Input } from './input';
 import { Card, CardContent, CardHeader } from './card';
 
 
-
 interface ChangePasswordFormProps {
     onClose: () => void;
 }
