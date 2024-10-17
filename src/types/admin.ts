@@ -3,7 +3,7 @@ import { ApiResponse } from './index.types';
 
 
 export interface Personal extends Record<string, unknown> {
-    ID: number;
+    PersonalID: number;
     Nombre: string;
     Telefono: string;
     Direccion: string;
@@ -23,7 +23,7 @@ export interface Cliente extends Record<string, unknown> {
 }
 
 export interface Mascota extends Record<string, unknown> {
-    ID: number;
+    MascotaID: number;
     Nombre: string;
     Sexo: string;
     Fecha_De_Nacimiento: string;
@@ -137,14 +137,14 @@ export interface PersonalUpdateForm {
 }
 
 export interface ClienteUpdateForm {
-    clienteID: number;
+    ClienteID: number;
     NombreCompleto?: string;
     Telefono?: string;
     Direccion?: string;
 }
 
 export interface MascotaUpdateForm {
-    mascotaID: number;
+    MascotaID: number;
     Nombre?: string;
     Sexo?: string;
     Observaciones?: string;

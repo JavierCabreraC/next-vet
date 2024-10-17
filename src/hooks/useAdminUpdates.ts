@@ -8,8 +8,8 @@ export const useAdminUpdates = () => {
     const [currentItem, setCurrentItem] = useState<CurrentItemType>({});
     const [updateForm, setUpdateForm] = useState<UpdateForms>({
         personalUpdate: { PersonalID: 0 },
-        clienteUpdate: { clienteID: 0 },
-        mascotaUpdate: { mascotaID: 0 }
+        clienteUpdate: { ClienteID: 0 },
+        mascotaUpdate: { MascotaID: 0 }
     });
 
     const handleUpdate = async () => {
@@ -45,6 +45,7 @@ export const useAdminUpdates = () => {
                 const data = await response.json();
                 // Manejar respuesta exitosa
                 setShowUpdateModal(false);
+                console.log({data});
                 // Aquí podrías actualizar la lista correspondiente
             } else {
                 // Manejar error

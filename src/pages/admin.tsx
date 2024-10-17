@@ -1,10 +1,11 @@
 import '@/app/globals.css';
 import React from 'react';
+import ResponseModal from '@/components/ResponseModal';
 import { useRouter } from 'next/router';
 import { logout } from '@/utils/auth';
-import { AdminActions, AdminCards, AdminHeader, renderForm, renderModal, UpdateModal } from '@/components/admin/index.admincomp';
+import { AdminActions, AdminCards, AdminHeader, 
+    renderForm, renderModal, UpdateModal } from '@/components/admin/index.admincomp';
 import { useAdminForms, useAdminModals, useAdminUpdates, useAuth } from '@/hooks/index.auth';
-import ResponseModal from '@/components/ResponseModal';
 import { Cliente, Mascota, Personal, UpdateType } from '@/types/index.types';
 
 
@@ -29,14 +30,10 @@ const AdminPage: React.FC = () => {
     } = useAdminModals();
 
     const {
-        showUpdateModal,
-        setShowUpdateModal,
-        updateType,
-        setUpdateType,
-        currentItem,
-        setCurrentItem,
-        updateForm,
-        setUpdateForm,
+        showUpdateModal, setShowUpdateModal,
+        updateType, setUpdateType,
+        currentItem, setCurrentItem,
+        updateForm, setUpdateForm,
         handleUpdate
     } = useAdminUpdates();
 
@@ -66,13 +63,13 @@ const AdminPage: React.FC = () => {
             case 'cliente':
                 setUpdateForm({
                     ...updateForm,
-                    clienteUpdate: { clienteID: (record as Cliente).ClienteID }
+                    clienteUpdate: { ClienteID: (record as Cliente).ClienteID }
                 });
                 break;
             case 'mascota':
                 setUpdateForm({
                     ...updateForm,
-                    mascotaUpdate: { mascotaID: (record as Mascota).MascotaID }
+                    mascotaUpdate: { MascotaID: (record as Mascota).MascotaID }
                 });
                 break;
         }
