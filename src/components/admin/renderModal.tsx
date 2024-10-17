@@ -1,7 +1,5 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Personal, Mascota, Bitacora } from '@/types/admin';
-
 
 
 interface RenderModalProps<T extends Record<string, unknown>> {
@@ -63,57 +61,66 @@ export const renderModal = <T extends Record<string, unknown>>({
     const renderTableHeaders = () => {
         if (currentItems.length === 0) return null;
         const item = currentItems[0];
-        if ('BitacoraID' in item) {
-            return ['BitacoraID', 'UsuarioID', 'TipoAccionBitacoraID', 'FechaHora', 'IPDir'];
+
+        // Bitácora
+        if ('Accion' in item) {
+            return ['ID', 'UsuarioID', 'Accion', 'Fecha_Hora', 'IP'];
         }
-        if ('PersonalID' in item) {
-            return ['PersonalID', 'NombreCompleto', 'Telefono', 'Direccion', 'FechaContratacion', 'Email', 'CargoID', 'ProfesionID'];
+        // Personal
+        if ('Cargo' in item) {
+            return ['ID', 'Nombre', 'Telefono', 'Direccion', 'Email', 'Fecha_De_Contratacion', 'Cargo', 'Profesion', 'Activo'];
         }
-        if ('MascotaID' in item) {
-            return Object.keys(item);
+        // Mascota
+        if ('Especie' in item) {
+            return ['ID', 'Nombre', 'Sexo', 'Fecha_De_Nacimiento', 'Observaciones', 'Especie', 'Raza'];
         }
-        // ... (otros casos para diferentes tipos de datos, el futuro Yo se encargará de eso...)
+        // Cliente
+        if ('ClienteID' in item) {
+            return ['ClienteID', 'NombreCompleto', 'Telefono', 'Direccion', 'Email'];
+        }
+
         return Object.keys(item);
     };
     
     const renderTableCell = (item: T, key: string) => {
-        if (key === 'FechaContratacion' && 'FechaContratacion' in item) {
-            return formatFecha((item as unknown as Personal)['FechaContratacion']);
-        }
-        if (key === 'FechaNacimiento' && 'FechaNacimiento' in item) {
-            return formatFecha((item as unknown as Mascota)['FechaNacimiento']);
-        }
-        if (key === 'FechaHora' && 'FechaHoraFormateada' in item) {
-            return formatFechaHora((item as unknown as Bitacora)['FechaHora']);
-        }
-        return item[key as keyof T]?.toString() || '';
+      switch(key) {
+          case 'Fecha_De_Contratacion':
+          case 'Fecha_De_Nacimiento':
+              return formatFecha(item[key] as string);
+          case 'Fecha_Hora':
+              return formatFechaHora(item[key] as string);
+          case 'Activo':
+              return (item[key] as boolean) ? 'Sí' : 'No';
+          default:
+              return item[key]?.toString() || '';
+      }
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg w-3/4 max-h-[80vh] overflow-y-auto">
-            <h2 className="text-2xl font-bold mb-4">{title}</h2>
-            <table className="w-full">
-              <thead>
-                <tr>
-                  {renderTableHeaders()?.map((key) => (
-                    <th key={key} className="text-left p-2">{key}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {currentItems.map((item, index) => (
-                  <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
-                    {renderTableHeaders()?.map((key) => (
-                      <td key={key} className="p-2">{renderTableCell(item, key)}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {renderPagination(data.length)}
-            <Button onClick={onClose} className="mt-4">Cerrar</Button>
+              <h2 className="text-2xl font-bold mb-4">{title}</h2>
+              <table className="w-full">
+                  <thead>
+                      <tr>
+                          {renderTableHeaders()?.map((key) => (
+                              <th key={key} className="text-left p-2 bg-gray-100">{key}</th>
+                          ))}
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {currentItems.map((item, index) => (
+                          <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : ''}>
+                              {renderTableHeaders()?.map((key) => (
+                                  <td key={key} className="p-2">{renderTableCell(item, key)}</td>
+                              ))}
+                          </tr>
+                      ))}
+                  </tbody>
+              </table>
+              {renderPagination(data.length)}
+              <Button onClick={onClose} className="mt-4">Cerrar</Button>
           </div>
-        </div>
+      </div>
     );
 };

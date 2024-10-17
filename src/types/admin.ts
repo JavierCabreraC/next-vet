@@ -1,12 +1,13 @@
 export interface Personal extends Record<string, unknown> {
-    PersonalID: number;
-    NombreCompleto: string;
+    ID: number;
+    Nombre: string;
     Telefono: string;
     Direccion: string;
-    FechaContratacion: string;
+    Fecha_De_Contratacion: string;
+    Activo: boolean;
     Email: string;
-    CargoID: number;
-    ProfesionID: number;
+    Cargo: string;
+    Profesion: string;
 }
 
 export interface Cliente extends Record<string, unknown> {
@@ -18,21 +19,21 @@ export interface Cliente extends Record<string, unknown> {
 }
 
 export interface Mascota extends Record<string, unknown> {
-    MascotaID: number;
+    ID: number;
     Nombre: string;
     Sexo: string;
-    FechaNacimiento: string;
+    Fecha_De_Nacimiento: string;
     Observaciones: string;
-    ClienteID: number;
-    RazaID?: number;
+    Especie: string;
+    Raza: string;
 }
 
 export interface Bitacora extends Record<string, unknown> {
-    BitacoraID: number;
+    ID: number;
     UsuarioID: number;
-    TipoAccionBitacoraID: number;
-    FechaHora: string;
-    IPDir: string;
+    Accion: string;
+    Fecha_Hora: string;
+    IP: string;
 }
 
 export interface AdminCardProps {

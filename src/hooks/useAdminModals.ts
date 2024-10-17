@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Personal, Cliente, Mascota, Bitacora } from '@/types/admin';
 
 
-
 export const useAdminModals = () => {
     const [showPersonalForm, setShowPersonalForm] = useState(false);
     const [showClienteForm, setShowClienteForm] = useState(false);

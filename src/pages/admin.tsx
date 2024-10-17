@@ -8,7 +8,6 @@ import { useAdminForms, useAdminModals } from '@/hooks/index.auth';
 import ResponseModal from '@/components/ResponseModal';
 
 
-
 const AdminPage: React.FC = () => {
     const router = useRouter();
     const { isAuthenticated, loading } = useAuth(['Administrador']);
