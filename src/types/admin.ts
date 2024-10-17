@@ -65,6 +65,12 @@ export interface RenderFormProps<T extends FormTypes> {
     handleSubmit: (formType: 'personal' | 'cliente' | 'mascota') => void;
 }
 
+export interface UpdateableRecord {
+    PersonalID?: number;
+    ClienteID?: number;
+    MascotaID?: number;
+}
+
 export interface RenderModalProps<T extends Record<string, unknown>> {
     title: string;
     data: T[];
@@ -72,6 +78,7 @@ export interface RenderModalProps<T extends Record<string, unknown>> {
     currentPage: number;
     setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
     itemsPerPage?: number;
+    onEdit?: (record: T) => void;
 }
 
 export interface AdminCardProps {
@@ -117,3 +124,43 @@ export type MascotaForm = {
 };
 
 export type FormTypes = PersonalForm | ClienteForm | MascotaForm;
+
+// *****************************************************************************************************
+
+// src/types/admin.types.ts
+export interface PersonalUpdateForm {
+    PersonalID: number;
+    NombreCompleto?: string;
+    Telefono?: string;
+    Direccion?: string;
+    CargoID?: number;
+}
+
+export interface ClienteUpdateForm {
+    clienteID: number;
+    NombreCompleto?: string;
+    Telefono?: string;
+    Direccion?: string;
+}
+
+export interface MascotaUpdateForm {
+    mascotaID: number;
+    Nombre?: string;
+    Sexo?: string;
+    Observaciones?: string;
+    ClienteID?: number;
+}
+
+export interface UpdateForms {
+    personalUpdate: PersonalUpdateForm;
+    clienteUpdate: ClienteUpdateForm;
+    mascotaUpdate: MascotaUpdateForm;
+}
+
+export interface CurrentItemType {
+    personal?: Personal;
+    cliente?: Cliente;
+    mascota?: Mascota;
+}
+
+export type UpdateType = 'personal' | 'cliente' | 'mascota';

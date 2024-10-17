@@ -7,3 +7,5 @@ export * from './AdminHeader';
 export * from './renderForm';
 
 export * from './renderModal';
+
+export * from './UpdateModal';

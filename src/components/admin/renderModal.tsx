@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/index.ui';
 import { RenderModalProps } from '@/types/index.types';
+import { Pencil } from 'lucide-react';
 
 
 export const renderModal = <T extends Record<string, unknown>>({
@@ -9,7 +10,8 @@ export const renderModal = <T extends Record<string, unknown>>({
     onClose,
     currentPage,
     setCurrentPage,
-    itemsPerPage = 7
+    itemsPerPage = 7,
+    onEdit,
 }: RenderModalProps<T>) => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -33,27 +35,33 @@ export const renderModal = <T extends Record<string, unknown>>({
         );
     };
 
-    const renderTableHeaders = () => {
-        if (currentItems.length === 0) return null;
+    const renderTableHeaders = (): string[] => {
+        if (currentItems.length === 0) return [];
         const item = currentItems[0];
+        const baseHeaders: string[] = [];
         // Bitácora
         if ('Accion' in item) {
-            return ['ID', 'UsuarioID', 'Accion', 'Fecha_Hora', 'IP'];
+            baseHeaders.push(...['ID', 'UsuarioID', 'Accion', 'Fecha_Hora', 'IP']);
         }
         // Personal
-        if ('Cargo' in item) {
-            return ['ID', 'Nombre', 'Telefono', 'Direccion', 'Email', 'Fecha_De_Contratacion', 'Cargo', 'Profesion', 'Activo'];
+        else if ('Cargo' in item) {
+            baseHeaders.push(...['ID', 'Nombre', 'Telefono', 'Direccion', 'Email', 'Fecha_De_Contratacion', 'Cargo', 'Profesion', 'Activo']);
         }
         // Mascota
-        if ('Especie' in item) {
-            return ['ID', 'Nombre', 'Sexo', 'Fecha_De_Nacimiento', 'Observaciones', 'Especie', 'Raza', 'DueñoID'];
+        else if ('Especie' in item) {
+            baseHeaders.push(...['ID', 'Nombre', 'Sexo', 'Fecha_De_Nacimiento', 'Observaciones', 'Especie', 'Raza', 'DueñoID']);
         }
         // Cliente
-        if ('ClienteID' in item) {
-            return ['ClienteID', 'NombreCompleto', 'Telefono', 'Direccion', 'Email'];
+        else if ('ClienteID' in item) {
+            baseHeaders.push(...['ClienteID', 'NombreCompleto', 'Telefono', 'Direccion', 'Email']);
         }
-        return Object.keys(item);
+        if (onEdit) {
+            baseHeaders.push('Acciones');
+        }
+        return baseHeaders;
     };
+
+    const headers = renderTableHeaders();
     
     const renderTableCell = (item: T, key: string) => {
         if (key === 'Activo') {
@@ -63,30 +71,41 @@ export const renderModal = <T extends Record<string, unknown>>({
     };
 
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg w-3/4 max-h-[80vh] overflow-y-auto">
-              <h2 className="text-2xl font-bold mb-4">{title}</h2>
-              <table className="w-full">
-                  <thead>
-                      <tr>
-                          {renderTableHeaders()?.map((key) => (
-                              <th key={key} className="text-left p-2 bg-gray-100">{key}</th>
-                          ))}
-                      </tr>
-                  </thead>
-                  <tbody>
-                      {currentItems.map((item, index) => (
-                          <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : ''}>
-                              {renderTableHeaders()?.map((key) => (
-                                  <td key={key} className="p-2">{renderTableCell(item, key)}</td>
-                              ))}
-                          </tr>
-                      ))}
-                  </tbody>
-              </table>
-              {renderPagination(data.length)}
-              <Button onClick={onClose} className="mt-4">Cerrar</Button>
-          </div>
-      </div>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+            <div className="bg-white p-6 rounded-lg w-3/4 max-h-[80vh] overflow-y-auto">
+                <h2 className="text-2xl font-bold mb-4">{title}</h2>
+                <table className="w-full">
+                    <thead>
+                        <tr>
+                            {headers.map((header: string) => (
+                                <th key={header} className="text-left p-2 bg-gray-100">{header}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {currentItems.map((item, index) => (
+                            <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : ''}>
+                                {headers.slice(0, -1).map((header: string) => (
+                                    <td key={header} className="p-2">{renderTableCell(item, header)}</td>
+                                ))}
+                                {onEdit && (
+                                    <td className="p-2">
+                                        <Button
+                                            onClick={() => onEdit(item)}
+                                            className="bg-yellow-500 hover:bg-yellow-600"
+                                            size="sm"
+                                        >
+                                            <Pencil className="h-4 w-4" />
+                                        </Button>
+                                    </td>
+                                )}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                {renderPagination(data.length)}
+                <Button onClick={onClose} className="mt-4">Cerrar</Button>
+            </div>
+        </div>
     );
 };

@@ -2,9 +2,10 @@ import '@/app/globals.css';
 import React from 'react';
 import { useRouter } from 'next/router';
 import { logout } from '@/utils/auth';
-import { AdminActions, AdminCards, AdminHeader, renderForm, renderModal } from '@/components/admin/index.admincomp';
-import { useAdminForms, useAdminModals, useAuth } from '@/hooks/index.auth';
+import { AdminActions, AdminCards, AdminHeader, renderForm, renderModal, UpdateModal } from '@/components/admin/index.admincomp';
+import { useAdminForms, useAdminModals, useAdminUpdates, useAuth } from '@/hooks/index.auth';
 import ResponseModal from '@/components/ResponseModal';
+import { Cliente, Mascota, Personal, UpdateType } from '@/types/index.types';
 
 
 const AdminPage: React.FC = () => {
@@ -27,6 +28,18 @@ const AdminPage: React.FC = () => {
         handleViewList
     } = useAdminModals();
 
+    const {
+        showUpdateModal,
+        setShowUpdateModal,
+        updateType,
+        setUpdateType,
+        currentItem,
+        setCurrentItem,
+        updateForm,
+        setUpdateForm,
+        handleUpdate
+    } = useAdminUpdates();
+
     if (loading) {
         return <div className="flex justify-center items-center h-screen">Cargando...</div>;
     }
@@ -36,6 +49,33 @@ const AdminPage: React.FC = () => {
 
     const handleLogout = () => {
         logout(router);
+    };
+
+    const handleEdit = (record: Personal | Cliente | Mascota, type: UpdateType) => {
+        setCurrentItem({ [type]: record });
+        setUpdateType(type);
+        setShowUpdateModal(true);
+        
+        switch (type) {
+            case 'personal':
+                setUpdateForm({
+                    ...updateForm,
+                    personalUpdate: { PersonalID: (record as Personal).PersonalID }
+                });
+                break;
+            case 'cliente':
+                setUpdateForm({
+                    ...updateForm,
+                    clienteUpdate: { clienteID: (record as Cliente).ClienteID }
+                });
+                break;
+            case 'mascota':
+                setUpdateForm({
+                    ...updateForm,
+                    mascotaUpdate: { mascotaID: (record as Mascota).MascotaID }
+                });
+                break;
+        }
     };
 
     return (
@@ -70,13 +110,14 @@ const AdminPage: React.FC = () => {
                 onClose: () => setShowMascotaForm(false),
                 handleSubmit
             })}
-            {showPersonalModal && renderModal({
+            {showPersonalModal && renderModal<Personal>({
                 title: "Lista de Personal",
                 data: personalList,
                 onClose: () => setShowPersonalModal(false),
                 currentPage,
                 setCurrentPage,
-                itemsPerPage
+                itemsPerPage,
+                onEdit: (record) => handleEdit(record, 'personal')
             })}
             {showClienteModal && renderModal({
                 title: "Lista de Clientes",
@@ -84,7 +125,8 @@ const AdminPage: React.FC = () => {
                 onClose: () => setShowClienteModal(false),
                 currentPage,
                 setCurrentPage,
-                itemsPerPage
+                itemsPerPage,
+                onEdit: (item) => handleEdit(item, 'cliente')
             })}
             {showMascotaModal && renderModal({
                 title: "Lista de Mascotas",
@@ -92,7 +134,8 @@ const AdminPage: React.FC = () => {
                 onClose: () => setShowMascotaModal(false),
                 currentPage,
                 setCurrentPage,
-                itemsPerPage
+                itemsPerPage,
+                onEdit: (item) => handleEdit(item, 'mascota')
             })}
             {showBitacoraModal && renderModal({
                 title: "Registros de Bitácora",
@@ -101,7 +144,17 @@ const AdminPage: React.FC = () => {
                 currentPage,
                 setCurrentPage,
                 itemsPerPage
+                // onEdit: (item) => handleEdit(item, 'bitacora')
             })}
+            <UpdateModal
+                isOpen={showUpdateModal}
+                onClose={() => setShowUpdateModal(false)}
+                type={updateType}
+                currentItem={currentItem}
+                updateForm={updateForm}
+                setUpdateForm={setUpdateForm}
+                onSubmit={handleUpdate}
+            />
             <ResponseModal 
                 isOpen={responseModal.isOpen}
                 onClose={() => setResponseModal(prev => ({ ...prev, isOpen: false }))}
