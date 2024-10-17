@@ -2,7 +2,6 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 
 
-
 interface AdminActionsProps {
     onViewList: (type: 'personal' | 'clientes' | 'mascotas' | 'bitacora') => void;
 }

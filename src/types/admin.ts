@@ -26,6 +26,7 @@ export interface Mascota extends Record<string, unknown> {
     Observaciones: string;
     Especie: string;
     Raza: string;
+    DueñoID: string;
 }
 
 export interface Bitacora extends Record<string, unknown> {

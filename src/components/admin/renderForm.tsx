@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/input';
 import { FormTypes } from '@/types/admin';
 
 
-
 interface RenderFormProps<T extends FormTypes> {
     title: string;
     form: T;

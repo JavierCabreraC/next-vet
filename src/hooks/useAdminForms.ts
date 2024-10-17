@@ -3,7 +3,6 @@ import { PersonalForm, ClienteForm, MascotaForm } from '@/types/admin';
 import { ApiResponse } from '@/types/responses';
 
 
-
 export const useAdminForms = () => {
     const [personalForm, setPersonalForm] = useState<PersonalForm>({
         NombreCompleto: '', Telefono: '', Direccion: '', Email: '', 

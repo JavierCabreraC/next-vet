@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import { ClipboardList, LogOut } from 'lucide-react';
 
 
-
 interface AdminHeaderProps {
     onLogout: () => void;
 }

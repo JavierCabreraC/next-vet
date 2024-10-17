@@ -3,7 +3,6 @@ import { UserPlus, Users, PawPrint } from 'lucide-react';
 import { AdminCardProps } from '@/types/admin';
 
 
-
 const AdminCard: React.FC<AdminCardProps> = ({ icon, title, description, onClick }) => (
     <div className="bg-white p-6 rounded-lg shadow-md transition-transform hover:scale-105 cursor-pointer" onClick={onClick}>
         <div className="text-blue-500 mb-4">{icon}</div>
