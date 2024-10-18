@@ -13,7 +13,7 @@ export const useAdminModals = () => {
     const [showClienteModal, setShowClienteModal] = useState(false);
     const [showMascotaModal, setShowMascotaModal] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(5);
+    const [itemsPerPage] = useState(8);
     const [bitacoraList, setBitacoraList] = useState<Bitacora[]>([]);
     const [showBitacoraModal, setShowBitacoraModal] = useState(false);
 

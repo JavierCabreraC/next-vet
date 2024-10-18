@@ -41,8 +41,6 @@ export interface Bitacora extends Record<string, unknown> {
     IPDir: string;
 }
 
-// *****************************************************************************************************
-
 export interface AdminActionsProps {
     onViewList: (type: 'personal' | 'clientes' | 'mascotas' | 'bitacora') => void;
 }
@@ -101,16 +99,6 @@ export interface ResponseModalProps {
     title: string;
 }
 
-// export interface UpdateModalProps {
-//     isOpen: boolean;
-//     onClose: () => void;
-//     type: UpdateType | null;
-//     currentItem: CurrentItemType;
-//     updateForm: UpdateForms;
-//     setUpdateForm: (form: UpdateForms) => void;
-//     onSubmit: () => void;
-// }
-
 export interface UpdateModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -124,8 +112,6 @@ export interface UpdateModalProps {
     setShowClienteModal: (show: boolean) => void;
     setShowMascotaModal: (show: boolean) => void;
 }
-
-// *****************************************************************************************************
 
 export type PersonalForm = {
     NombreCompleto: string;
@@ -154,8 +140,6 @@ export type MascotaForm = {
 };
 
 export type FormTypes = PersonalForm | ClienteForm | MascotaForm;
-
-// *****************************************************************************************************
 
 export interface CurrentItemType {
     personal?: Personal;

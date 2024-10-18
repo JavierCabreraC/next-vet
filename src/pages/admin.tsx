@@ -2,10 +2,10 @@ import '@/app/globals.css';
 import React from 'react';
 import ResponseModal from '@/components/ResponseModal';
 import { useRouter } from 'next/router';
-import { logout } from '@/utils/auth';
+import { logout } from '@/utils/index.utils';
 import { AdminActions, AdminCards, AdminHeader, 
     renderForm, renderModal, UpdateModal } from '@/components/admin/index.admincomp';
-import { useAdminForms, useAdminModals, useAdminUpdates, useAuth } from '@/hooks/index.auth';
+import { useAdminForms, useAdminModals, useAdminUpdates, useAuth } from '@/hooks/index.hooks';
 import { Cliente, Mascota, Personal, UpdateType } from '@/types/index.types';
 
 

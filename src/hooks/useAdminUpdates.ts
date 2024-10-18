@@ -6,9 +6,6 @@ export const useAdminUpdates = ({
         setShowPersonalModal, setShowClienteModal, setShowMascotaModal
         }: UseAdminUpdatesProps) => {
     const [showUpdateModal, setShowUpdateModal] = useState(false);
-    // const [ShowPersonalModal, setShowPersonalModal] = useState(false);
-    // const [ShowClienteModal, setShowClienteModal] = useState(false);
-    // const [ShowMascotaModal, setShowMascotaModal] = useState(false);
     const [updateType, setUpdateType] = useState<UpdateType | null>(null);
     const [currentItem, setCurrentItem] = useState<CurrentItemType>({});
     const [updateForm, setUpdateForm] = useState<UpdateForms>({
@@ -93,9 +90,6 @@ export const useAdminUpdates = ({
 
     return {
         showUpdateModal, setShowUpdateModal,
-        // ShowPersonalModal, setShowPersonalModal,
-        // ShowClienteModal, setShowClienteModal,
-        // ShowMascotaModal, setShowMascotaModal,
         updateType, setUpdateType,
         currentItem, setCurrentItem,
         updateForm, setUpdateForm,
