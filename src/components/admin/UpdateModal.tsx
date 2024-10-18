@@ -1,5 +1,5 @@
 import { CurrentItemType, UpdateForms, UpdateType } from "@/types/index.types";
-import { Button } from "../ui/index.ui";
+import { Button, Input } from "../ui/index.ui";
 
 
 interface UpdateModalProps {
@@ -11,6 +11,73 @@ interface UpdateModalProps {
     setUpdateForm: (form: UpdateForms) => void;
     onSubmit: () => void;
 }
+
+// export const UpdateModal: React.FC<UpdateModalProps> = ({
+//     isOpen,
+//     onClose,
+//     type,
+//     // currentItem,
+//     updateForm,
+//     setUpdateForm,
+//     onSubmit
+// }) => {
+//     if (!isOpen || !type) return null;
+
+//     const renderFields = () => {
+//         switch (type) {
+//             case 'personal':
+//                 return (
+//                     <>
+//                         <input
+//                             type="text"
+//                             placeholder="Nombre Completo"
+//                             value={updateForm.personalUpdate.NombreCompleto || ''}
+//                             onChange={(e) => setUpdateForm({
+//                                 ...updateForm,
+//                                 personalUpdate: {
+//                                     ...updateForm.personalUpdate,
+//                                     NombreCompleto: e.target.value
+//                                 }
+//                             })}
+//                         />
+//                         {/* Añadir campos restantes */}
+//                     </>
+//                 );
+//             // Añadir casos para cliente y mascota
+//         }
+//     };
+
+//     const getTitle = (type: UpdateType): string => {
+//         const titles: Record<UpdateType, string> = {
+//             personal: 'Personal',
+//             cliente: 'Cliente',
+//             mascota: 'Mascota'
+//         };
+//         return `Actualizar ${titles[type]}`;
+//     };
+
+//     return (
+//         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+//             <div className="bg-white p-6 rounded-lg w-96">
+//                 <h2 className="text-xl font-bold mb-4">{getTitle(type)}</h2>
+//                 <form onSubmit={(e) => {
+//                     e.preventDefault();
+//                     onSubmit();
+//                 }}>
+//                     {renderFields()}
+//                     <div className="flex justify-end gap-2 mt-4">
+//                         <Button onClick={onClose} variant="outline">
+//                             Cancelar
+//                         </Button>
+//                         <Button type="submit">
+//                             Actualizar
+//                         </Button>
+//                     </div>
+//                 </form>
+//             </div>
+//         </div>
+//     );
+// };
 
 export const UpdateModal: React.FC<UpdateModalProps> = ({
     isOpen,
@@ -27,8 +94,8 @@ export const UpdateModal: React.FC<UpdateModalProps> = ({
         switch (type) {
             case 'personal':
                 return (
-                    <>
-                        <input
+                    <div className="space-y-4">
+                        <Input
                             type="text"
                             placeholder="Nombre Completo"
                             value={updateForm.personalUpdate.NombreCompleto || ''}
@@ -40,26 +107,151 @@ export const UpdateModal: React.FC<UpdateModalProps> = ({
                                 }
                             })}
                         />
-                        {/* Añadir campos restantes */}
-                    </>
+                        <Input
+                            type="text"
+                            placeholder="Teléfono"
+                            value={updateForm.personalUpdate.Telefono || ''}
+                            onChange={(e) => setUpdateForm({
+                                ...updateForm,
+                                personalUpdate: {
+                                    ...updateForm.personalUpdate,
+                                    Telefono: e.target.value
+                                }
+                            })}
+                        />
+                        <Input
+                            type="text"
+                            placeholder="Dirección"
+                            value={updateForm.personalUpdate.Direccion || ''}
+                            onChange={(e) => setUpdateForm({
+                                ...updateForm,
+                                personalUpdate: {
+                                    ...updateForm.personalUpdate,
+                                    Direccion: e.target.value
+                                }
+                            })}
+                        />
+                        <Input
+                            type="number"
+                            placeholder="Cargo ID"
+                            value={updateForm.personalUpdate.CargoID || ''}
+                            onChange={(e) => setUpdateForm({
+                                ...updateForm,
+                                personalUpdate: {
+                                    ...updateForm.personalUpdate,
+                                    CargoID: e.target.value
+                                }
+                            })}
+                        />
+                    </div>
                 );
-            // Añadir casos para cliente y mascota
+            case 'cliente':
+                return (
+                    <div className="space-y-4">
+                        <Input
+                            type="text"
+                            placeholder="Nombre Completo"
+                            value={updateForm.clienteUpdate.NombreCompleto || ''}
+                            onChange={(e) => setUpdateForm({
+                                ...updateForm,
+                                clienteUpdate: {
+                                    ...updateForm.clienteUpdate,
+                                    NombreCompleto: e.target.value
+                                }
+                            })}
+                        />
+                        <Input
+                            type="text"
+                            placeholder="Teléfono"
+                            value={updateForm.clienteUpdate.Telefono || ''}
+                            onChange={(e) => setUpdateForm({
+                                ...updateForm,
+                                clienteUpdate: {
+                                    ...updateForm.clienteUpdate,
+                                    Telefono: e.target.value
+                                }
+                            })}
+                        />
+                        <Input
+                            type="text"
+                            placeholder="Dirección"
+                            value={updateForm.clienteUpdate.Direccion || ''}
+                            onChange={(e) => setUpdateForm({
+                                ...updateForm,
+                                clienteUpdate: {
+                                    ...updateForm.clienteUpdate,
+                                    Direccion: e.target.value
+                                }
+                            })}
+                        />
+                    </div>
+                );
+            case 'mascota':
+                return (
+                    <div className="space-y-4">
+                        <Input
+                            type="text"
+                            placeholder="Nombre"
+                            value={updateForm.mascotaUpdate.Nombre || ''}
+                            onChange={(e) => setUpdateForm({
+                                ...updateForm,
+                                mascotaUpdate: {
+                                    ...updateForm.mascotaUpdate,
+                                    Nombre: e.target.value
+                                }
+                            })}
+                        />
+                        <Input
+                            type="text"
+                            placeholder="Sexo"
+                            value={updateForm.mascotaUpdate.Sexo || ''}
+                            onChange={(e) => setUpdateForm({
+                                ...updateForm,
+                                mascotaUpdate: {
+                                    ...updateForm.mascotaUpdate,
+                                    Sexo: e.target.value
+                                }
+                            })}
+                        />
+                        <Input
+                            type="text"
+                            placeholder="Observaciones"
+                            value={updateForm.mascotaUpdate.Observaciones || ''}
+                            onChange={(e) => setUpdateForm({
+                                ...updateForm,
+                                mascotaUpdate: {
+                                    ...updateForm.mascotaUpdate,
+                                    Observaciones: e.target.value
+                                }
+                            })}
+                        />
+                        <Input
+                            type="number"
+                            placeholder="Cliente ID"
+                            value={updateForm.mascotaUpdate.ClienteID || ''}
+                            onChange={(e) => setUpdateForm({
+                                ...updateForm,
+                                mascotaUpdate: {
+                                    ...updateForm.mascotaUpdate,
+                                    ClienteID: e.target.value
+                                }
+                            })}
+                        />
+                    </div>
+                );
+            default:
+                return null;
         }
-    };
-
-    const getTitle = (type: UpdateType): string => {
-        const titles: Record<UpdateType, string> = {
-            personal: 'Personal',
-            cliente: 'Cliente',
-            mascota: 'Mascota'
-        };
-        return `Actualizar ${titles[type]}`;
     };
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
             <div className="bg-white p-6 rounded-lg w-96">
-                <h2 className="text-xl font-bold mb-4">{getTitle(type)}</h2>
+                <h2 className="text-xl font-bold mb-4">
+                    {type === 'personal' && 'Actualizar Personal'}
+                    {type === 'cliente' && 'Actualizar Cliente'}
+                    {type === 'mascota' && 'Actualizar Mascota'}
+                </h2>
                 <form onSubmit={(e) => {
                     e.preventDefault();
                     onSubmit();

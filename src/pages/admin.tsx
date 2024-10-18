@@ -48,6 +48,33 @@ const AdminPage: React.FC = () => {
         logout(router);
     };
 
+    // const handleEdit = (record: Personal | Cliente | Mascota, type: UpdateType) => {
+    //     setCurrentItem({ [type]: record });
+    //     setUpdateType(type);
+    //     setShowUpdateModal(true);
+        
+    //     switch (type) {
+    //         case 'personal':
+    //             setUpdateForm({
+    //                 ...updateForm,
+    //                 personalUpdate: { PersonalID: (record as Personal).PersonalID }
+    //             });
+    //             break;
+    //         case 'cliente':
+    //             setUpdateForm({
+    //                 ...updateForm,
+    //                 clienteUpdate: { ClienteID: (record as Cliente).ClienteID }
+    //             });
+    //             break;
+    //         case 'mascota':
+    //             setUpdateForm({
+    //                 ...updateForm,
+    //                 mascotaUpdate: { MascotaID: (record as Mascota).MascotaID }
+    //             });
+    //             break;
+    //     }
+    // };
+
     const handleEdit = (record: Personal | Cliente | Mascota, type: UpdateType) => {
         setCurrentItem({ [type]: record });
         setUpdateType(type);
@@ -57,19 +84,36 @@ const AdminPage: React.FC = () => {
             case 'personal':
                 setUpdateForm({
                     ...updateForm,
-                    personalUpdate: { PersonalID: (record as Personal).PersonalID }
+                    personalUpdate: {
+                        PersonalID: (record as Personal).PersonalID,
+                        NombreCompleto: '',
+                        Telefono: '',
+                        Direccion: '',
+                        CargoID: ''
+                    }
                 });
                 break;
             case 'cliente':
                 setUpdateForm({
                     ...updateForm,
-                    clienteUpdate: { ClienteID: (record as Cliente).ClienteID }
+                    clienteUpdate: {
+                        ClienteID: (record as Cliente).ClienteID,
+                        NombreCompleto: '',
+                        Telefono: '',
+                        Direccion: ''
+                    }
                 });
                 break;
             case 'mascota':
                 setUpdateForm({
                     ...updateForm,
-                    mascotaUpdate: { MascotaID: (record as Mascota).MascotaID }
+                    mascotaUpdate: {
+                        MascotaID: (record as Mascota).MascotaID,
+                        Nombre: '',
+                        Sexo: '',
+                        Observaciones: '',
+                        ClienteID: ''
+                    }
                 });
                 break;
         }

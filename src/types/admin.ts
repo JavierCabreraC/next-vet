@@ -128,39 +128,68 @@ export type FormTypes = PersonalForm | ClienteForm | MascotaForm;
 // *****************************************************************************************************
 
 // src/types/admin.types.ts
-export interface PersonalUpdateForm {
-    PersonalID: number;
-    NombreCompleto?: string;
-    Telefono?: string;
-    Direccion?: string;
-    CargoID?: number;
-}
-
-export interface ClienteUpdateForm {
-    ClienteID: number;
-    NombreCompleto?: string;
-    Telefono?: string;
-    Direccion?: string;
-}
-
-export interface MascotaUpdateForm {
-    MascotaID: number;
-    Nombre?: string;
-    Sexo?: string;
-    Observaciones?: string;
-    ClienteID?: number;
-}
-
-export interface UpdateForms {
-    personalUpdate: PersonalUpdateForm;
-    clienteUpdate: ClienteUpdateForm;
-    mascotaUpdate: MascotaUpdateForm;
-}
-
 export interface CurrentItemType {
     personal?: Personal;
     cliente?: Cliente;
     mascota?: Mascota;
 }
 
+// export interface PersonalUpdateForm {
+//     PersonalID: number;
+//     NombreCompleto?: string;
+//     Telefono?: string;
+//     Direccion?: string;
+//     CargoID?: number;
+// }
+
+// export interface ClienteUpdateForm {
+//     ClienteID: number;
+//     NombreCompleto?: string;
+//     Telefono?: string;
+//     Direccion?: string;
+// }
+
+// export interface MascotaUpdateForm {
+//     MascotaID: number;
+//     Nombre?: string;
+//     Sexo?: string;
+//     Observaciones?: string;
+//     ClienteID?: number;
+// }
+
+// export interface UpdateForms {
+//     personalUpdate: PersonalUpdateForm;
+//     clienteUpdate: ClienteUpdateForm;
+//     mascotaUpdate: MascotaUpdateForm;
+// }
+
+// export type UpdateType = 'personal' | 'cliente' | 'mascota';
+
+
+
+// Definición más clara de tipos
 export type UpdateType = 'personal' | 'cliente' | 'mascota';
+
+export interface UpdateForms {
+    personalUpdate: {
+        PersonalID?: number;
+        NombreCompleto?: string;
+        Telefono?: string;
+        Direccion?: string;
+        CargoID?: string;
+    };
+    clienteUpdate: {
+        ClienteID?: number;
+        NombreCompleto?: string;
+        Telefono?: string;
+        Direccion?: string;
+    };
+    mascotaUpdate: {
+        MascotaID?: number;
+        Nombre?: string;
+        Sexo?: string;
+        Observaciones?: string;
+        ClienteID?: string;
+    };
+}
+

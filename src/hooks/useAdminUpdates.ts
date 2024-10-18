@@ -12,25 +12,85 @@ export const useAdminUpdates = () => {
         mascotaUpdate: { MascotaID: 0 }
     });
 
+    // const handleUpdate = async () => {
+    //     const token = localStorage.getItem('token');
+    //     if (!updateType || !currentItem) return;
+
+    //     const url = `http://localhost:3333/admin/${updateType}`;
+    //     let body = {};
+
+    //     switch (updateType) {
+    //         case 'personal':
+    //             body = updateForm.personalUpdate;
+    //             break;
+    //         case 'cliente':
+    //             body = updateForm.clienteUpdate;
+    //             break;
+    //         case 'mascota':
+    //             body = updateForm.mascotaUpdate;
+    //             break;
+    //     }
+
+    //     try {
+    //         const response = await fetch(url, {
+    //             method: 'PATCH',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${token}`
+    //             },
+    //             body: JSON.stringify(body)
+    //         });
+
+    //         if (response.ok) {
+    //             const data = await response.json();
+    //             // Manejar respuesta exitosa
+    //             setShowUpdateModal(false);
+    //             console.log({data});
+    //             // Aquí podrías actualizar la lista correspondiente
+    //         } else {
+    //             // Manejar error
+    //         }
+    //     } catch (error) {
+    //         console.error('Error al actualizar:', error);
+    //     }
+    // };
+
     const handleUpdate = async () => {
         const token = localStorage.getItem('token');
         if (!updateType || !currentItem) return;
-
+    
         const url = `http://localhost:3333/admin/${updateType}`;
-        let body = {};
-
+        const body = { dto: {} };
+    
         switch (updateType) {
             case 'personal':
-                body = updateForm.personalUpdate;
+                body.dto = {
+                    PersonalID: updateForm.personalUpdate.PersonalID,
+                    NombreCompleto: updateForm.personalUpdate.NombreCompleto || '',
+                    Telefono: updateForm.personalUpdate.Telefono || '',
+                    Direccion: updateForm.personalUpdate.Direccion || '',
+                    CargoID: updateForm.personalUpdate.CargoID || ''
+                };
                 break;
             case 'cliente':
-                body = updateForm.clienteUpdate;
+                body.dto = {
+                    ClienteID: updateForm.clienteUpdate.ClienteID,
+                    NombreCompleto: updateForm.clienteUpdate.NombreCompleto || '',
+                    Telefono: updateForm.clienteUpdate.Telefono || '',
+                    Direccion: updateForm.clienteUpdate.Direccion || ''
+                };
                 break;
             case 'mascota':
-                body = updateForm.mascotaUpdate;
+                body.dto = {
+                    MascotaID: updateForm.mascotaUpdate.MascotaID,
+                    Nombre: updateForm.mascotaUpdate.Nombre || '',
+                    Sexo: updateForm.mascotaUpdate.Sexo || '',
+                    Observaciones: updateForm.mascotaUpdate.Observaciones || '',
+                    ClienteID: updateForm.mascotaUpdate.ClienteID || ''
+                };
                 break;
         }
-
+    
         try {
             const response = await fetch(url, {
                 method: 'PATCH',
@@ -40,15 +100,13 @@ export const useAdminUpdates = () => {
                 },
                 body: JSON.stringify(body)
             });
-
+    
             if (response.ok) {
                 const data = await response.json();
-                // Manejar respuesta exitosa
                 setShowUpdateModal(false);
                 console.log({data});
-                // Aquí podrías actualizar la lista correspondiente
-            } else {
-                // Manejar error
+                // Aquí podrías mostrar un mensaje de éxito usando el ResponseModal
+                // y actualizar la lista correspondiente
             }
         } catch (error) {
             console.error('Error al actualizar:', error);
