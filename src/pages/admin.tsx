@@ -48,33 +48,6 @@ const AdminPage: React.FC = () => {
         logout(router);
     };
 
-    // const handleEdit = (record: Personal | Cliente | Mascota, type: UpdateType) => {
-    //     setCurrentItem({ [type]: record });
-    //     setUpdateType(type);
-    //     setShowUpdateModal(true);
-        
-    //     switch (type) {
-    //         case 'personal':
-    //             setUpdateForm({
-    //                 ...updateForm,
-    //                 personalUpdate: { PersonalID: (record as Personal).PersonalID }
-    //             });
-    //             break;
-    //         case 'cliente':
-    //             setUpdateForm({
-    //                 ...updateForm,
-    //                 clienteUpdate: { ClienteID: (record as Cliente).ClienteID }
-    //             });
-    //             break;
-    //         case 'mascota':
-    //             setUpdateForm({
-    //                 ...updateForm,
-    //                 mascotaUpdate: { MascotaID: (record as Mascota).MascotaID }
-    //             });
-    //             break;
-    //     }
-    // };
-
     const handleEdit = (record: Personal | Cliente | Mascota, type: UpdateType) => {
         setCurrentItem({ [type]: record });
         setUpdateType(type);
@@ -85,7 +58,7 @@ const AdminPage: React.FC = () => {
                 setUpdateForm({
                     ...updateForm,
                     personalUpdate: {
-                        PersonalID: (record as Personal).PersonalID,
+                        ID: (record as Personal).ID,
                         NombreCompleto: '',
                         Telefono: '',
                         Direccion: '',
@@ -108,7 +81,7 @@ const AdminPage: React.FC = () => {
                 setUpdateForm({
                     ...updateForm,
                     mascotaUpdate: {
-                        MascotaID: (record as Mascota).MascotaID,
+                        ID: (record as Mascota).ID,
                         Nombre: '',
                         Sexo: '',
                         Observaciones: '',

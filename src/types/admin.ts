@@ -3,7 +3,7 @@ import { ApiResponse } from './index.types';
 
 
 export interface Personal extends Record<string, unknown> {
-    PersonalID: number;
+    ID: number;
     Nombre: string;
     Telefono: string;
     Direccion: string;
@@ -23,7 +23,7 @@ export interface Cliente extends Record<string, unknown> {
 }
 
 export interface Mascota extends Record<string, unknown> {
-    MascotaID: number;
+    ID: number;
     Nombre: string;
     Sexo: string;
     Fecha_De_Nacimiento: string;
@@ -95,6 +95,16 @@ export interface ResponseModalProps {
     title: string;
 }
 
+export interface UpdateModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    type: UpdateType | null;
+    currentItem: CurrentItemType;
+    updateForm: UpdateForms;
+    setUpdateForm: (form: UpdateForms) => void;
+    onSubmit: () => void;
+}
+
 // *****************************************************************************************************
 
 export type PersonalForm = {
@@ -127,52 +137,17 @@ export type FormTypes = PersonalForm | ClienteForm | MascotaForm;
 
 // *****************************************************************************************************
 
-// src/types/admin.types.ts
 export interface CurrentItemType {
     personal?: Personal;
     cliente?: Cliente;
     mascota?: Mascota;
 }
 
-// export interface PersonalUpdateForm {
-//     PersonalID: number;
-//     NombreCompleto?: string;
-//     Telefono?: string;
-//     Direccion?: string;
-//     CargoID?: number;
-// }
-
-// export interface ClienteUpdateForm {
-//     ClienteID: number;
-//     NombreCompleto?: string;
-//     Telefono?: string;
-//     Direccion?: string;
-// }
-
-// export interface MascotaUpdateForm {
-//     MascotaID: number;
-//     Nombre?: string;
-//     Sexo?: string;
-//     Observaciones?: string;
-//     ClienteID?: number;
-// }
-
-// export interface UpdateForms {
-//     personalUpdate: PersonalUpdateForm;
-//     clienteUpdate: ClienteUpdateForm;
-//     mascotaUpdate: MascotaUpdateForm;
-// }
-
-// export type UpdateType = 'personal' | 'cliente' | 'mascota';
-
-
-
-// Definición más clara de tipos
 export type UpdateType = 'personal' | 'cliente' | 'mascota';
 
 export interface UpdateForms {
     personalUpdate: {
-        PersonalID?: number;
+        ID?: number;
         NombreCompleto?: string;
         Telefono?: string;
         Direccion?: string;
@@ -185,11 +160,10 @@ export interface UpdateForms {
         Direccion?: string;
     };
     mascotaUpdate: {
-        MascotaID?: number;
+        ID?: number;
         Nombre?: string;
         Sexo?: string;
         Observaciones?: string;
         ClienteID?: string;
     };
 }
-
