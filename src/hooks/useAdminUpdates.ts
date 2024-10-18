@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CurrentItemType, UpdateForms, UpdateType } from "@/types/index.types";
+import { CurrentItemType, UpdateForms, UpdateType } from "@/types/admin";
 
 
 export const useAdminUpdates = () => {
@@ -11,16 +11,6 @@ export const useAdminUpdates = () => {
         clienteUpdate: { ClienteID: 0 },
         mascotaUpdate: { ID: 0 }
     });
-
-    // const [responseModal, setResponseModal] = useState<{
-    //     isOpen: boolean;
-    //     response: ApiResponse | null;
-    //     title: string;
-    // }>({
-    //     isOpen: false,
-    //     response: null,
-    //     title: '',
-    // });
 
     const handleUpdate = async () => {
         const token = localStorage.getItem('token');

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PersonalForm, ClienteForm, MascotaForm, ApiResponse } from '@/types/index.types';
+import { ClienteForm, MascotaForm, PersonalForm, ApiResponse } from '@/types/index.types';
 
 
 export const useAdminForms = () => {
@@ -46,8 +46,6 @@ export const useAdminForms = () => {
                 body = { ...mascotaForm };
                 break;
         }
-
-        body.JWT = token;
 
         try {
             const response = await fetch(url, {

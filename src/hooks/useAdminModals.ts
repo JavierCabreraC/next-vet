@@ -1,5 +1,5 @@
+import { Bitacora, Cliente, Mascota, Personal } from '@/types/index.types';
 import { useState } from 'react';
-import { Personal, Cliente, Mascota, Bitacora } from '@/types/index.types';
 
 
 export const useAdminModals = () => {

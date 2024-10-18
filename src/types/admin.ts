@@ -47,6 +47,12 @@ export interface AdminActionsProps {
     onViewList: (type: 'personal' | 'clientes' | 'mascotas' | 'bitacora') => void;
 }
 
+export interface ServiceCardProps {
+    icon: React.ReactNode;
+    title: string;
+    description: string;
+}
+
 export interface AdminCardsProps {
     onShowPersonalForm: () => void;
     onShowClienteForm: () => void;

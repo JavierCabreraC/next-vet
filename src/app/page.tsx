@@ -1,11 +1,10 @@
 'use client';
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import LoginForm from '@/components/ui/LoginForm';
 import ChangePasswordForm from '@/components/ui/ChangePassword';
 import { PawPrint, Calendar, Stethoscope } from 'lucide-react';
-
+import { ServiceCardProps } from '@/types/index.types';
 
 
 const VetClinicWelcomePage: React.FC = () => {
@@ -72,12 +71,6 @@ const VetClinicWelcomePage: React.FC = () => {
         </div>
     );
 };
-
-interface ServiceCardProps {
-    icon: React.ReactNode;
-    title: string;
-    description: string;
-}
 
 const ServiceCard: React.FC<ServiceCardProps> = ({ icon, title, description }) => (
     <div className="bg-white p-6 rounded-lg shadow-md transition-transform hover:scale-105">
