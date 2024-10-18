@@ -1,15 +1,20 @@
 import { useState } from "react";
-import { CurrentItemType, UpdateForms, UpdateType } from "@/types/admin";
+import { CurrentItemType, UpdateForms, UpdateType, UseAdminUpdatesProps } from "@/types/admin";
 
 
-export const useAdminUpdates = () => {
+export const useAdminUpdates = ({
+        setShowPersonalModal, setShowClienteModal, setShowMascotaModal
+        }: UseAdminUpdatesProps) => {
     const [showUpdateModal, setShowUpdateModal] = useState(false);
+    // const [ShowPersonalModal, setShowPersonalModal] = useState(false);
+    // const [ShowClienteModal, setShowClienteModal] = useState(false);
+    // const [ShowMascotaModal, setShowMascotaModal] = useState(false);
     const [updateType, setUpdateType] = useState<UpdateType | null>(null);
     const [currentItem, setCurrentItem] = useState<CurrentItemType>({});
     const [updateForm, setUpdateForm] = useState<UpdateForms>({
         personalUpdate: { ID: 0 },
         clienteUpdate: { ClienteID: 0 },
-        mascotaUpdate: { ID: 0 }
+        mascotaUpdate: { ID: 0 },
     });
 
     const handleUpdate = async () => {
@@ -61,6 +66,17 @@ export const useAdminUpdates = () => {
             if (response.ok) {
                 const data = await response.json();
                 setShowUpdateModal(false);
+                switch (updateType) {
+                    case 'personal':
+                        setShowPersonalModal(false);
+                        break;
+                    case 'cliente':
+                        setShowClienteModal(false);
+                        break;
+                    case 'mascota':
+                        setShowMascotaModal(false);
+                        break;
+                }
                 console.log({data});
                 // Aquí podrías mostrar un mensaje de éxito usando el ResponseModal
                 // y actualizar la lista correspondiente
@@ -77,6 +93,9 @@ export const useAdminUpdates = () => {
 
     return {
         showUpdateModal, setShowUpdateModal,
+        // ShowPersonalModal, setShowPersonalModal,
+        // ShowClienteModal, setShowClienteModal,
+        // ShowMascotaModal, setShowMascotaModal,
         updateType, setUpdateType,
         currentItem, setCurrentItem,
         updateForm, setUpdateForm,

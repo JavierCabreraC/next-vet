@@ -14,7 +14,7 @@ const AdminPage: React.FC = () => {
     const { isAuthenticated, loading } = useAuth(['Administrador']);
     const {
         personalForm, setPersonalForm, clienteForm, setClienteForm, 
-        mascotaForm, setMascotaForm, handleSubmit, responseModal, setResponseModal 
+        mascotaForm, setMascotaForm, handleSubmit, responseModal, setResponseModal
     } = useAdminForms();
     const {
         showPersonalForm, setShowPersonalForm,
@@ -32,10 +32,14 @@ const AdminPage: React.FC = () => {
     const {
         showUpdateModal, setShowUpdateModal,
         updateType, setUpdateType,
-        currentItem, setCurrentItem,
+        setCurrentItem,
         updateForm, setUpdateForm,
         handleUpdate
-    } = useAdminUpdates();
+    } = useAdminUpdates({
+        setShowPersonalModal,
+        setShowClienteModal,
+        setShowMascotaModal
+    });
 
     if (loading) {
         return <div className="flex justify-center items-center h-screen">Cargando...</div>;
@@ -163,10 +167,12 @@ const AdminPage: React.FC = () => {
                 isOpen={showUpdateModal}
                 onClose={() => setShowUpdateModal(false)}
                 type={updateType}
-                currentItem={currentItem}
                 updateForm={updateForm}
                 setUpdateForm={setUpdateForm}
                 onSubmit={handleUpdate}
+                setShowPersonalModal={setShowPersonalModal}
+                setShowClienteModal={setShowClienteModal}
+                setShowMascotaModal={setShowMascotaModal}
             />
             <ResponseModal 
                 isOpen={responseModal.isOpen}

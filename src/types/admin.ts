@@ -38,7 +38,7 @@ export interface Bitacora extends Record<string, unknown> {
     UsuarioID: number;
     Accion: string;
     Fecha_Hora: string;
-    IP: string;
+    IPDir: string;
 }
 
 // *****************************************************************************************************
@@ -101,14 +101,28 @@ export interface ResponseModalProps {
     title: string;
 }
 
+// export interface UpdateModalProps {
+//     isOpen: boolean;
+//     onClose: () => void;
+//     type: UpdateType | null;
+//     currentItem: CurrentItemType;
+//     updateForm: UpdateForms;
+//     setUpdateForm: (form: UpdateForms) => void;
+//     onSubmit: () => void;
+// }
+
 export interface UpdateModalProps {
     isOpen: boolean;
     onClose: () => void;
     type: UpdateType | null;
-    currentItem: CurrentItemType;
+    // currentItem: CurrentItemType;
     updateForm: UpdateForms;
     setUpdateForm: (form: UpdateForms) => void;
     onSubmit: () => void;
+    // Agregar estas nuevas props
+    setShowPersonalModal: (show: boolean) => void;
+    setShowClienteModal: (show: boolean) => void;
+    setShowMascotaModal: (show: boolean) => void;
 }
 
 // *****************************************************************************************************
@@ -172,4 +186,10 @@ export interface UpdateForms {
         Observaciones?: string;
         ClienteID?: string;
     };
+}
+
+export interface UseAdminUpdatesProps {
+    setShowPersonalModal: (show: boolean) => void;
+    setShowClienteModal: (show: boolean) => void;
+    setShowMascotaModal: (show: boolean) => void;
 }

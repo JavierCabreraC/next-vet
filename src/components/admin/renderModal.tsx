@@ -10,7 +10,7 @@ export const renderModal = <T extends Record<string, unknown>>({
     onClose,
     currentPage,
     setCurrentPage,
-    itemsPerPage = 7,
+    itemsPerPage = 8,
     onEdit,
 }: RenderModalProps<T>) => {
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -19,18 +19,60 @@ export const renderModal = <T extends Record<string, unknown>>({
 
     const renderPagination = (totalItems: number) => {
         const totalPages = Math.ceil(totalItems / itemsPerPage);
+        const maxButtons = 5; // Número de botones a mostrar
+        
+        let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+        const endPage = Math.min(totalPages, startPage + maxButtons - 1);
+        
+        // Ajustar el startPage si estamos cerca del final
+        if (endPage - startPage + 1 < maxButtons) {
+            startPage = Math.max(1, endPage - maxButtons + 1);
+        }
+    
         return (
-            <div className="flex justify-center mt-4">
-                {Array.from({ length: totalPages }, (_, i) => (
+            <div className="flex justify-center mt-4 gap-1">
+                {/* Botón Primera Página */}
+                {startPage > 1 && (
+                    <>
+                        <Button
+                            onClick={() => setCurrentPage(1)}
+                            variant="outline"
+                            className="mx-1"
+                        >
+                            1
+                        </Button>
+                        {startPage > 2 && <span className="mx-1">...</span>}
+                    </>
+                )}
+    
+                {/* Botones numerados */}
+                {Array.from(
+                    { length: endPage - startPage + 1 },
+                    (_, i) => startPage + i
+                ).map((page) => (
                     <Button
-                        key={i}
-                        onClick={() => setCurrentPage(i + 1)}
-                        variant={currentPage === i + 1 ? "default" : "outline"}
+                        key={page}
+                        onClick={() => setCurrentPage(page)}
+                        variant={currentPage === page ? "default" : "outline"}
                         className="mx-1"
                     >
-                        {i + 1}
+                        {page}
                     </Button>
                 ))}
+    
+                {/* Botón Última Página */}
+                {endPage < totalPages && (
+                    <>
+                        {endPage < totalPages - 1 && <span className="mx-1">...</span>}
+                        <Button
+                            onClick={() => setCurrentPage(totalPages)}
+                            variant="outline"
+                            className="mx-1"
+                        >
+                            {totalPages}
+                        </Button>
+                    </>
+                )}
             </div>
         );
     };
@@ -41,11 +83,11 @@ export const renderModal = <T extends Record<string, unknown>>({
         const baseHeaders: string[] = [];
         // Bitácora
         if ('Accion' in item) {
-            baseHeaders.push(...['ID', 'UsuarioID', 'Accion', 'Fecha_Hora', 'IP']);
+            baseHeaders.push(...['ID', 'UsuarioID', 'Accion', 'IPDir', 'Fecha_Hora']);
         }
         // Personal
         else if ('Cargo' in item) {
-            baseHeaders.push(...['ID', 'Nombre', 'Telefono', 'Direccion', 'Email', 'Fecha_De_Contratacion', 'Cargo', 'Profesion', 'Activo']);
+            baseHeaders.push(...['ID', 'Nombre', 'Telefono', 'Direccion', 'Email', 'Cargo', 'Profesion', 'Fecha_De_Contratacion']);
         }
         // Mascota
         else if ('Especie' in item) {
@@ -56,9 +98,22 @@ export const renderModal = <T extends Record<string, unknown>>({
             baseHeaders.push(...['ClienteID', 'NombreCompleto', 'Telefono', 'Direccion', 'Email']);
         }
         if (onEdit) {
-            baseHeaders.push('Acciones');
+            baseHeaders.push('Editar');
         }
         return baseHeaders;
+    };
+
+    const getColumnWidth = (header: string): string => {
+        switch (header) {
+            case 'NombreCompleto':
+                return 'w-1/4'; // 25% del ancho
+            case 'ID':
+            case 'ClienteID':
+            case 'UsuarioID':
+                return 'w-16'; // ancho fijo pequeño
+            default:
+                return 'w-auto';
+        }
     };
 
     const headers = renderTableHeaders();
@@ -78,15 +133,25 @@ export const renderModal = <T extends Record<string, unknown>>({
                     <thead>
                         <tr>
                             {headers.map((header: string) => (
-                                <th key={header} className="text-left p-2 bg-gray-100">{header}</th>
+                                <th 
+                                    key={header} 
+                                    className={`text-center p-2 bg-gray-100 ${getColumnWidth(header)}`}
+                                >
+                                    {header}
+                                </th>
                             ))}
                         </tr>
                     </thead>
                     <tbody>
                         {currentItems.map((item, index) => (
                             <tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : ''}>
-                                {headers.slice(0, -1).map((header: string) => (
-                                    <td key={header} className="p-2">{renderTableCell(item, header)}</td>
+                                {(onEdit ? headers.slice(0, -1) : headers).map((header: string) => (
+                                    <td 
+                                        key={header} 
+                                        className={`p-2 text-center ${getColumnWidth(header)}`}
+                                    >
+                                        {renderTableCell(item, header)}
+                                    </td>
                                 ))}
                                 {onEdit && (
                                     <td className="p-2">
