@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CurrentItemType, UpdateForms, UpdateType, UseAdminUpdatesProps } from "@/types/admin";
+import { API_CONFIG, ApiService } from "@/services/index.services";
 
 
 export const useAdminUpdates = ({
@@ -15,10 +16,13 @@ export const useAdminUpdates = ({
     });
 
     const handleUpdate = async () => {
-        const token = localStorage.getItem('token');
         if (!updateType || !currentItem) return;
-    
-        const url = `http://localhost:3333/admin/${updateType}`;
+        const endpointMap: Record<typeof updateType, keyof typeof API_CONFIG.ENDPOINTS> = {
+            personal: 'PERSONAL',
+            cliente: 'CLIENTES',
+            mascota: 'MASCOTAS'
+        };
+        const endpoint = API_CONFIG.ENDPOINTS[endpointMap[updateType]]; 
         let body = {};
     
         switch (updateType) {
@@ -51,43 +55,28 @@ export const useAdminUpdates = ({
         }
     
         try {
-            const response = await fetch(url, {
+            const data = await ApiService.fetch(endpoint, {
                 method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
                 body: JSON.stringify(body)
             });
-    
-            if (response.ok) {
-                const data = await response.json();
-                setShowUpdateModal(false);
-                switch (updateType) {
-                    case 'personal':
-                        setShowPersonalModal(false);
-                        break;
-                    case 'cliente':
-                        setShowClienteModal(false);
-                        break;
-                    case 'mascota':
-                        setShowMascotaModal(false);
-                        break;
-                }
-                console.log({data});
-                // Aquí podrías mostrar un mensaje de éxito usando el ResponseModal
-                // y actualizar la lista correspondiente
+            setShowUpdateModal(false);
+            switch (updateType) {
+                case 'personal':
+                    setShowPersonalModal(false);
+                    break;
+                case 'cliente':
+                    setShowClienteModal(false);
+                    break;
+                case 'mascota':
+                    setShowMascotaModal(false);
+                    break;
             }
+            console.log({ data });
         } catch (error) {
             console.error('Error al enviar el formulario:', error);
-            // setResponseModal({
-            //     isOpen: true,
-            //     response: null,
-            //     title: 'Error',
-            // });
         }
     };
-
+    
     return {
         showUpdateModal, setShowUpdateModal,
         updateType, setUpdateType,

@@ -1,3 +1,4 @@
+import { ApiService } from '@/services/index.services';
 import { Bitacora, Cliente, Mascota, Personal } from '@/types/index.types';
 import { useState } from 'react';
 
@@ -13,28 +14,18 @@ export const useAdminModals = () => {
     const [showClienteModal, setShowClienteModal] = useState(false);
     const [showMascotaModal, setShowMascotaModal] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(8);
+    const [itemsPerPage] = useState(6); // cantidad de registros por página <-----
     const [bitacoraList, setBitacoraList] = useState<Bitacora[]>([]);
     const [showBitacoraModal, setShowBitacoraModal] = useState(false);
 
     const fetchData = async <T,>(endpoint: string, setData: React.Dispatch<React.SetStateAction<T[]>>) => {
-        const token = localStorage.getItem('token');
         try {
-            const response = await fetch(`http://localhost:3333${endpoint}`, {
+            const data: T[] = await ApiService.fetch(endpoint, {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
             });
-            if (response.ok) {
-                const data: T[] = await response.json();
-                setData(data);
-            } else {
-                console.error('Error fetching data');
-            }
+            setData(data);
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error fetching data:', error);
         }
     };
 
