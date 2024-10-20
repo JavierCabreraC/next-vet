@@ -1,8 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import LoginForm from '@/components/ui/LoginForm';
-import ChangePasswordForm from '@/components/ui/ChangePassword';
+import { Button, ChangePasswordForm, LoginForm } from '@/components/ui/index.ui';
 import { PawPrint, Calendar, Stethoscope } from 'lucide-react';
 import { ServiceCardProps } from '@/types/index.types';
 
@@ -12,7 +10,7 @@ const VetClinicWelcomePage: React.FC = () => {
     const [showChangePassword, setShowChangePassword] = useState(false);
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white">
+        <div className="flex flex-col min-h-screen bg-gradient-to-b from-blue-100 to-white">
             <header className="bg-white shadow-md p-4">
                 <div className="container mx-auto flex justify-between items-center">
                     <h1 className="text-3xl font-bold text-blue-600">
@@ -27,7 +25,7 @@ const VetClinicWelcomePage: React.FC = () => {
                     </nav>
                 </div>
             </header>   
-            <main className="container mx-auto mt-8 p-4">
+            <main className="container mx-auto mt-8 p-4 flex-grow">
                 {showLogin && (
                     <LoginForm onClose={() => setShowLogin(false)} />
                 )}
@@ -63,7 +61,7 @@ const VetClinicWelcomePage: React.FC = () => {
                     </div>
                 )}
             </main>
-            <footer className="bg-blue-600 text-white mt-12 py-6">
+            <footer className="bg-blue-600 text-white mt-auto py-6">
                 <div className="container mx-auto text-center">
                     <p>&copy; 2024 Clínica Veterinaria Zoo-Life. Todos los derechos reservados.</p>
                 </div>

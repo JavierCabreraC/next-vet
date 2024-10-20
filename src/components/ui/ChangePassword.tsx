@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from './button';
-import { Input } from './input';
+import { Button, Input } from '@/components/ui/index.ui';
 import { Card, CardContent, CardHeader } from './card';
 
 
@@ -8,7 +7,7 @@ interface ChangePasswordFormProps {
     onClose: () => void;
 }
 
-const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({ onClose }) => {
+export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({ onClose }) => {
     const [email, setEmail] = useState('');
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -31,7 +30,7 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({ onClose }) => {
             const data = await response.json(); 
             if (response.ok) {
                 setMessage(data.message);
-                // Opcionalmente, limpiar los campos del formulario después de un cambio exitoso
+                // impiar los campos del formulario después de un cambio exitoso:
                 setEmail('');
                 setCurrentPassword('');
                 setNewPassword('');
@@ -44,49 +43,47 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({ onClose }) => {
         }
     };
     return (
-      <Card className="w-full max-w-md mx-auto">
-        <CardHeader className="flex justify-between items-center">
-          <h2 className="text-2xl font-semibold">Cambiar Contraseña</h2>
-          <Button variant="ghost" onClick={onClose}>X</Button>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-              <Input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700">Contraseña Actual</label>
-              <Input
-                type="password"
-                id="currentPassword"
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700">Nueva Contraseña</label>
-              <Input
-                type="password"
-                id="newPassword"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                required
-              />
-            </div>
-            {message && <p className={`text-${message.includes('correctamente') ? 'green' : 'red'}-500`}>{message}</p>}
-            <Button type="submit" className="w-full">Cambiar Contraseña</Button>
-          </form>
-        </CardContent>
-      </Card>
+        <Card className="w-full max-w-md mx-auto">
+            <CardHeader className="flex justify-between items-center">
+                <h2 className="text-2xl font-semibold">Cambiar Contraseña</h2>
+                <Button variant="ghost" onClick={onClose}>X</Button>
+            </CardHeader>
+            <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+                        <Input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="currentPassword" className="block text-sm font-medium text-gray-700">Contraseña Actual</label>
+                        <Input
+                            type="password"
+                            id="currentPassword"
+                            value={currentPassword}
+                            onChange={(e) => setCurrentPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700">Nueva Contraseña</label>
+                        <Input
+                            type="password"
+                            id="newPassword"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    {message && <p className={`text-${message.includes('correctamente') ? 'green' : 'red'}-500`}>{message}</p>}
+                    <Button type="submit" className="w-full">Cambiar Contraseña</Button>
+                </form>
+            </CardContent>
+        </Card>
     );
 };
-
-export default ChangePasswordForm;
