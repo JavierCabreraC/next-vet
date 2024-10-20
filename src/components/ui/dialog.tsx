@@ -1,4 +1,3 @@
-// components/ui/dialog.tsx
 import React from 'react';
 
 
