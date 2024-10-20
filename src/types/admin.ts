@@ -103,11 +103,9 @@ export interface UpdateModalProps {
     isOpen: boolean;
     onClose: () => void;
     type: UpdateType | null;
-    // currentItem: CurrentItemType;
     updateForm: UpdateForms;
     setUpdateForm: (form: UpdateForms) => void;
     onSubmit: () => void;
-    // Agregar estas nuevas props
     setShowPersonalModal: (show: boolean) => void;
     setShowClienteModal: (show: boolean) => void;
     setShowMascotaModal: (show: boolean) => void;

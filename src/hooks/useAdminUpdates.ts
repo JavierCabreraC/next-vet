@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { CurrentItemType, UpdateForms, UpdateType, UseAdminUpdatesProps } from "@/types/admin";
 import { API_CONFIG, ApiService } from "@/services/index.services";
+import { ApiResponse, CurrentItemType, UpdateForms, UpdateType, UseAdminUpdatesProps } from "@/types/index.types";
 
 
 export const useAdminUpdates = ({
@@ -10,9 +10,16 @@ export const useAdminUpdates = ({
     const [updateType, setUpdateType] = useState<UpdateType | null>(null);
     const [currentItem, setCurrentItem] = useState<CurrentItemType>({});
     const [updateForm, setUpdateForm] = useState<UpdateForms>({
-        personalUpdate: { ID: 0 },
-        clienteUpdate: { ClienteID: 0 },
-        mascotaUpdate: { ID: 0 },
+        personalUpdate: { ID: 0 }, clienteUpdate: { ClienteID: 0 }, mascotaUpdate: { ID: 0 },
+    });
+    const [responseModal, setResponseModal] = useState<{
+        isOpen: boolean;
+        response: ApiResponse | null;
+        title: string;
+    }>({
+        isOpen: false,
+        response: null,
+        title: '',
     });
 
     const handleUpdate = async () => {
@@ -82,7 +89,7 @@ export const useAdminUpdates = ({
         updateType, setUpdateType,
         currentItem, setCurrentItem,
         updateForm, setUpdateForm,
-        // responseModal, setResponseModal,
+        responseModal, setResponseModal,
         handleUpdate
     };
 };

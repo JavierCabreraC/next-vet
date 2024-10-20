@@ -1,10 +1,9 @@
 import '@/app/globals.css';
 import React from 'react';
-import ResponseModal from '@/components/ResponseModal';
 import { useRouter } from 'next/router';
 import { logout } from '@/utils/index.utils';
 import { AdminActions, AdminCards, AdminHeader, 
-    renderForm, renderModal, UpdateModal } from '@/components/admin/index.admincomp';
+    renderForm, renderModal, ResponseModal, UpdateModal } from '@/components/admin/index.admincomp';
 import { useAdminForms, useAdminModals, useAdminUpdates, useAuth } from '@/hooks/index.hooks';
 import { Cliente, Mascota, Personal, UpdateType } from '@/types/index.types';
 
@@ -12,33 +11,33 @@ import { Cliente, Mascota, Personal, UpdateType } from '@/types/index.types';
 const AdminPage: React.FC = () => {
     const router = useRouter();
     const { isAuthenticated, loading } = useAuth(['Administrador']);
+
     const {
-        personalForm, setPersonalForm, clienteForm, setClienteForm, 
-        mascotaForm, setMascotaForm, handleSubmit, responseModal, setResponseModal
+        personalForm, setPersonalForm, 
+        clienteForm, setClienteForm, 
+        mascotaForm, setMascotaForm, 
+        handleSubmit, responseModal, setResponseModal
     } = useAdminForms();
+
     const {
         showPersonalForm, setShowPersonalForm,
         showClienteForm, setShowClienteForm,
         showMascotaForm, setShowMascotaForm,
-        personalList, clienteList, mascotaList, bitacoraList,
         showPersonalModal, setShowPersonalModal,
         showClienteModal, setShowClienteModal,
         showMascotaModal, setShowMascotaModal,
         showBitacoraModal, setShowBitacoraModal,
-        currentPage, setCurrentPage, itemsPerPage,
-        handleViewList
+        personalList, clienteList, mascotaList, bitacoraList,
+        currentPage, setCurrentPage, itemsPerPage, handleViewList
     } = useAdminModals();
 
     const {
+        updateForm, setUpdateForm,
         showUpdateModal, setShowUpdateModal,
         updateType, setUpdateType,
-        setCurrentItem,
-        updateForm, setUpdateForm,
-        handleUpdate
+        setCurrentItem, handleUpdate
     } = useAdminUpdates({
-        setShowPersonalModal,
-        setShowClienteModal,
-        setShowMascotaModal
+        setShowPersonalModal, setShowClienteModal, setShowMascotaModal
     });
 
     if (loading) {
@@ -47,7 +46,6 @@ const AdminPage: React.FC = () => {
     if (!isAuthenticated) {
         return <div className="flex justify-center items-center h-screen">Acceso Denegado</div>;
     }
-
     const handleLogout = () => {
         logout(router);
     };

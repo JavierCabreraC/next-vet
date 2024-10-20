@@ -1,7 +1,7 @@
 import React from 'react';
+import { Pencil } from 'lucide-react';
 import { Button } from '@/components/ui/index.ui';
 import { RenderModalProps } from '@/types/index.types';
-import { Pencil } from 'lucide-react';
 
 
 export const renderModal = <T extends Record<string, unknown>>({
@@ -10,7 +10,7 @@ export const renderModal = <T extends Record<string, unknown>>({
     onClose,
     currentPage,
     setCurrentPage,
-    itemsPerPage = 8,
+    itemsPerPage = 6,
     onEdit,
 }: RenderModalProps<T>) => {
     const indexOfLastItem = currentPage * itemsPerPage;

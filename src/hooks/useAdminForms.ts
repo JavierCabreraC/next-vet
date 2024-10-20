@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { ClienteForm, MascotaForm, PersonalForm, ApiResponse } from '@/types/index.types';
 import { API_CONFIG, ApiService } from '@/services/index.services';
+import { ApiResponse, PersonalForm, ClienteForm, MascotaForm } from '@/types/index.types';
 
 
 export const useAdminForms = () => {
@@ -86,3 +86,91 @@ export const useAdminForms = () => {
         handleSubmit
     };
 };
+
+
+
+
+// import { useGenericForm } from '@/hooks/form';
+// import { API_CONFIG } from '@/services/index.services';
+// import type { PersonalForm, ClienteForm, MascotaForm } from '@/types/admin';
+
+
+// export const useAdminForms = () => {
+//     const initialPersonalForm: PersonalForm = {
+//         NombreCompleto: '', Telefono: '', Direccion: '', Email: '', FechaContratacion: '', 
+//         CargoID: 0, ProfesionID: 0
+//     };
+
+//     const initialClienteForm: ClienteForm = {
+//         NombreCompleto: '', Telefono: '', Direccion: '', Email: ''
+//     };
+
+//     const initialMascotaForm: MascotaForm = {
+//         Nombre: '', Sexo: '', FechaDeNacimiento: '', Observaciones: '',
+//         ClienteID: 0, RazaID: 0
+//     };
+
+//     const {
+//         form: personalFormState,
+//         setFormData: setPersonalForm,
+//         handleSubmit: handlePersonalSubmit,
+//         responseModal: personalResponseModal
+//     } = useGenericForm<PersonalForm>({
+//         initialState: initialPersonalForm,
+//         endpoint: API_CONFIG.ENDPOINTS.PERSONAL,
+//         formType: 'personal'
+//     });
+
+//     const {
+//         form: clienteFormState,
+//         setFormData: setClienteForm,
+//         handleSubmit: handleClienteSubmit,
+//         responseModal: clienteResponseModal
+//     } = useGenericForm<ClienteForm>({
+//         initialState: initialClienteForm,
+//         endpoint: API_CONFIG.ENDPOINTS.CLIENTES,
+//         formType: 'cliente'
+//     });
+
+//     const {
+//         form: mascotaFormState,
+//         setFormData: setMascotaForm,
+//         handleSubmit: handleMascotaSubmit,
+//         responseModal: mascotaResponseModal
+//     } = useGenericForm<MascotaForm>({
+//         initialState: initialMascotaForm,
+//         endpoint: API_CONFIG.ENDPOINTS.MASCOTAS,
+//         formType: 'mascota'
+//     });
+
+//     const handleSubmit = async (formType: 'personal' | 'cliente' | 'mascota') => {
+//         switch (formType) {
+//             case 'personal':
+//                 await handlePersonalSubmit();
+//                 break;
+//             case 'cliente':
+//                 await handleClienteSubmit();
+//                 break;
+//             case 'mascota':
+//                 await handleMascotaSubmit();
+//                 break;
+//         }
+//     };
+
+//     return {
+//         personalForm: personalFormState.data,
+//         clienteForm: clienteFormState.data,
+//         mascotaForm: mascotaFormState.data,
+//         setPersonalForm, setClienteForm, setMascotaForm, handleSubmit,
+//         responseModal: {
+//             isOpen: personalResponseModal.isOpen || clienteResponseModal.isOpen || mascotaResponseModal.isOpen,
+//             response: personalFormState.response || clienteFormState.response || mascotaFormState.response,
+//             title: personalFormState.error || clienteFormState.error || mascotaFormState.error || 'Operación exitosa',
+//             onClose: () => {
+//                 if (personalResponseModal.isOpen) personalResponseModal.onClose();
+//                 if (clienteResponseModal.isOpen) clienteResponseModal.onClose();
+//                 if (mascotaResponseModal.isOpen) mascotaResponseModal.onClose();
+//             }
+//         }
+//     };
+// };

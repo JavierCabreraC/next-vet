@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, Button 
 import { ResponseModalProps } from '@/types/index.types';
 
 
-const ResponseModal: React.FC<ResponseModalProps> = ({ isOpen, onClose, response, title }) => {
+export const ResponseModal: React.FC<ResponseModalProps> = ({ isOpen, onClose, response, title }) => {
     if (!response) return null;
   
     return (
@@ -26,5 +26,3 @@ const ResponseModal: React.FC<ResponseModalProps> = ({ isOpen, onClose, response
         </Dialog>
     );
 };
-
-export default ResponseModal;

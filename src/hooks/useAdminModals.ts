@@ -7,16 +7,16 @@ export const useAdminModals = () => {
     const [showPersonalForm, setShowPersonalForm] = useState(false);
     const [showClienteForm, setShowClienteForm] = useState(false);
     const [showMascotaForm, setShowMascotaForm] = useState(false);
-    const [personalList, setPersonalList] = useState<Personal[]>([]);
-    const [clienteList, setClienteList] = useState<Cliente[]>([]);
-    const [mascotaList, setMascotaList] = useState<Mascota[]>([]);
     const [showPersonalModal, setShowPersonalModal] = useState(false);
     const [showClienteModal, setShowClienteModal] = useState(false);
     const [showMascotaModal, setShowMascotaModal] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(6); // cantidad de registros por página <-----
-    const [bitacoraList, setBitacoraList] = useState<Bitacora[]>([]);
     const [showBitacoraModal, setShowBitacoraModal] = useState(false);
+    const [personalList, setPersonalList] = useState<Personal[]>([]);
+    const [clienteList, setClienteList] = useState<Cliente[]>([]);
+    const [mascotaList, setMascotaList] = useState<Mascota[]>([]);
+    const [bitacoraList, setBitacoraList] = useState<Bitacora[]>([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(6); // <----- cantidad de registros por página
 
     const fetchData = async <T,>(endpoint: string, setData: React.Dispatch<React.SetStateAction<T[]>>) => {
         try {
@@ -44,7 +44,7 @@ export const useAdminModals = () => {
                 setShowMascotaModal(true);
                 break;
             case 'bitacora':
-                await fetchData<Bitacora>('/admin/logs', setBitacoraList);
+                await fetchData<Bitacora>('/admin/logs/', setBitacoraList);
                 setShowBitacoraModal(true);
                 break;
         }

@@ -8,4 +8,6 @@ export * from './renderForm';
 
 export * from './renderModal';
 
+export * from './ResponseModal';
+
 export * from './UpdateModal';
