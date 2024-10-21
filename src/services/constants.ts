@@ -4,7 +4,8 @@ export const API_CONFIG = {
         PERSONAL: '/admin/personal',
         CLIENTES: '/admin/clientes',
         MASCOTAS: '/admin/mascotas',
-        LOGS: '/admin/logs'
+        LOGS: '/admin/logs',
+        CLI_MASCOTAS: '/cliente/mascotas'
     },
     ITEMS_PER_PAGE: 6
 } as const;
