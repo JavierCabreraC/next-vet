@@ -34,15 +34,15 @@ export const useAdminForms = () => {
     
         switch (formType) {
             case 'personal':
-                url = API_CONFIG.ENDPOINTS.PERSONAL;
+                url = API_CONFIG.ENDPOINTS.ADM_PERSONAL;
                 body = { ...personalForm };
                 break;
             case 'cliente':
-                url = API_CONFIG.ENDPOINTS.CLIENTES;
+                url = API_CONFIG.ENDPOINTS.ADM_CLIENTES;
                 body = { ...clienteForm };
                 break;
             case 'mascota':
-                url = API_CONFIG.ENDPOINTS.MASCOTAS;
+                url = API_CONFIG.ENDPOINTS.ADM_MASCOTAS;
                 body = { ...mascotaForm };
                 break;
         }

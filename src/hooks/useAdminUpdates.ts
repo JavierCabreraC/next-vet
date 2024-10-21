@@ -25,9 +25,9 @@ export const useAdminUpdates = ({
     const handleUpdate = async () => {
         if (!updateType || !currentItem) return;
         const endpointMap: Record<typeof updateType, keyof typeof API_CONFIG.ENDPOINTS> = {
-            personal: 'PERSONAL',
-            cliente: 'CLIENTES',
-            mascota: 'MASCOTAS'
+            personal: 'ADM_PERSONAL',
+            cliente: 'ADM_CLIENTES',
+            mascota: 'ADM_MASCOTAS'
         };
         const endpoint = API_CONFIG.ENDPOINTS[endpointMap[updateType]]; 
         let body = {};
