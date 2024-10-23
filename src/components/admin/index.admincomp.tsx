@@ -1,13 +1,13 @@
-export * from './AdminActions';
+export * from './shared/Form';
 
-export * from './AdminCards';
+export * from './shared/Modal';
 
-export * from './AdminHeader';
+export * from './shared/ResponseModal';
 
-export * from './renderForm';
+export * from './shared/UpdateModal';
 
-export * from './renderModal';
+export * from './view/Actions';
 
-export * from './ResponseModal';
+export * from './view/Cards';
 
-export * from './UpdateModal';
+export * from './view/Header';

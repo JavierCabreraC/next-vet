@@ -74,18 +74,18 @@ const ClientePage: React.FC = () => {
                         <DashboardCard 
                             icon={<PawPrint size={40} />}
                             title="Mis Mascotas"
-                            description="Ver información y historial de tus mascotas"
+                            description="Ver información y historial de tus mascotas - New Route"
                             onClick={handleMisMascotasClick}
                         />
                         <DashboardCard 
                             icon={<Calendar size={40} />}
                             title="Agendar Cita"
-                            description="Programa una nueva reservación para un servicio"
+                            description="Programa una nueva reservación para un servicio - New Route"
                         />
                         <DashboardCard 
                             icon={<ClipboardList size={40} />}
                             title="Historial de Visitas"
-                            description="Revisa el historial de visitas y tratamientos"
+                            description="Revisa el historial de visitas y tratamientos - New Route"
                         />
                     </div>
                 ) : (

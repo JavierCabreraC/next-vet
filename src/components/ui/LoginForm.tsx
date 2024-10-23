@@ -49,19 +49,19 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
           
             switch (data.rol) {
                 case 'Administrador':
-                    router.push('/admin');
+                    router.push('/admin/dashboard');
                     break;
                 case 'Veterinario':
                     router.push('/vetdoc');
                     break;
                 case 'Cliente':
-                    router.push('/cliente');
+                    router.push('/client/dashboard');
                     break;
                 default:
                     setError('Unknown role');
             }
         } catch (err) {
-            setError(`Login failed: ${err instanceof Error ? err.message : 'Unknown error'}`);
+            setError(`Login failed: ${err instanceof Error ? err.message : 'Error Desconocido. Rol no válido.'}`);
         }
     };
 

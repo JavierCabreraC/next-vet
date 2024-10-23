@@ -1,7 +1,7 @@
-export * from './useAdminForms';
+export * from './admin/view/useForms';
 
-export * from './useAdminModals';
+export * from './admin/view/useModals';
 
-export * from './useAdminUpdates';
+export * from './admin/view/useUpdates';
 
 export * from './useAuth';
