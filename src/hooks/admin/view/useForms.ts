@@ -1,23 +1,9 @@
 import { useState } from 'react';
-import { API_CONFIG, ApiService } from '@/services/index.services';
-import { ApiResponse, PersonalForm, ClienteForm, MascotaForm } from '@/types/index.types';
+import { useFormHandler } from '@/hooks/index.hooks';
+import type { PersonalForm, ClienteForm, MascotaForm, ApiResponse } from '@/types/index.types';
 
 
 export const useAdminForms = () => {
-    const [personalForm, setPersonalForm] = useState<PersonalForm>({
-        NombreCompleto: '', Telefono: '', Direccion: '', Email: '', 
-        FechaContratacion: '', CargoID: 0, ProfesionID: 0
-    });
-
-    const [clienteForm, setClienteForm] = useState<ClienteForm>({
-        NombreCompleto: '', Telefono: '', Direccion: '', Email: ''
-    });
-
-    const [mascotaForm, setMascotaForm] = useState<MascotaForm>({
-        Nombre: '', Sexo: '', FechaDeNacimiento: '', Observaciones: '', 
-        ClienteID: 0, RazaID: 0
-    });
-
     const [responseModal, setResponseModal] = useState<{
         isOpen: boolean;
         response: ApiResponse | null;
@@ -28,60 +14,92 @@ export const useAdminForms = () => {
         title: '',
     });
 
-    const handleSubmit = async (formType: 'personal' | 'cliente' | 'mascota') => {
-        let url = '';
-        let body: Record<string, unknown> = {};
-    
-        switch (formType) {
-            case 'personal':
-                url = API_CONFIG.ENDPOINTS.ADM_PERSONAL;
-                body = { ...personalForm };
-                break;
-            case 'cliente':
-                url = API_CONFIG.ENDPOINTS.ADM_CLIENTES;
-                body = { ...clienteForm };
-                break;
-            case 'mascota':
-                url = API_CONFIG.ENDPOINTS.ADM_MASCOTAS;
-                body = { ...mascotaForm };
-                break;
-        }
-    
-        try {
-            const response: ApiResponse = await ApiService.fetch(url, {
-                method: 'POST',
-                body: JSON.stringify(body)
-            });
+    const personalHandler = useFormHandler<PersonalForm>({
+        formType: 'personal',
+        initialState: {
+            NombreCompleto: '',
+            Telefono: '',
+            Direccion: '',
+            Email: '',
+            FechaContratacion: '',
+            CargoID: 0,
+            ProfesionID: 0
+        }, 
+        onSuccess: (response) => {
             setResponseModal({
                 isOpen: true,
-                response: response,
-                title: `Registro de ${formType} exitoso`,
+                response,
+                title: 'Registro de personal exitoso'
             });
+        }
+    });
+
+    const clienteHandler = useFormHandler<ClienteForm>({
+        formType: 'cliente',
+        initialState: {
+            NombreCompleto: '',
+            Telefono: '',
+            Direccion: '',
+            Email: ''
+        },
+        onSuccess: (response) => {
+            setResponseModal({
+                isOpen: true,
+                response,
+                title: 'Registro de cliente exitoso'
+            });
+        }
+    });
+
+    const mascotaHandler = useFormHandler<MascotaForm>({
+        formType: 'mascota',
+        initialState: {
+            Nombre: '',
+            Sexo: '',
+            FechaDeNacimiento: '',
+            Observaciones: '',
+            ClienteID: 0,
+            RazaID: 0
+        },
+        onSuccess: (response) => {
+            setResponseModal({
+                isOpen: true,
+                response,
+                title: 'Registro de mascota exitoso'
+            });
+        }
+    });
+
+    const handleSubmit = async (formType: 'personal' | 'cliente' | 'mascota') => {
+        try {
             switch (formType) {
                 case 'personal':
-                    setPersonalForm({NombreCompleto: '', Telefono: '', Direccion: '', Email: '', FechaContratacion: '', CargoID: 0, ProfesionID: 0});
+                    await personalHandler.handleSubmit();
                     break;
                 case 'cliente':
-                    setClienteForm({NombreCompleto: '', Telefono: '', Direccion: '', Email: ''});
+                    await clienteHandler.handleSubmit();
                     break;
                 case 'mascota':
-                    setMascotaForm({Nombre: '', Sexo: '', FechaDeNacimiento: '', Observaciones: '', ClienteID: 0, RazaID: 0});
+                    await mascotaHandler.handleSubmit();
                     break;
             }
         } catch (error) {
-            console.error('Error al enviar el formulario:', error);
+            console.log({error});
             setResponseModal({
                 isOpen: true,
                 response: null,
-                title: 'Error',
+                title: 'Error en el registro'
             });
         }
     };
-    
+
     return {
-        personalForm, setPersonalForm,
-        clienteForm, setClienteForm,
-        mascotaForm, setMascotaForm,
+        personalForm: personalHandler.form,
+        setPersonalForm: personalHandler.setForm,
+        clienteForm: clienteHandler.form,
+        setClienteForm: clienteHandler.setForm,
+        mascotaForm: mascotaHandler.form,
+        setMascotaForm: mascotaHandler.setForm,
         responseModal, setResponseModal,
         handleSubmit
     };

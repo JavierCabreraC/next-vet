@@ -2,10 +2,10 @@ import '@/app/globals.css';
 import React from 'react';
 import { useRouter } from 'next/router';
 import { logout } from '@/utils/index.utils';
+import { Personal } from '@/types/index.types';
 import { AdminActions, AdminCards, AdminHeader, 
     renderForm, renderModal, ResponseModal, UpdateModal } from '@/components/admin/index.admincomp';
 import { useAdminForms, useAdminModals, useAdminUpdates, useAuth } from '@/hooks/index.hooks';
-import { Cliente, Mascota, Personal, UpdateType } from '@/types/index.types';
 
 
 const AdminPage: React.FC = () => {
@@ -13,10 +13,10 @@ const AdminPage: React.FC = () => {
     const { isAuthenticated, loading } = useAuth(['Administrador']);
 
     const {
-        personalForm, setPersonalForm, 
-        clienteForm, setClienteForm, 
-        mascotaForm, setMascotaForm, 
-        handleSubmit, responseModal, setResponseModal
+        personalForm, setPersonalForm,
+        clienteForm, setClienteForm,
+        mascotaForm, setMascotaForm,
+        responseModal, setResponseModal, handleSubmit
     } = useAdminForms();
 
     const {
@@ -32,12 +32,13 @@ const AdminPage: React.FC = () => {
     } = useAdminModals();
 
     const {
-        updateForm, setUpdateForm,
         showUpdateModal, setShowUpdateModal,
-        updateType, setUpdateType,
-        setCurrentItem, handleUpdate
+        updateType, updateForm, setUpdateForm,
+        handleUpdate, handleEdit
     } = useAdminUpdates({
-        setShowPersonalModal, setShowClienteModal, setShowMascotaModal
+        setShowPersonalModal,
+        setShowClienteModal,
+        setShowMascotaModal
     });
 
     if (loading) {
@@ -48,50 +49,6 @@ const AdminPage: React.FC = () => {
     }
     const handleLogout = () => {
         logout(router);
-    };
-
-    const handleEdit = (record: Personal | Cliente | Mascota, type: UpdateType) => {
-        setCurrentItem({ [type]: record });
-        setUpdateType(type);
-        setShowUpdateModal(true);
-        
-        switch (type) {
-            case 'personal':
-                setUpdateForm({
-                    ...updateForm,
-                    personalUpdate: {
-                        ID: (record as Personal).ID,
-                        NombreCompleto: '',
-                        Telefono: '',
-                        Direccion: '',
-                        CargoID: ''
-                    }
-                });
-                break;
-            case 'cliente':
-                setUpdateForm({
-                    ...updateForm,
-                    clienteUpdate: {
-                        ClienteID: (record as Cliente).ClienteID,
-                        NombreCompleto: '',
-                        Telefono: '',
-                        Direccion: ''
-                    }
-                });
-                break;
-            case 'mascota':
-                setUpdateForm({
-                    ...updateForm,
-                    mascotaUpdate: {
-                        ID: (record as Mascota).ID,
-                        Nombre: '',
-                        Sexo: '',
-                        Observaciones: '',
-                        ClienteID: ''
-                    }
-                });
-                break;
-        }
     };
 
     return (
@@ -142,7 +99,7 @@ const AdminPage: React.FC = () => {
                 currentPage,
                 setCurrentPage,
                 itemsPerPage,
-                onEdit: (item) => handleEdit(item, 'cliente')
+                onEdit: (record) => handleEdit(record, 'cliente')
             })}
             {showMascotaModal && renderModal({
                 title: "Lista de Mascotas",
@@ -151,7 +108,7 @@ const AdminPage: React.FC = () => {
                 currentPage,
                 setCurrentPage,
                 itemsPerPage,
-                onEdit: (item) => handleEdit(item, 'mascota')
+                onEdit: (record) => handleEdit(record, 'mascota')
             })}
             {showBitacoraModal && renderModal({
                 title: "Registros de Bitácora",
