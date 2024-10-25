@@ -1,6 +1,6 @@
+import { useState } from 'react';
 import { ApiService } from '@/services/index.services';
 import { Bitacora, Cliente, Mascota, Personal } from '@/types/index.types';
-import { useState } from 'react';
 
 
 export const useAdminModals = () => {
@@ -32,19 +32,19 @@ export const useAdminModals = () => {
     const handleViewList = async (type: 'personal' | 'clientes' | 'mascotas' | 'bitacora') => {
         switch (type) {
             case 'personal':
-                await fetchData<Personal>('/admin/personal/', setPersonalList);
+                await fetchData<Personal>('/api/admin/personal/', setPersonalList);
                 setShowPersonalModal(true);
                 break;
             case 'clientes':
-                await fetchData<Cliente>('/admin/clientes/', setClienteList);
+                await fetchData<Cliente>('/api/admin/clientes/', setClienteList);
                 setShowClienteModal(true);
                 break;
             case 'mascotas':
-                await fetchData<Mascota>('/admin/mascotas/', setMascotaList);
+                await fetchData<Mascota>('/api/admin/mascotas/', setMascotaList);
                 setShowMascotaModal(true);
                 break;
             case 'bitacora':
-                await fetchData<Bitacora>('/admin/logs/', setBitacoraList);
+                await fetchData<Bitacora>('/api/admin/logs/', setBitacoraList);
                 setShowBitacoraModal(true);
                 break;
         }

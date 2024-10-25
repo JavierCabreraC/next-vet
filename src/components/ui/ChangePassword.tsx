@@ -16,7 +16,7 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({ onClose 
         e.preventDefault();
         setMessage('');   
         try {
-            const response = await fetch('http://localhost:3333/auth/updateHash', {
+            const response = await fetch('http://localhost:3333/api/auth/updateHash', {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

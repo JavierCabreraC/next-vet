@@ -11,7 +11,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ onLogout }) => {
                 <h1 className="text-3xl font-bold text-blue-600">
                     <span className="flex items-center">
                         <ClipboardList className="mr-2" />
-                        Panel de Administración - From New Route
+                        Panel de Administración
                     </span>
                 </h1>
                 <Button variant="outline" onClick={onLogout}>

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, Button } from "@/components/ui/index.ui";
 import { ResponseModalProps } from '@/types/index.types';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, Button } from "@/components/ui/index.ui";
 
 
 export const ResponseModal: React.FC<ResponseModalProps> = ({ isOpen, onClose, response, title }) => {

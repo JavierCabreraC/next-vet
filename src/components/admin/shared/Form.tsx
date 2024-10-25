@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, CardHeader, CardContent, Button, Input } from '@/components/ui/index.ui';
 import { FormTypes, RenderFormProps } from '@/types/index.types';
+import { Card, CardHeader, CardContent, Button, Input } from '@/components/ui/index.ui';
 
 
 export const renderForm = <T extends FormTypes>({

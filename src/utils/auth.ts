@@ -8,7 +8,7 @@ export const logout = async (router: NextRouter) => {
         return;
     }
     try {
-        const response = await fetch('http://localhost:3333/auth/logout', {
+        const response = await fetch('http://localhost:3333/api/auth/logout', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
