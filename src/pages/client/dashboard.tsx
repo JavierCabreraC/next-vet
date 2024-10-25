@@ -56,7 +56,7 @@ const ClientePage: React.FC = () => {
                     <h1 className="text-3xl font-bold text-blue-600">
                         <span className="flex items-center">
                             <PawPrint className="mr-2" />
-                            Portal del Cliente
+                            Portal de Cliente
                         </span>
                     </h1>
                     <button 
@@ -74,18 +74,18 @@ const ClientePage: React.FC = () => {
                         <DashboardCard 
                             icon={<PawPrint size={40} />}
                             title="Mis Mascotas"
-                            description="Ver información y historial de tus mascotas - New Route"
+                            description="Ver información y historial de tus mascotas"
                             onClick={handleMisMascotasClick}
                         />
                         <DashboardCard 
                             icon={<Calendar size={40} />}
                             title="Agendar Cita"
-                            description="Programa una nueva reservación para un servicio - New Route"
+                            description="Programa una nueva reservación para un servicio"
                         />
                         <DashboardCard 
                             icon={<ClipboardList size={40} />}
                             title="Historial de Visitas"
-                            description="Revisa el historial de visitas y tratamientos - New Route"
+                            description="Revisa el historial de visitas y tratamientos"
                         />
                     </div>
                 ) : (
