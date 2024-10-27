@@ -4,9 +4,12 @@ import { Bitacora, Cliente, Mascota, Personal } from '@/types/index.types';
 
 
 export const useAdminModals = () => {
-    const [showPersonalForm, setShowPersonalForm] = useState(false);
-    const [showClienteForm, setShowClienteForm] = useState(false);
-    const [showMascotaForm, setShowMascotaForm] = useState(false);
+    const [activeForm, setActiveForm] = useState<'personal' | 'cliente' | 'mascota' | null>(null);
+    
+    const setShowPersonalForm = (show: boolean) => setActiveForm(show ? 'personal' : null);
+    const setShowClienteForm = (show: boolean) => setActiveForm(show ? 'cliente' : null);
+    const setShowMascotaForm = (show: boolean) => setActiveForm(show ? 'mascota' : null);
+
     const [showPersonalModal, setShowPersonalModal] = useState(false);
     const [showClienteModal, setShowClienteModal] = useState(false);
     const [showMascotaModal, setShowMascotaModal] = useState(false);
@@ -52,9 +55,10 @@ export const useAdminModals = () => {
     };
 
     return {
-        showPersonalForm, setShowPersonalForm,
-        showClienteForm, setShowClienteForm,
-        showMascotaForm, setShowMascotaForm,
+        showPersonalForm: activeForm === 'personal',
+        showClienteForm: activeForm === 'cliente',
+        showMascotaForm: activeForm === 'mascota',
+        setShowPersonalForm, setShowClienteForm, setShowMascotaForm,
         personalList, clienteList, mascotaList, bitacoraList,
         showPersonalModal, setShowPersonalModal,
         showClienteModal, setShowClienteModal,
