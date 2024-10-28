@@ -1,7 +1,6 @@
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import { ApiService } from '@/services/api';
+import { Button, Input } from '@/components/ui/index.ui';
+import { API_CONFIG, ApiService } from '@/services/index.services';
 
 
 interface VacunaFormProps {
@@ -20,7 +19,7 @@ export const VacunaForm: React.FC<VacunaFormProps> = ({ onSuccess }) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await ApiService.fetch('/vetdoc/vacunas', {
+            await ApiService.fetch(`${API_CONFIG.ENDPOINTS.DOC_VACUNAS}`, {
                 method: 'POST',
                 body: JSON.stringify({
                     ...formData,

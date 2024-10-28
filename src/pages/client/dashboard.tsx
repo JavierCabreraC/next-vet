@@ -1,11 +1,11 @@
 import '@/app/globals.css';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { logout } from '@/utils/index.utils';
 import { useAuth } from '@/hooks/index.hooks';
-import { useRouter } from 'next/router';
+import { PawPrint, Calendar, ClipboardList } from 'lucide-react';
 import { API_CONFIG, ApiService } from '@/services/index.services';
 import { ClientHeader, MascotasList } from '@/components/client/index.clientcomp';
-import { PawPrint, Calendar, ClipboardList } from 'lucide-react';
 
 
 interface Mascota {
