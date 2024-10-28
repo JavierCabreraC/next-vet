@@ -52,7 +52,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
                     router.push('/admin/dashboard');
                     break;
                 case 'Veterinario':
-                    router.push('/vetdoc');
+                    router.push('/vetdoc/dashboard');
                     break;
                 case 'Cliente':
                     router.push('/client/dashboard');
