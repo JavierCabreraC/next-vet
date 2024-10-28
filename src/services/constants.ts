@@ -5,7 +5,9 @@ export const API_CONFIG = {
         ADM_CLIENTES:   '/admin/clientes',
         ADM_MASCOTAS:   '/admin/mascotas',
         ADM_LOGS:       '/admin/logs',
-        CLI_MASCOTAS:   '/cliente/mascotas'
+        CLI_MASCOTAS:   '/cliente/mascotas',
+        DOC_VACUNAS:    '/vetdoc/vacunas',
+        DOC_REGVAC:     '/vetdoc/regvac'
     },
     ITEMS_PER_PAGE: 6
 } as const;

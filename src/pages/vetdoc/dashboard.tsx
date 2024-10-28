@@ -1,31 +1,23 @@
 import '@/app/globals.css';
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { logout } from '@/utils/index.utils';
 import { useAuth } from '@/hooks/index.hooks';
-import { useRouter } from 'next/router';
-import { VetHeader } from '@/components/vetdoc/VetHeader';
-import { VacunaForm } from '@/components/vetdoc/VacunaForm';
-import { ApiService } from '@/services/api';
-import { VacunasList } from '@/components/vetdoc/VacunasList';
-import { Calendar, Clipboard, Syringe, Plus } from 'lucide-react';
+import { Button } from '@/components/ui/index.ui';
+import { API_CONFIG, ApiService } from '@/services/index.services';
+import type { Vacuna, VacunacionRegistro } from '@/types/index.types';
+import { Clipboard, Stethoscope, LogOut, Syringe, Plus, FileText } from 'lucide-react';
+import { VacunasList, VacunaForm, VacunacionForm, VacunacionList } from '@/components/vetdoc/index.docvetcomp';
 
 
-interface Vacuna {
-    ID: number;
-    Vacuna: string;
-    Descripcion: string;
-    Laboratorio: string;
-    Tipo: string;
-    EdadMinima: number;
-}
+type ViewState = 'dashboard' | 'vacunas' | 'vacunaForm' | 'vacunacion' | 'vacunacionForm' | 'registros';
 
 const VetDocPage: React.FC = () => {
     const router = useRouter();
     const { isAuthenticated, loading } = useAuth(['Veterinario']);
-    const [showVacunas, setShowVacunas] = useState(false);
-    const [showVacunaForm, setShowVacunaForm] = useState(false);
+    const [currentView, setCurrentView] = useState<ViewState>('dashboard');
     const [vacunas, setVacunas] = useState<Vacuna[]>([]);
+    const [registros, setRegistros] = useState<VacunacionRegistro[]>([]);
 
     if (loading) {
         return <div className="flex justify-center items-center h-screen">Cargando...</div>;
@@ -40,33 +32,32 @@ const VetDocPage: React.FC = () => {
 
     const handleVacunasClick = async () => {
         try {
-            const data = await ApiService.fetch<Vacuna[]>('/vetdoc/vacunas', {
+            const data = await ApiService.fetch<Vacuna[]>(`${API_CONFIG.ENDPOINTS.DOC_VACUNAS}`, {
                 method: 'GET',
             });
             setVacunas(data);
-            setShowVacunas(true);
-            setShowVacunaForm(false);
+            setCurrentView('vacunas');
         } catch (error) {
             console.error('Error al obtener vacunas:', error);
         }
     };
 
-    const handleNewVacunaClick = () => {
-        setShowVacunaForm(true);
-        setShowVacunas(false);
+    const handleRegistrosClick = async () => {
+        try {
+            const data = await ApiService.fetch<VacunacionRegistro[]>(`${API_CONFIG.ENDPOINTS.DOC_REGVAC}`, {
+                method: 'GET',
+            });
+            setRegistros(data);
+            setCurrentView('registros');
+        } catch (error) {
+            console.error('Error al obtener registros:', error);
+        }
     };
 
-    const handleVacunaRegistrada = () => {
-        handleVacunasClick(); // Recargar lista de vacunas
-        setShowVacunaForm(false);
-        setShowVacunas(true);
-    };
-
-    return (
-        <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white">
-            <VetHeader onLogout={handleLogout} />
-            <main className="container mx-auto mt-8 p-4">
-                {!showVacunas && !showVacunaForm ? (
+    const renderContent = () => {
+        switch (currentView) {
+            case 'dashboard':
+                return (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                         <DashboardCard 
                             icon={<Syringe size={40} />}
@@ -75,48 +66,93 @@ const VetDocPage: React.FC = () => {
                             onClick={handleVacunasClick}
                         />
                         <DashboardCard 
-                            icon={<Calendar size={40} />}
-                            title="Citas del Día"
-                            description="Ver las citas programadas para hoy"
+                            icon={<FileText size={40} />}
+                            title="Registrar Vacunación"
+                            description="Registrar vacunación de mascota"
+                            onClick={() => setCurrentView('vacunacionForm')}
                         />
                         <DashboardCard 
                             icon={<Clipboard size={40} />}
-                            title="Historial de Pacientes"
-                            description="Acceder a los registros médicos"
+                            title="Registros de Vacunación"
+                            description="Ver historial de vacunaciones"
+                            onClick={handleRegistrosClick}
                         />
                     </div>
-                ) : (
-                    <div>
+                );
+            case 'vacunas':
+                return (
+                    <>
                         <div className="flex justify-between items-center mb-6">
-                            <Button onClick={() => {
-                                setShowVacunas(false);
-                                setShowVacunaForm(false);
-                            }}>
+                            <h2 className="text-2xl font-bold">Vacunas Registradas</h2>
+                            <Button onClick={() => setCurrentView('vacunaForm')}>
+                                <Plus className="mr-2" size={16} />
+                                Nueva Vacuna
+                            </Button>
+                        </div>
+                        <VacunasList vacunas={vacunas} />
+                    </>
+                );
+            case 'vacunaForm':
+                return (
+                    <>
+                        <h2 className="text-2xl font-bold mb-4">Registrar Nueva Vacuna</h2>
+                        <VacunaForm onSuccess={() => {
+                            handleVacunasClick();
+                            setCurrentView('vacunas');
+                        }} />
+                    </>
+                );
+            case 'vacunacionForm':
+                return (
+                    <>
+                        <h2 className="text-2xl font-bold mb-4">Registrar Vacunación</h2>
+                        <VacunacionForm 
+                            vacunas={vacunas}
+                            onSuccess={() => {
+                                handleRegistrosClick();
+                                setCurrentView('registros');
+                            }}
+                        />
+                    </>
+                );
+            case 'registros':
+                return (
+                    <>
+                        <h2 className="text-2xl font-bold mb-4">Registros de Vacunación</h2>
+                        <VacunacionList registros={registros} />
+                    </>
+                );
+            default:
+                return null;
+        }
+    };
+
+    return (
+        <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white">
+            <header className="bg-white shadow-md p-4">
+                <div className="container mx-auto flex justify-between items-center">
+                    <h1 className="text-3xl font-bold text-blue-600">
+                        <span className="flex items-center">
+                            <Stethoscope className="mr-2" />
+                            Dashboard - Médico Veterinario
+                        </span>
+                    </h1>
+                    <div className="flex gap-4">
+                        {currentView !== 'dashboard' && (
+                            <Button variant="outline" onClick={() => setCurrentView('dashboard')}>
                                 Volver al Dashboard
                             </Button>
-                            {showVacunas && (
-                                <Button onClick={handleNewVacunaClick}>
-                                    <Plus className="mr-2" size={16} />
-                                    Nueva Vacuna
-                                </Button>
-                            )}
-                        </div>
-
-                        {showVacunas && (
-                            <>
-                                <h2 className="text-2xl font-bold mb-4">Vacunas Registradas</h2>
-                                <VacunasList vacunas={vacunas} />
-                            </>
                         )}
-
-                        {showVacunaForm && (
-                            <>
-                                <h2 className="text-2xl font-bold mb-4">Registrar Nueva Vacuna</h2>
-                                <VacunaForm onSuccess={handleVacunaRegistrada} />
-                            </>
-                        )}
+                        <Button variant="outline" onClick={handleLogout}>
+                            <LogOut className="mr-2" size={16} />
+                            Cerrar Sesión
+                        </Button>
                     </div>
-                )}
+                </div>
+            </header>
+
+            <main className="container mx-auto mt-8 p-4">
+                {renderContent()}
             </main>
         </div>
     );
