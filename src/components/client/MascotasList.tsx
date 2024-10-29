@@ -1,24 +1,14 @@
 import React from 'react';
+import { MascotaCli } from '@/types/index.types';
 
-
-interface Mascota {
-    ID: number;
-    Nombre: string;
-    Sexo: string;
-    Fecha_De_Nacimiento: string;
-    Años: string;
-    Meses: string;
-    Especie: string;
-    Raza: string;
-}
 
 interface MascotasListProps {
-    mascotas: Mascota[];
+    mascotas: MascotaCli[];
 }
 
 export const MascotasList: React.FC<MascotasListProps> = ({ mascotas }) => {
     // Renderizado para dispositivos móviles
-    const renderMobileCard = (mascota: Mascota) => (
+    const renderMobileCard = (mascota: MascotaCli) => (
         <div key={mascota.ID} className="bg-white rounded-lg shadow-md p-4 mb-4">
             <div className="mb-2 text-center">
                 <span className="font-semibold text-gray-700">Nombre: </span>

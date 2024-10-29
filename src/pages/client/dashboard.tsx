@@ -3,27 +3,18 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { logout } from '@/utils/index.utils';
 import { useAuth } from '@/hooks/index.hooks';
+import { MascotaCli } from '@/types/index.types';
 import { PawPrint, Calendar, ClipboardList } from 'lucide-react';
 import { API_CONFIG, ApiService } from '@/services/index.services';
-import { ClientHeader, MascotasList } from '@/components/client/index.clientcomp';
+import { ClientHeader, MascotasList, ReservationForm } from '@/components/client/index.clientcomp';
 
-
-interface Mascota {
-    ID: number;
-    Nombre: string;
-    Sexo: string;
-    Fecha_De_Nacimiento: string;
-    Años: string;
-    Meses: string;
-    Especie: string;
-    Raza: string;
-}
 
 const ClientePage: React.FC = () => {
     const router = useRouter();
     const { isAuthenticated, loading } = useAuth(['Cliente']);
-    const [mascotas, setMascotas] = useState<Mascota[]>([]);
+    const [mascotas, setMascotas] = useState<MascotaCli[]>([]);
     const [showMascotas, setShowMascotas] = useState(false);
+    const [showReservationForm, setShowReservationForm] = useState(false);
 
     if (loading) {
         return <div className="flex justify-center items-center h-screen">Cargando...</div>;
@@ -38,21 +29,29 @@ const ClientePage: React.FC = () => {
 
     const handleMisMascotasClick = async () => {
         try {
-            const data = await ApiService.fetch<Mascota[]>(`${API_CONFIG.ENDPOINTS.CLI_MASCOTAS}`, {
+            const data = await ApiService.fetch<MascotaCli[]>(`${API_CONFIG.ENDPOINTS.CLI_MASCOTAS}`, {
                 method: 'GET',
             });
             setMascotas(data);
             setShowMascotas(true);
+            setShowReservationForm(false); // Ocultar formulario si estaba visible
         } catch (error) {
             console.error('Error al obtener las mascotas:', error);
         }
+    };
+
+    const handleReservationSuccess = () => {
+        setShowReservationForm(false);
+        // Aquí podrías mostrar un mensaje de éxito o redirigir
+        alert('Reservación realizada con éxito');
     };
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white">
             <ClientHeader onLogout={handleLogout} />
             <main className="container mx-auto mt-8 p-4">
-                {!showMascotas ? (
+                {!showMascotas && !showReservationForm ? (
+                    // Vista inicial con las cards
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                         <DashboardCard 
                             icon={<PawPrint size={40} />}
@@ -64,23 +63,44 @@ const ClientePage: React.FC = () => {
                             icon={<Calendar size={40} />}
                             title="Agendar Cita"
                             description="Programa una nueva reservación para un servicio"
+                            onClick={() => setShowReservationForm(true)}
                         />
                         <DashboardCard 
                             icon={<ClipboardList size={40} />}
                             title="Historial de Visitas"
                             description="Revisa el historial de visitas y tratamientos"
+                            // onClick={handleHistorialClick} // Para futura implementación
                         />
                     </div>
-                ) : (
+                ) : showMascotas ? (
+                    // Vista de mascotas
                     <div>
                         <button 
-                            onClick={() => setShowMascotas(false)} 
+                            onClick={() => {
+                                setShowMascotas(false);
+                                setShowReservationForm(false);
+                            }} 
                             className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                         >
                             Volver
                         </button>
                         <h2 className="text-2xl font-bold mb-4">Mis Mascotas</h2>
                         <MascotasList mascotas={mascotas} />
+                    </div>
+                ) : (
+                    // Vista del formulario de reservación
+                    <div>
+                        <button 
+                            onClick={() => setShowReservationForm(false)} 
+                            className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        >
+                            Volver
+                        </button>
+                        <h2 className="text-2xl font-bold mb-4">Agendar Nueva Cita</h2>
+                        <ReservationForm
+                            onSuccess={handleReservationSuccess}
+                            onCancel={() => setShowReservationForm(false)}
+                        />
                     </div>
                 )}
             </main>
