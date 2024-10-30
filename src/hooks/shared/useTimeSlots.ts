@@ -17,8 +17,7 @@ export const useTimeSlots = ({ selectedDate, onError }: UseTimeSlotsProps) => {
             setLoading(true);
             
             // Obtener las reservaciones ocupadas
-            const reservedSlots = await ApiService.fetch<ReservedTimeSlot[]>(
-                `${API_CONFIG.ENDPOINTS.CLI_RESERVA}`, 
+            const reservedSlots = await ApiService.fetch<ReservedTimeSlot[]>(`${API_CONFIG.ENDPOINTS.CLI_RESERVAGRAL}`, 
                 {
                     method: 'GET',
                     headers: {
@@ -36,19 +35,27 @@ export const useTimeSlots = ({ selectedDate, onError }: UseTimeSlotsProps) => {
             // Marcar como no disponibles los slots que coinciden
             reservedSlots.forEach(reserved => {
                 if (reserved.Estado === 'Pendiente') {
-                    const reservedTime = new Date(reserved.Fecha_Hora)
-                        .toLocaleTimeString('es-ES', { 
-                            hour: '2-digit', 
-                            minute: '2-digit',
-                            hour12: false 
-                        });
+                    // Obtener solo la fecha de la reservación
+                    const reservedDate = new Date(reserved.Fecha_Hora)
+                        .toISOString()
+                        .split('T')[0];
 
-                    const matchingSlot = TIME_SLOTS.find(slot => 
-                        slot.start === reservedTime
-                    );
+                    // Solo procesar si la fecha coincide con la seleccionada
+                    if (reservedDate === selectedDate) {
+                        const reservedTime = new Date(reserved.Fecha_Hora)
+                            .toLocaleTimeString('es-ES', { 
+                                hour: '2-digit', 
+                                minute: '2-digit',
+                                hour12: false 
+                            });
 
-                    if (matchingSlot) {
-                        newAvailability[matchingSlot.id] = false;
+                        const matchingSlot = TIME_SLOTS.find(slot => 
+                            slot.start === reservedTime
+                        );
+
+                        if (matchingSlot) {
+                            newAvailability[matchingSlot.id] = false;
+                        }
                     }
                 }
             });
