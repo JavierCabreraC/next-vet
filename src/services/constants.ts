@@ -6,7 +6,8 @@ export const API_CONFIG = {
         ADM_MASCOTAS:   '/admin/mascotas',
         ADM_LOGS:       '/admin/logs',
         CLI_MASCOTAS:   '/cliente/mascotas',
-        CLI_RESERVA:    '/cliente/reservacion',
+        CLI_RESERVA:    '/cliente/reservaciones',
+        CLI_RESERV:     '/cliente/reservacion',
         DOC_VACUNAS:    '/vetdoc/vacunas',
         DOC_REGVAC:     '/vetdoc/regvac'
     },

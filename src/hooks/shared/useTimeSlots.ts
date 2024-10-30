@@ -17,7 +17,7 @@ export const useTimeSlots = ({ onError }: UseTimeSlotsProps = {}) => {
             console.log({date});
             
             // Obtener las reservaciones ocupadas
-            const reservedSlots = await ApiService.fetch<ReservedTimeSlot[]>(`${API_CONFIG.ENDPOINTS.CLI_MASCOTAS}`, {
+            const reservedSlots = await ApiService.fetch<ReservedTimeSlot[]>(`${API_CONFIG.ENDPOINTS.CLI_RESERVA}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
