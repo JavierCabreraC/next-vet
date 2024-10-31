@@ -5,25 +5,18 @@ import { logout } from '@/utils/index.utils';
 import { useAuth } from '@/hooks/index.hooks';
 import { PawPrint, Calendar, ClipboardList } from 'lucide-react';
 import { API_CONFIG, ApiService } from '@/services/index.services';
-import { ClientHeader, MascotasList } from '@/components/client/index.clientcomp';
+import { CancelReservationRequest, MascotaCli, PendingReservation } from '@/types/index.types';
+import { ClientHeader, MascotasList, ReservationForm, ReservationsList } from '@/components/client/index.clientcomp';
 
-
-interface Mascota {
-    ID: number;
-    Nombre: string;
-    Sexo: string;
-    Fecha_De_Nacimiento: string;
-    Años: string;
-    Meses: string;
-    Especie: string;
-    Raza: string;
-}
 
 const ClientePage: React.FC = () => {
     const router = useRouter();
     const { isAuthenticated, loading } = useAuth(['Cliente']);
-    const [mascotas, setMascotas] = useState<Mascota[]>([]);
+    const [mascotas, setMascotas] = useState<MascotaCli[]>([]);
     const [showMascotas, setShowMascotas] = useState(false);
+    const [showReservationForm, setShowReservationForm] = useState(false);
+    const [reservations, setReservations] = useState<PendingReservation[]>([]);
+    const [showReservations, setShowReservations] = useState(false);
 
     if (loading) {
         return <div className="flex justify-center items-center h-screen">Cargando...</div>;
@@ -38,13 +31,63 @@ const ClientePage: React.FC = () => {
 
     const handleMisMascotasClick = async () => {
         try {
-            const data = await ApiService.fetch<Mascota[]>(`${API_CONFIG.ENDPOINTS.CLI_MASCOTAS}`, {
+            const data = await ApiService.fetch<MascotaCli[]>(`${API_CONFIG.ENDPOINTS.CLI_MASCOTAS}`, {
                 method: 'GET',
             });
             setMascotas(data);
             setShowMascotas(true);
+            setShowReservationForm(false); // minimiza el formulario si estaba visible
         } catch (error) {
             console.error('Error al obtener las mascotas:', error);
+        }
+    };
+
+    const handleReservationsClick = async () => {
+        try {
+            const data = await ApiService.fetch<PendingReservation[]>(
+                `${API_CONFIG.ENDPOINTS.CLI_RESERVACLI}`,
+                { method: 'GET' }
+            );
+            setReservations(data);
+            setShowReservations(true);
+            setShowMascotas(false);
+            setShowReservationForm(false);
+        } catch (error) {
+            console.error('Error al obtener las reservaciones:', error);
+        }
+    };
+
+    const handleReservationSuccess = () => {
+        setShowReservationForm(false);
+        // acá se muestra un pop-out para indicar que sí se hizo la reserva
+        // modificarlo luego
+        alert('Reservación realizada con éxito');
+    };
+
+    const handleCancelReservation = async (reservationId: number): Promise<void> => {
+        try {
+            const cancelRequest: CancelReservationRequest = {
+                ReservacionID: reservationId
+            };
+
+            await ApiService.fetch(`${API_CONFIG.ENDPOINTS.CLI_RESERVA}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(cancelRequest)
+            });
+
+            // Actualizar la lista de reservaciones después de cancelar
+            const updatedReservations = await ApiService.fetch<PendingReservation[]>(
+                `${API_CONFIG.ENDPOINTS.CLI_RESERVACLI}`,
+                { method: 'GET' }
+            );
+            setReservations(updatedReservations);
+
+        } catch (error) {
+            console.error('Error al cancelar la reservación:', error);
+            throw error; // Propagar el error para manejarlo en el componente
         }
     };
 
@@ -52,7 +95,8 @@ const ClientePage: React.FC = () => {
         <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white">
             <ClientHeader onLogout={handleLogout} />
             <main className="container mx-auto mt-8 p-4">
-                {!showMascotas ? (
+                {!showMascotas && !showReservationForm && !showReservations ? (
+                    // Vista inicial con las cards
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                         <DashboardCard 
                             icon={<PawPrint size={40} />}
@@ -64,23 +108,66 @@ const ClientePage: React.FC = () => {
                             icon={<Calendar size={40} />}
                             title="Agendar Cita"
                             description="Programa una nueva reservación para un servicio"
+                            onClick={() => setShowReservationForm(true)}
                         />
                         <DashboardCard 
                             icon={<ClipboardList size={40} />}
                             title="Historial de Visitas"
                             description="Revisa el historial de visitas y tratamientos"
+                            // onClick={handleHistorialClick} // para mi yo del futuro
+                        />
+                        <DashboardCard 
+                            icon={<Calendar size={40} />}
+                            title="Mis Reservaciones"
+                            description="Ver las reservaciones pendientes"
+                            onClick={handleReservationsClick}
                         />
                     </div>
-                ) : (
+                ) : showMascotas ? ( // Vista de mascotas:
                     <div>
                         <button 
-                            onClick={() => setShowMascotas(false)} 
+                            onClick={() => {
+                                setShowMascotas(false);
+                                setShowReservationForm(false);
+                            }} 
                             className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                         >
                             Volver
                         </button>
                         <h2 className="text-2xl font-bold mb-4">Mis Mascotas</h2>
                         <MascotasList mascotas={mascotas} />
+                    </div>
+                ) : showReservations ? ( // Vista de reservaciones pendientes:
+                    <div>
+                        <button 
+                            onClick={() => {
+                                setShowReservations(false);
+                                setShowMascotas(false);
+                                setShowReservationForm(false);
+                            }} 
+                            className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        >
+                            Volver
+                        </button>
+                        <h2 className="text-2xl font-bold mb-4">Mis Reservaciones Pendientes</h2>
+                        <ReservationsList 
+                            reservations={reservations}
+                            onCancelReservation={handleCancelReservation}
+                        />
+                    </div>
+                ) : ( // Vista del formulario de reservación:
+                    <div>
+                        <button 
+                            onClick={() => setShowReservationForm(false)} 
+                            className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        >
+                            Volver
+                        </button>
+                        <h2 className="text-2xl font-bold mb-4">Agendar Nueva Cita</h2>
+                        <ReservationForm
+                            onSuccess={handleReservationSuccess}
+                            onCancel={() => setShowReservationForm(false)}
+                        />
                     </div>
                 )}
             </main>

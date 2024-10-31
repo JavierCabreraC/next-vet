@@ -68,7 +68,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
     return (
         <Card className="w-full max-w-md mx-auto">
             <CardHeader className="flex justify-between items-center">
-                <h2 className="text-2xl font-semibold">Login</h2>
+                <h2 className="text-2xl font-semibold">Iniciar Sesión</h2>
                 <Button variant="ghost" onClick={onClose}>X</Button>
             </CardHeader>
             <CardContent>
