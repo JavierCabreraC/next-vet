@@ -45,3 +45,7 @@ export interface PendingReservation {
     Fecha_Hora: string;
     Estado: 'Pendiente';
 }
+
+export interface CancelReservationRequest {
+    ReservacionID: number;
+}

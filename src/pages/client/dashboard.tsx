@@ -5,7 +5,7 @@ import { logout } from '@/utils/index.utils';
 import { useAuth } from '@/hooks/index.hooks';
 import { PawPrint, Calendar, ClipboardList } from 'lucide-react';
 import { API_CONFIG, ApiService } from '@/services/index.services';
-import { MascotaCli, PendingReservation } from '@/types/index.types';
+import { CancelReservationRequest, MascotaCli, PendingReservation } from '@/types/index.types';
 import { ClientHeader, MascotasList, ReservationForm, ReservationsList } from '@/components/client/index.clientcomp';
 
 
@@ -62,6 +62,33 @@ const ClientePage: React.FC = () => {
         // acá se muestra un pop-out para indicar que sí se hizo la reserva
         // modificarlo luego
         alert('Reservación realizada con éxito');
+    };
+
+    const handleCancelReservation = async (reservationId: number): Promise<void> => {
+        try {
+            const cancelRequest: CancelReservationRequest = {
+                ReservacionID: reservationId
+            };
+
+            await ApiService.fetch(`${API_CONFIG.ENDPOINTS.CLI_RESERVA}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(cancelRequest)
+            });
+
+            // Actualizar la lista de reservaciones después de cancelar
+            const updatedReservations = await ApiService.fetch<PendingReservation[]>(
+                `${API_CONFIG.ENDPOINTS.CLI_RESERVACLI}`,
+                { method: 'GET' }
+            );
+            setReservations(updatedReservations);
+
+        } catch (error) {
+            console.error('Error al cancelar la reservación:', error);
+            throw error; // Propagar el error para manejarlo en el componente
+        }
     };
 
     return (
@@ -125,7 +152,10 @@ const ClientePage: React.FC = () => {
                             Volver
                         </button>
                         <h2 className="text-2xl font-bold mb-4">Mis Reservaciones Pendientes</h2>
-                        <ReservationsList reservations={reservations} />
+                        <ReservationsList 
+                            reservations={reservations}
+                            onCancelReservation={handleCancelReservation}
+                        />
                     </div>
                 ) : (
                     // Vista del formulario de reservación
