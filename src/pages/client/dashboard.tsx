@@ -3,10 +3,10 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { logout } from '@/utils/index.utils';
 import { useAuth } from '@/hooks/index.hooks';
-import { MascotaCli } from '@/types/index.types';
 import { PawPrint, Calendar, ClipboardList } from 'lucide-react';
 import { API_CONFIG, ApiService } from '@/services/index.services';
-import { ClientHeader, MascotasList, ReservationForm } from '@/components/client/index.clientcomp';
+import { MascotaCli, PendingReservation } from '@/types/index.types';
+import { ClientHeader, MascotasList, ReservationForm, ReservationsList } from '@/components/client/index.clientcomp';
 
 
 const ClientePage: React.FC = () => {
@@ -15,6 +15,8 @@ const ClientePage: React.FC = () => {
     const [mascotas, setMascotas] = useState<MascotaCli[]>([]);
     const [showMascotas, setShowMascotas] = useState(false);
     const [showReservationForm, setShowReservationForm] = useState(false);
+    const [reservations, setReservations] = useState<PendingReservation[]>([]);
+    const [showReservations, setShowReservations] = useState(false);
 
     if (loading) {
         return <div className="flex justify-center items-center h-screen">Cargando...</div>;
@@ -34,15 +36,31 @@ const ClientePage: React.FC = () => {
             });
             setMascotas(data);
             setShowMascotas(true);
-            setShowReservationForm(false); // Ocultar formulario si estaba visible
+            setShowReservationForm(false); // minimizar el formulario si estaba visible
         } catch (error) {
             console.error('Error al obtener las mascotas:', error);
         }
     };
 
+    const handleReservationsClick = async () => {
+        try {
+            const data = await ApiService.fetch<PendingReservation[]>(
+                `${API_CONFIG.ENDPOINTS.CLI_RESERVACLI}`,
+                { method: 'GET' }
+            );
+            setReservations(data);
+            setShowReservations(true);
+            setShowMascotas(false);
+            setShowReservationForm(false);
+        } catch (error) {
+            console.error('Error al obtener las reservaciones:', error);
+        }
+    };
+
     const handleReservationSuccess = () => {
         setShowReservationForm(false);
-        // Aquí podrías mostrar un mensaje de éxito o redirigir
+        // acá se muestra un pop-out para indicar que sí se hizo la reserva
+        // modificarlo luego
         alert('Reservación realizada con éxito');
     };
 
@@ -50,7 +68,7 @@ const ClientePage: React.FC = () => {
         <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white">
             <ClientHeader onLogout={handleLogout} />
             <main className="container mx-auto mt-8 p-4">
-                {!showMascotas && !showReservationForm ? (
+                {!showMascotas && !showReservationForm && !showReservations ? (
                     // Vista inicial con las cards
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                         <DashboardCard 
@@ -69,7 +87,13 @@ const ClientePage: React.FC = () => {
                             icon={<ClipboardList size={40} />}
                             title="Historial de Visitas"
                             description="Revisa el historial de visitas y tratamientos"
-                            // onClick={handleHistorialClick} // Para futura implementación
+                            // onClick={handleHistorialClick} // para mi yo del futuro
+                        />
+                        <DashboardCard 
+                            icon={<Calendar size={40} />}
+                            title="Mis Reservaciones"
+                            description="Ver las reservaciones pendientes"
+                            onClick={handleReservationsClick}
                         />
                     </div>
                 ) : showMascotas ? (
@@ -86,6 +110,22 @@ const ClientePage: React.FC = () => {
                         </button>
                         <h2 className="text-2xl font-bold mb-4">Mis Mascotas</h2>
                         <MascotasList mascotas={mascotas} />
+                    </div>
+                ) : showReservations ? (
+                    // Vista de reservaciones pendientes
+                    <div>
+                        <button 
+                            onClick={() => {
+                                setShowReservations(false);
+                                setShowMascotas(false);
+                                setShowReservationForm(false);
+                            }} 
+                            className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        >
+                            Volver
+                        </button>
+                        <h2 className="text-2xl font-bold mb-4">Mis Reservaciones Pendientes</h2>
+                        <ReservationsList reservations={reservations} />
                     </div>
                 ) : (
                     // Vista del formulario de reservación

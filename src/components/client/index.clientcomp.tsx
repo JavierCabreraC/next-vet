@@ -6,3 +6,5 @@ export * from './ReservationForm';
 
 export * from './TimeSlotSelector';
 
+export * from './ReservationsList';
+

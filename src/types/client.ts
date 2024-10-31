@@ -20,7 +20,6 @@ export interface Reservation {
 export interface ReservationRequest {
     Motivo: string;
     FechaHoraReservada: string;
-    // UsuarioID: number;
 }
 
 export interface TimeSlot {
@@ -39,4 +38,10 @@ export interface User {
     UsuarioID: number;
     Rol: 'Administrador' | 'Veterinario' | 'Cliente';
     Estado: 'Activo' | 'Inactivo';
+}
+
+export interface PendingReservation {
+    ReservacionID: number;
+    Fecha_Hora: string;
+    Estado: 'Pendiente';
 }
