@@ -40,7 +40,7 @@ export const useTimeSlots = ({ selectedDate, onError }: UseTimeSlotsProps) => {
                         .toISOString()
                         .split('T')[0];
 
-                    // Solo procesar si la fecha coincide con la seleccionada
+                    // Sólo procesar si la fecha coincide con la seleccionada
                     if (reservedDate === selectedDate) {
                         const reservedTime = new Date(reserved.Fecha_Hora)
                             .toLocaleTimeString('es-ES', { 
@@ -70,14 +70,11 @@ export const useTimeSlots = ({ selectedDate, onError }: UseTimeSlotsProps) => {
 
     useEffect(() => {
         if (!selectedDate) return;
-
-        // Fetch inicial
+        // Fetch inicial:
         fetchDayReservations();
-
-        // Configurar polling cada 30 segundos
+        // Configurar polling cada 30 segundos:
         const interval = setInterval(fetchDayReservations, 30000);
-
-        // Limpiar intervalo al desmontar
+        // Limpiar intervalo al desmontar:
         return () => clearInterval(interval);
     }, [selectedDate]);
 

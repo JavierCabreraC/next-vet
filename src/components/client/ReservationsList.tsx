@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { X } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { PendingReservation } from '@/types/index.types';
-import { X } from 'lucide-react';
 
 
 interface ReservationsListProps {

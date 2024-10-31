@@ -36,7 +36,7 @@ const ClientePage: React.FC = () => {
             });
             setMascotas(data);
             setShowMascotas(true);
-            setShowReservationForm(false); // minimizar el formulario si estaba visible
+            setShowReservationForm(false); // minimiza el formulario si estaba visible
         } catch (error) {
             console.error('Error al obtener las mascotas:', error);
         }
@@ -123,8 +123,7 @@ const ClientePage: React.FC = () => {
                             onClick={handleReservationsClick}
                         />
                     </div>
-                ) : showMascotas ? (
-                    // Vista de mascotas
+                ) : showMascotas ? ( // Vista de mascotas:
                     <div>
                         <button 
                             onClick={() => {
@@ -138,8 +137,7 @@ const ClientePage: React.FC = () => {
                         <h2 className="text-2xl font-bold mb-4">Mis Mascotas</h2>
                         <MascotasList mascotas={mascotas} />
                     </div>
-                ) : showReservations ? (
-                    // Vista de reservaciones pendientes
+                ) : showReservations ? ( // Vista de reservaciones pendientes:
                     <div>
                         <button 
                             onClick={() => {
@@ -157,8 +155,7 @@ const ClientePage: React.FC = () => {
                             onCancelReservation={handleCancelReservation}
                         />
                     </div>
-                ) : (
-                    // Vista del formulario de reservación
+                ) : ( // Vista del formulario de reservación:
                     <div>
                         <button 
                             onClick={() => setShowReservationForm(false)} 
