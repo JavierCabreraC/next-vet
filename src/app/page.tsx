@@ -53,6 +53,11 @@ const VetClinicWelcomePage: React.FC = () => {
                                 title="Cuidados Especiales"
                                 description="Servicios de peluquería, spa y cuidados especiales para su mascota"
                             />
+                            <ServiceCard 
+                                icon={<PawPrint size={40} />}
+                                title="Historial de la Mascota"
+                                description="Servicios prestados, tratamientos y registro de recetas"
+                            />
                         </div>
                         
                         <Button size="lg" onClick={() => setShowLogin(true)}>
