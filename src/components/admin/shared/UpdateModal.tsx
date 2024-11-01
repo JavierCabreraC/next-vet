@@ -1,5 +1,5 @@
-import { Button, Input } from "@/components/ui/index.ui";
 import { UpdateModalProps } from "@/types/index.types";
+import { Button, Input } from "@/components/ui/index.ui";
 
 
 export const UpdateModal: React.FC<UpdateModalProps> = ({

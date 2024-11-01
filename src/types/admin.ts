@@ -41,8 +41,22 @@ export interface Bitacora extends Record<string, unknown> {
     IPDir: string;
 }
 
+export interface Reservacion extends Record<string, unknown> {
+    ReservacionID: number;
+    Fecha_Hora: string;
+    UsuarioID: number;
+    NombreCliente: string;
+    Estado: string;
+}
+
+export interface Usuario extends Record<string, unknown> {
+    UsuarioID: number;
+    Rol: string;
+    Estado: string;
+}
+
 export interface AdminActionsProps {
-    onViewList: (type: 'personal' | 'clientes' | 'mascotas' | 'bitacora') => void;
+    onViewList: (type: 'personal' | 'clientes' | 'mascotas' | 'bitacora' | 'reservacion' | 'usuarios') => void;
 }
 
 export interface ServiceCardProps {
