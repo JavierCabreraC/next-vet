@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
-import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { addHours, format } from 'date-fns';
 import { PendingReservation } from '@/types/index.types';
 
 
@@ -30,7 +30,8 @@ export const ReservationsList: React.FC<ReservationsListProps> = ({ reservations
 
     const formatDateTime = (dateTimeStr: string): string => {
         const date = new Date(dateTimeStr);
-        return format(date, "d 'de' MMMM 'de' yyyy 'a las' HH:mm", { locale: es });
+        const adjustedDate = addHours(date, 4);
+        return format(adjustedDate, "d 'de' MMMM 'de' yyyy 'a las' HH:mm", { locale: es });
     };
 
     // Renderizado para dispositivos móviles
