@@ -27,7 +27,9 @@ const AdminPage: React.FC = () => {
         showClienteModal, setShowClienteModal,
         showMascotaModal, setShowMascotaModal,
         showBitacoraModal, setShowBitacoraModal,
-        personalList, clienteList, mascotaList, bitacoraList,
+        showReservacionModal, setShowReservacionModal,
+        showUsuarioModal, setShowUsuarioModal,
+        personalList, clienteList, mascotaList, bitacoraList, reservacionList, usuarioList,
         currentPage, setCurrentPage, itemsPerPage, handleViewList
     } = useAdminModals();
 
@@ -114,6 +116,22 @@ const AdminPage: React.FC = () => {
                 title: "Registros de Bitácora",
                 data: bitacoraList,
                 onClose: () => setShowBitacoraModal(false),
+                currentPage,
+                setCurrentPage,
+                itemsPerPage
+            })}
+            {showReservacionModal && renderModal({
+                title: "Lista de Reservaciones",
+                data: reservacionList,
+                onClose: () => setShowReservacionModal(false),
+                currentPage,
+                setCurrentPage,
+                itemsPerPage
+            })}
+            {showUsuarioModal && renderModal({
+                title: "Lista de Reservaciones",
+                data: usuarioList,
+                onClose: () => setShowUsuarioModal(false),
                 currentPage,
                 setCurrentPage,
                 itemsPerPage

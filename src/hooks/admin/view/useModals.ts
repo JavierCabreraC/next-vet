@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ApiService } from '@/services/index.services';
-import { Bitacora, Cliente, Mascota, Personal } from '@/types/index.types';
+import { Bitacora, Cliente, Mascota, Personal, Reservacion, 
+    Usuario } from '@/types/index.types';
 
 
 export const useAdminModals = () => {
@@ -14,6 +15,10 @@ export const useAdminModals = () => {
     const [showClienteModal, setShowClienteModal] = useState(false);
     const [showMascotaModal, setShowMascotaModal] = useState(false);
     const [showBitacoraModal, setShowBitacoraModal] = useState(false);
+    const [showReservacionModal, setShowReservacionModal] = useState(false);
+    const [showUsuarioModal, setShowUsuarioModal] = useState(false);
+    const [usuarioList, setUsuarioList] = useState<Usuario[]>([]);
+    const [reservacionList, setReservacionList] = useState<Reservacion[]>([]);
     const [personalList, setPersonalList] = useState<Personal[]>([]);
     const [clienteList, setClienteList] = useState<Cliente[]>([]);
     const [mascotaList, setMascotaList] = useState<Mascota[]>([]);
@@ -32,7 +37,7 @@ export const useAdminModals = () => {
         }
     };
 
-    const handleViewList = async (type: 'personal' | 'clientes' | 'mascotas' | 'bitacora') => {
+    const handleViewList = async (type: 'personal' | 'clientes' | 'mascotas' | 'bitacora' | 'reservacion' | 'usuarios') => {
         switch (type) {
             case 'personal':
                 await fetchData<Personal>('/admin/personal/', setPersonalList);
@@ -50,6 +55,14 @@ export const useAdminModals = () => {
                 await fetchData<Bitacora>('/admin/logs/', setBitacoraList);
                 setShowBitacoraModal(true);
                 break;
+            case 'reservacion':
+                await fetchData<Reservacion>('/admin/reservacion/', setReservacionList);
+                setShowReservacionModal(true);
+                break;
+            case 'usuarios':
+                await fetchData<Usuario>('/admin/usuarios/', setUsuarioList);
+                setShowUsuarioModal(true);
+                break;
         }
         setCurrentPage(1);
     };
@@ -59,11 +72,13 @@ export const useAdminModals = () => {
         showClienteForm: activeForm === 'cliente',
         showMascotaForm: activeForm === 'mascota',
         setShowPersonalForm, setShowClienteForm, setShowMascotaForm,
-        personalList, clienteList, mascotaList, bitacoraList,
+        personalList, clienteList, mascotaList, bitacoraList, reservacionList,
+        showUsuarioModal, setShowUsuarioModal, usuarioList,
         showPersonalModal, setShowPersonalModal,
         showClienteModal, setShowClienteModal,
         showMascotaModal, setShowMascotaModal,
         showBitacoraModal, setShowBitacoraModal,
+        showReservacionModal, setShowReservacionModal,
         currentPage, setCurrentPage,
         itemsPerPage, handleViewList
     };

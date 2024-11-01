@@ -42,7 +42,7 @@ export interface Bitacora extends Record<string, unknown> {
 }
 
 export interface AdminActionsProps {
-    onViewList: (type: 'personal' | 'clientes' | 'mascotas' | 'bitacora') => void;
+    onViewList: (type: 'personal' | 'clientes' | 'mascotas' | 'bitacora' | 'reservacion' | 'usuarios') => void;
 }
 
 export interface ServiceCardProps {
@@ -174,4 +174,18 @@ export interface UseAdminUpdatesProps {
     setShowPersonalModal: (show: boolean) => void;
     setShowClienteModal: (show: boolean) => void;
     setShowMascotaModal: (show: boolean) => void;
+}
+
+export interface Reservacion extends Record<string, unknown> {
+    ReservacionID: number;
+    Fecha_Hora: string;
+    UsuarioID: number;
+    NombreCliente: string;
+    Estado: string;
+}
+
+export interface Usuario extends Record<string, unknown> {
+    UsuarioID: number;
+    Rol: string;
+    Estado: string;
 }
