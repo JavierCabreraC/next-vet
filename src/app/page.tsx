@@ -40,23 +40,23 @@ const VetClinicWelcomePage: React.FC = () => {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                             <ServiceCard 
                                 icon={<Stethoscope size={40} />}
-                                title="Atención Veterinaria"
-                                description="Consultas y tratamientos especializados para todo tipo de mascotas"
+                                title="Gestión de Usuarios"
+                                description="Asignación de funcionalidades por usuario"
                             />
                             <ServiceCard 
                                 icon={<Calendar size={40} />}
-                                title="Citas Online"
+                                title="Gestión de Reservaciones"
                                 description="Reserve su cita de forma rápida y sencilla a través de nuestra plataforma"
                             />
                             <ServiceCard 
                                 icon={<PawPrint size={40} />}
-                                title="Cuidados Especiales"
+                                title="Servicios Especiales"
                                 description="Servicios de peluquería, spa y cuidados especiales para su mascota"
                             />
                             <ServiceCard 
                                 icon={<PawPrint size={40} />}
                                 title="Historial de la Mascota"
-                                description="Servicios prestados, tratamientos y registro de recetas"
+                                description="Registro de los servicios prestados, tratamientos y recetas"
                             />
                         </div>
                         
