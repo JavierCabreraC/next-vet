@@ -167,8 +167,8 @@ export const UpdateModal: React.FC<UpdateModalProps> = ({
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white p-6 rounded-lg w-96">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[60]">
+            <div className="bg-white p-6 rounded-lg w-96 relative">
                 <h2 className="text-xl font-bold mb-4">
                     {type === 'personal' && 'Actualizar Personal'}
                     {type === 'cliente' && 'Actualizar Cliente'}
