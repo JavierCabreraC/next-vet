@@ -90,6 +90,12 @@ export const renderModal = <T extends Record<string, unknown>>({
         else if ('ClienteID' in item) {
             baseHeaders.push(...['ClienteID', 'NombreCompleto', 'Telefono', 'Direccion', 'Email']);
         }
+        else if ('ReservacionID' in item) {
+            baseHeaders.push(...['ReservacionID', 'Fecha_Hora', 'UsuarioID', 'NombreCliente', 'Estado']);
+        }
+        else if ('Rol' in item) {
+            baseHeaders.push(...['UsuarioID', 'Rol', 'Estado']);
+        }
         if (onEdit) {
             baseHeaders.push('Editar');
         }

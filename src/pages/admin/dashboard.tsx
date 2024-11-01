@@ -129,7 +129,7 @@ const AdminPage: React.FC = () => {
                 itemsPerPage
             })}
             {showUsuarioModal && renderModal({
-                title: "Lista de Reservaciones",
+                title: "Lista de Usuarios",
                 data: usuarioList,
                 onClose: () => setShowUsuarioModal(false),
                 currentPage,

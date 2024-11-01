@@ -73,7 +73,7 @@ const VetDocPage: React.FC = () => {
                         />
                         <DashboardCard 
                             icon={<Clipboard size={40} />}
-                            title="Registros de Vacunación"
+                            title="Historial de Vacunaciones"
                             description="Ver historial de vacunaciones"
                             onClick={handleRegistrosClick}
                         />
