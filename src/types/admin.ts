@@ -157,9 +157,14 @@ export interface CurrentItemType {
     personal?: Personal;
     cliente?: Cliente;
     mascota?: Mascota;
+    reservacion?: Reservacion;
 }
 
-export type UpdateType = 'personal' | 'cliente' | 'mascota';
+export interface ReservacionUpdate {
+    ReservacionID: number;
+}
+
+export type UpdateType = 'personal' | 'cliente' | 'mascota' | 'reservacion';
 
 export interface UpdateForms {
     personalUpdate: {

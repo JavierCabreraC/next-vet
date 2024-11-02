@@ -16,5 +16,10 @@ export interface PersonalResponse extends BaseResponse {
     PersonalID: number;
     UsuarioID?: number;
 }
+
+export interface ReservacionResponse {
+    Respuesta: string;
+    ReservaID: number;
+}
   
-export type ApiResponse = ClienteResponse | MascotaResponse | PersonalResponse;
+export type ApiResponse = ClienteResponse | MascotaResponse | PersonalResponse | ReservacionResponse;

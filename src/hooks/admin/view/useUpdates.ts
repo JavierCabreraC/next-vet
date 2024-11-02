@@ -1,5 +1,5 @@
 import { useUpdateHandler } from '@/hooks/index.hooks';
-import type { Cliente, Mascota, Personal, UpdateType, UseAdminUpdatesProps } from '@/types/admin';
+import type { Cliente, Mascota, Personal, Reservacion, UpdateType, UseAdminUpdatesProps } from '@/types/admin';
 
 
 export const useAdminUpdates = ({
@@ -24,7 +24,7 @@ export const useAdminUpdates = ({
         }
     });
 
-    const handleEdit = (record: Personal | Cliente | Mascota, type: UpdateType) => {
+    const handleEdit = (record: Personal | Cliente | Mascota | Reservacion, type: UpdateType) => {
         updateHandler.initializeUpdate(record, type);
     };
 

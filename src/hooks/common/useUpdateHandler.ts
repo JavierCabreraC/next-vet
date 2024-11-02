@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ApiService, API_CONFIG } from '@/services/index.services';
-import { UpdateType, UpdateForms, CurrentItemType, Personal, Cliente, Mascota } from '@/types/admin';
+import { UpdateType, UpdateForms, CurrentItemType, Personal, Cliente, Mascota, ReservacionUpdate } from '@/types/admin';
 
 
 interface UseUpdateHandlerProps {
@@ -29,24 +29,41 @@ export const useUpdateHandler = ({ onUpdateSuccess }: UseUpdateHandlerProps) => 
         const endpointMap: Record<UpdateType, string> = {
             personal: API_CONFIG.ENDPOINTS.ADM_PERSONAL,
             cliente: API_CONFIG.ENDPOINTS.ADM_CLIENTES,
-            mascota: API_CONFIG.ENDPOINTS.ADM_MASCOTAS
+            mascota: API_CONFIG.ENDPOINTS.ADM_MASCOTAS,
+            reservacion: API_CONFIG.ENDPOINTS.ADM_RESERV
         };
 
-        const formMap: UpdateFormMap = {
-            personal: 'personalUpdate',
-            cliente: 'clienteUpdate',
-            mascota: 'mascotaUpdate'
-        };
-
-        const formKey = formMap[updateType];
-        const currentForm = updateForm[formKey];
-        
         try {
-            await ApiService.fetch(endpointMap[updateType], {
-                method: 'PATCH',
-                body: JSON.stringify(currentForm)
-            });
-
+            if (updateType === 'reservacion') {
+                // Para reservaciones, solo enviamos el ID
+                const reservacion = currentItem.reservacion as ReservacionUpdate;
+                await ApiService.fetch<{ Respuesta: string; ReservaID: number }>(
+                    endpointMap[updateType],
+                    {
+                        method: 'PATCH',
+                        body: JSON.stringify({ ReservacionID: reservacion.ReservacionID })
+                    }
+                );
+                setShowModal(false);
+                onUpdateSuccess?.(updateType);
+                return;
+            } else {
+                // Lógica existente para otros tipos...
+                const formMap: UpdateFormMap = {
+                    personal: 'personalUpdate',
+                    cliente: 'clienteUpdate',
+                    mascota: 'mascotaUpdate'
+                };
+                const formKey = formMap[updateType];
+                const currentForm = updateForm[formKey];
+                
+                await ApiService.fetch(endpointMap[updateType], {
+                    method: 'PATCH',
+                    body: JSON.stringify(currentForm)
+                });
+                setShowModal(false);
+                onUpdateSuccess?.(updateType);
+            }
             setShowModal(false);
             onUpdateSuccess?.(updateType);
         } catch (error) {
@@ -60,23 +77,27 @@ export const useUpdateHandler = ({ onUpdateSuccess }: UseUpdateHandlerProps) => 
     ) => {
         setCurrentItem({ [type]: item });
         setUpdateType(type);
-        setShowModal(true);
 
-        // Mapeo type-safe de los IDs según el tipo
-        const updateData: UpdateForms = {
-            ...updateForm,
-            personalUpdate: type === 'personal' 
-                ? { ID: (item as Personal).ID }
-                : updateForm.personalUpdate,
-            clienteUpdate: type === 'cliente'
-                ? { ClienteID: (item as Cliente).ClienteID }
-                : updateForm.clienteUpdate,
-            mascotaUpdate: type === 'mascota'
-                ? { ID: (item as Mascota).ID }
-                : updateForm.mascotaUpdate
-        };
-
-        setUpdateForm(updateData);
+        if (type !== 'reservacion') {
+            // Lógica existente para otros tipos...
+            setShowModal(true);
+            const updateData: UpdateForms = {
+                ...updateForm,
+                personalUpdate: type === 'personal' 
+                    ? { ID: (item as Personal).ID }
+                    : updateForm.personalUpdate,
+                clienteUpdate: type === 'cliente'
+                    ? { ClienteID: (item as Cliente).ClienteID }
+                    : updateForm.clienteUpdate,
+                mascotaUpdate: type === 'mascota'
+                    ? { ID: (item as Mascota).ID }
+                    : updateForm.mascotaUpdate
+            };
+            setUpdateForm(updateData);
+        } else {
+            // Para reservaciones, ejecutar la actualización inmediatamente
+            handleUpdate();
+        }
     };
 
     return {

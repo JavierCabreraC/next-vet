@@ -126,7 +126,8 @@ const AdminPage: React.FC = () => {
                 onClose: () => setShowReservacionModal(false),
                 currentPage,
                 setCurrentPage,
-                itemsPerPage
+                itemsPerPage,
+                onEdit: (record) => handleEdit(record, 'reservacion')
             })}
             {showUsuarioModal && renderModal({
                 title: "Lista de Usuarios",
