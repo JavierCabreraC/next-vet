@@ -158,13 +158,18 @@ export interface CurrentItemType {
     cliente?: Cliente;
     mascota?: Mascota;
     reservacion?: Reservacion;
+    usuario?: Usuario;
 }
 
-export interface ReservacionUpdate {
+export interface ReservacionUpdate extends Record<string, unknown> {
     ReservacionID: number;
 }
 
-export type UpdateType = 'personal' | 'cliente' | 'mascota' | 'reservacion';
+export interface UsuarioUpdate extends Record<string, unknown> {
+    UsuarioID: number;
+}
+
+export type UpdateType = 'personal' | 'cliente' | 'mascota' | 'reservacion' | 'usuario';
 
 export interface UpdateForms {
     personalUpdate: {
@@ -187,10 +192,19 @@ export interface UpdateForms {
         Observaciones?: string;
         ClienteID?: string;
     };
+    reservacionUpdate: { ReservacionID: number };
+    usuarioUpdate: { UsuarioID: number };
 }
+
+export type ViewListType = 'personal' | 'clientes' | 'mascotas' | 'bitacora' | 'usuarios' | 'reservacion';
+
+export type HandleViewListFunction = (type: ViewListType) => Promise<void>;
 
 export interface UseAdminUpdatesProps {
     setShowPersonalModal: (show: boolean) => void;
     setShowClienteModal: (show: boolean) => void;
     setShowMascotaModal: (show: boolean) => void;
+    setShowUsuarioModal: (show: boolean) => void;
+    setShowReservacionModal: (show: boolean) => void;
+    handleViewList: HandleViewListFunction;
 }

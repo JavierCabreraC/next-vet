@@ -40,7 +40,10 @@ const AdminPage: React.FC = () => {
     } = useAdminUpdates({
         setShowPersonalModal,
         setShowClienteModal,
-        setShowMascotaModal
+        setShowMascotaModal,
+        setShowUsuarioModal,
+        setShowReservacionModal,
+        handleViewList
     });
 
     if (loading) {
@@ -135,7 +138,8 @@ const AdminPage: React.FC = () => {
                 onClose: () => setShowUsuarioModal(false),
                 currentPage,
                 setCurrentPage,
-                itemsPerPage
+                itemsPerPage,
+                onEdit: (record) => handleEdit(record, 'usuario')
             })}
             <UpdateModal
                 isOpen={showUpdateModal}
