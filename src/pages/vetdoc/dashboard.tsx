@@ -62,13 +62,13 @@ const VetDocPage: React.FC = () => {
                         <DashboardCard 
                             icon={<Syringe size={40} />}
                             title="Gestión de Vacunas"
-                            description="Ver y registrar vacunas disponibles"
+                            description="Mostrar y registrar vacunas disponibles"
                             onClick={handleVacunasClick}
                         />
                         <DashboardCard 
                             icon={<FileText size={40} />}
                             title="Registrar Vacunación"
-                            description="Registrar vacunación de mascota"
+                            description="Registrar vacunación de una mascota"
                             onClick={() => setCurrentView('vacunacionForm')}
                         />
                         <DashboardCard 
@@ -76,6 +76,12 @@ const VetDocPage: React.FC = () => {
                             title="Historial de Vacunaciones"
                             description="Ver historial de vacunaciones"
                             onClick={handleRegistrosClick}
+                        />
+                        <DashboardCard 
+                            icon={<Stethoscope size={40} />}
+                            title="Gestión de Servicios"
+                            description="Consultas, cirugías y otros servicios"
+                            onClick={() => router.push('/vetdoc/servicios')}
                         />
                     </div>
                 );
