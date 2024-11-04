@@ -1,34 +1,63 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { ApiService } from '@/services/index.services';
 import { Button, Input } from '@/components/ui/index.ui';
-import { API_CONFIG, ApiService } from '@/services/index.services';
-import type { Vacuna, NuevaVacunacion } from '@/types/index.types';
+import type { Vacuna, NuevaVacunacion, VacunacionResponse } from '@/types/index.types';
 
 
 interface VacunacionFormProps {
-    vacunas: Vacuna[];
     onSuccess: () => void;
 }
 
-export const VacunacionForm: React.FC<VacunacionFormProps> = ({ vacunas, onSuccess }) => {
+export const VacunacionForm: React.FC<VacunacionFormProps> = ({ onSuccess }) => {
     const [formData, setFormData] = useState<NuevaVacunacion>({
-        FechaVacunacion: new Date().toISOString().split('T')[0],
+        FechaVacunacion: '',
         ProximaFecha: '',
         VacunaID: 0,
         MascotaID: 0
     });
+    
+    const [vacunasDisponibles, setVacunasDisponibles] = useState<Vacuna[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const cargarVacunas = async () => {
+            try {
+                const data = await ApiService.fetch<Vacuna[]>('/vetdoc/vacunas', {
+                    method: 'GET',
+                });
+                setVacunasDisponibles(data);
+            } catch (error) {
+                console.error('Error al cargar vacunas:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        cargarVacunas();
+    }, []); // Se ejecuta solo al montar el componente
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await ApiService.fetch(`${API_CONFIG.ENDPOINTS.DOC_REGVAC}`, {
+            const response = await ApiService.fetch<VacunacionResponse>('/vetdoc/regvac', {
                 method: 'POST',
                 body: JSON.stringify(formData)
             });
-            onSuccess();
+            if (response.Respuesta === "Vacunación registrada exitosamente.") {
+                onSuccess();
+            }
         } catch (error) {
             console.error('Error al registrar vacunación:', error);
         }
     };
+
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center p-4">
+                Cargando vacunas disponibles...
+            </div>
+        );
+    }
 
     return (
         <div className="bg-white rounded-lg shadow-md p-6 max-w-md mx-auto">
@@ -42,7 +71,7 @@ export const VacunacionForm: React.FC<VacunacionFormProps> = ({ vacunas, onSucce
                         required
                     />
                 </div>
-
+                
                 <div>
                     <label className="block text-sm font-medium mb-1">Vacuna</label>
                     <select
@@ -52,14 +81,14 @@ export const VacunacionForm: React.FC<VacunacionFormProps> = ({ vacunas, onSucce
                         required
                     >
                         <option value="">Seleccione una vacuna</option>
-                        {vacunas.map(vacuna => (
+                        {vacunasDisponibles.map((vacuna) => (
                             <option key={vacuna.ID} value={vacuna.ID}>
-                                {vacuna.Vacuna} - {vacuna.Tipo}
+                                {vacuna.Vacuna} - {vacuna.Laboratorio} ({vacuna.Tipo})
                             </option>
                         ))}
                     </select>
                 </div>
-
+                
                 <div>
                     <label className="block text-sm font-medium mb-1">Fecha de Vacunación</label>
                     <Input
@@ -69,7 +98,7 @@ export const VacunacionForm: React.FC<VacunacionFormProps> = ({ vacunas, onSucce
                         required
                     />
                 </div>
-
+                
                 <div>
                     <label className="block text-sm font-medium mb-1">Próxima Fecha</label>
                     <Input

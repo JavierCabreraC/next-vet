@@ -107,7 +107,6 @@ const VetDocPage: React.FC = () => {
                     <>
                         <h2 className="text-2xl font-bold mb-4">Registrar Vacunación</h2>
                         <VacunacionForm 
-                            vacunas={vacunas}
                             onSuccess={() => {
                                 handleRegistrosClick();
                                 setCurrentView('registros');
