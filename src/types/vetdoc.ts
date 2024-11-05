@@ -28,3 +28,7 @@ export interface VacunacionResponse {
     RegvacID: number;
     MascotaID: number;
 }
+
+export interface VacunacionFormProps {
+    onSuccess: () => void;
+}

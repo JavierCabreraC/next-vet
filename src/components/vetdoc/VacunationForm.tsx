@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react';
 import { ApiService } from '@/services/index.services';
 import { Button, Input } from '@/components/ui/index.ui';
-import type { Vacuna, NuevaVacunacion, VacunacionResponse } from '@/types/index.types';
+import type { Vacuna, NuevaVacunacion, VacunacionResponse, VacunacionFormProps } from '@/types/index.types';
 
-
-interface VacunacionFormProps {
-    onSuccess: () => void;
-}
 
 export const VacunacionForm: React.FC<VacunacionFormProps> = ({ onSuccess }) => {
     const [formData, setFormData] = useState<NuevaVacunacion>({

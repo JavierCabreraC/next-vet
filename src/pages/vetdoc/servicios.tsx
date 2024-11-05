@@ -4,12 +4,10 @@ import { useRouter } from 'next/router';
 import { logout } from '@/utils/index.utils';
 import { useAuth } from '@/hooks/index.hooks';
 import { Button } from '@/components/ui/index.ui';
-import {
-    Stethoscope, LogOut, Plus,
-    Clipboard, Search, Activity,
-    Scissors, BedDouble, TestTube,
-    Syringe, History, FileCheck
+import { Stethoscope, LogOut, Plus, Clipboard, Search, Activity,
+        Scissors, BedDouble, TestTube, Syringe, History, FileCheck
 } from 'lucide-react';
+
 
 type MainView = 'nuevo' | 'activos' | 'historial';
 type ServiceType = 'consulta' | 'peluqueria' | 'internacion' | 'analisis' | 'cirugia';
