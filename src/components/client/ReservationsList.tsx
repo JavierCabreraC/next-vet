@@ -30,6 +30,8 @@ export const ReservationsList: React.FC<ReservationsListProps> = ({ reservations
 
     const formatDateTime = (dateTimeStr: string): string => {
         const date = new Date(dateTimeStr);
+        // const adjustedDate = addHours(date, 4); // importar de 'date-fns'
+        // return format(adjustedDate, "d 'de' MMMM 'de' yyyy 'a las' HH:mm", { locale: es });
         return format(date, "d 'de' MMMM 'de' yyyy 'a las' HH:mm", { locale: es });
     };
 
