@@ -75,3 +75,11 @@ export interface ServicioResponse {
     Respuesta: string;
     ServicioID: number;
 }
+
+export interface ServicioCompletado {
+    ServicioID: number;
+    Servicio: string;
+    Estado: string;
+    "Hora de finalización": string;
+    "Nombre de Mascota": string;
+}

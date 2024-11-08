@@ -5,13 +5,14 @@ import { logout } from '@/utils/index.utils';
 import { useAuth } from '@/hooks/index.hooks';
 import { Button } from '@/components/ui/index.ui';
 import type { ReservacionV } from '@/types/vetdoc';
-import { Stethoscope, LogOut, Plus, Clipboard, Search, Activity,
-        Scissors, BedDouble, TestTube, Syringe, History, FileCheck } from 'lucide-react';
-import { ReservacionesPendientes, PeluqueriaForm } from '@/components/vetdoc/index.docvetcomp';
-import { ServiciosActivos } from '@/components/vetdoc/ServiciosActivos';
+// import { ServiciosActivos } from '@/components/vetdoc/ServiciosActivos';
+import { Stethoscope, LogOut, Plus, Clipboard, Search, Activity, Scissors, 
+    BedDouble, TestTube, Syringe, History, FileCheck, CheckCircle2} from 'lucide-react';
+import { ReservacionesPendientes, PeluqueriaForm, ServiciosActivos, ServiciosCompletados } from '@/components/vetdoc/index.docvetcomp';
+// import { ServiciosCompletados } from '@/components/vetdoc/ServiciosCompletados';
 
 
-type MainView = 'nuevo' | 'activos' | 'historial';
+type MainView = 'nuevo' | 'activos' | 'historial' | 'completados';
 type ServiceType = 'consulta' | 'peluqueria' | 'internacion' | 'analisis' | 'cirugia';
 
 const ServiciosPage: React.FC = () => {
@@ -145,6 +146,13 @@ const ServiciosPage: React.FC = () => {
                         <ServiciosActivos />
                     </div>
                 );
+            case 'completados':
+                return (
+                    <div className="p-6">
+                        <h2 className="text-2xl font-bold mb-6">Servicios Completados</h2>
+                        <ServiciosCompletados />
+                    </div>
+                );
             case 'historial':
                 return (
                     <div className="p-6">
@@ -196,7 +204,7 @@ const ServiciosPage: React.FC = () => {
             {/* Main Content */}
             <div className="flex h-[calc(100vh-4rem)]">
                 {/* Sidebar */}
-                <aside className="w-64 bg-white shadow-lg">
+                <aside className="w-75 bg-white shadow-lg border-r border-gray-400">
                     <nav className="p-4">
                         <div className="space-y-2">
                             <NavButton
@@ -216,6 +224,12 @@ const ServiciosPage: React.FC = () => {
                                     setMainView('activos');
                                     setSelectedService(null);
                                 }}
+                            />
+                            <NavButton
+                                icon={<CheckCircle2 size={20} />}
+                                text="Servicios Completados"
+                                active={mainView === 'completados'}
+                                onClick={() => setMainView('completados')}
                             />
                             <NavButton
                                 icon={<History size={20} />}

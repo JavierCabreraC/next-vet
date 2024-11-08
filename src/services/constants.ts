@@ -13,12 +13,12 @@ export const API_CONFIG = {
         CLI_RESERVAGRAL:       '/cliente/reservacion/gral',
         DOC_VACUNAS:           '/vetdoc/vacunas',
         DOC_REGVAC:            '/vetdoc/regvac',
-        DOC_RESERVPEN:         '/vetdoc/reservaciones',
-        DOC_SERVPELU:          '/vetdoc/servicios/peluqueria',
-        DOC_SERVPELUACT:       '/vetdoc/servicios/peluqueria/active',
-        DOC_MASCOTAS:          '/vetdoc/mascotas',
-        DOC_SERVACT:           '/vetdoc/servicios/active',
-        DOC_SERVEND:           '/vetdoc/servicios'
+        DOC_RESERVPEN:         '/vetdoc/reservaciones',           // lee las reservaciones pendientes
+        DOC_SERVPELU:          '/vetdoc/servicios/peluqueria',    // para registrar servicio de peluqueria
+        DOC_MASCOTAS:          '/vetdoc/mascotas',                // lee las mascotaservicios/completed
+        DOC_SERVACT:           '/vetdoc/servicios/active',        // lee servicios en proceso
+        DOC_SERVEND:           '/vetdoc/servicios',               // para marcar un servicio como completado
+        DOC_SERVCOM:           '/vetdoc/servicios/completed'      // lee servicios completados
     },
     ITEMS_PER_PAGE: 6
 } as const;

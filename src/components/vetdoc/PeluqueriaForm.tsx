@@ -1,4 +1,3 @@
-// src/components/vetdoc/PeluqueriaForm.tsx
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ApiService, API_CONFIG } from '@/services/index.services';

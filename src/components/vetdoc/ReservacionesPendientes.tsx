@@ -1,4 +1,3 @@
-// src/components/vetdoc/ReservacionesPendientes.tsx
 import React, { useState, useEffect } from 'react';
 import { Button, Input } from '@/components/ui/index.ui';
 import { ApiService, API_CONFIG } from '@/services/index.services';
@@ -32,8 +31,6 @@ export const ReservacionesPendientes: React.FC<ReservacionesPendientesProps> = (
     }, []);
 
     const handleReservacionSelect = (reservacion: ReservacionV) => {
-        console.log('Reservación seleccionada:', reservacion);
-        console.log('ClienteID:', reservacion.ClienteID);
         onReservacionSelect(reservacion);
     };
 
