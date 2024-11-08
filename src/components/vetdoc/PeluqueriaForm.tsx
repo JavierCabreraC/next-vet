@@ -21,8 +21,6 @@ export const PeluqueriaForm: React.FC<PeluqueriaFormProps> = ({
     useEffect(() => {
         const cargarMascotas = async () => {
             try {
-                // Aquí está el cambio principal - usamos el ClienteID de la reservación
-                console.log('Cargando mascotas para ClienteID:', reservacion.ClienteID);
                 const data = await ApiService.fetch<MascotaV[]>(
                     `${API_CONFIG.ENDPOINTS.DOC_MASCOTAS}/${reservacion.ClienteID}`,
                     { method: 'GET' }
@@ -39,7 +37,7 @@ export const PeluqueriaForm: React.FC<PeluqueriaFormProps> = ({
         if (reservacion.ClienteID) {
             cargarMascotas();
         }
-    }, [reservacion.ClienteID]); // Dependencia explícita
+    }, [reservacion.ClienteID]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -76,7 +74,7 @@ export const PeluqueriaForm: React.FC<PeluqueriaFormProps> = ({
                     <label className="block text-sm font-medium mb-1">Mascota</label>
                     <select
                         className="w-full border rounded-md p-2"
-                        value={formData.MascotaID || ''} // Importante: manejar el caso cuando es 0
+                        value={formData.MascotaID || ''} // manejar el caso cuando es 0
                         onChange={(e) => setFormData({
                             ...formData, 
                             MascotaID: parseInt(e.target.value)

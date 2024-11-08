@@ -83,3 +83,18 @@ export interface ServicioCompletado {
     "Hora de finalización": string;
     "Nombre de Mascota": string;
 }
+
+export interface NuevaConsulta {
+    Peso: number;
+    Temperatura: number;
+    Diagnostico: string;
+    Tratamiento?: string;
+    ReservacionID: number;
+    MascotaID: number;
+}
+
+export interface ConsultaFormProps {
+    reservacion: ReservacionV;
+    onSuccess: () => void;
+    onCancel: () => void;
+}

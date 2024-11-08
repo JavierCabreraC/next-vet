@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/index.ui';
 import type { ReservacionV } from '@/types/vetdoc';
 import { Stethoscope, LogOut, Plus, Clipboard, Search, Activity, Scissors, 
     BedDouble, TestTube, Syringe, History, FileCheck, CheckCircle2} from 'lucide-react';
-import { ReservacionesPendientes, PeluqueriaForm, ServiciosActivos, ServiciosCompletados } from '@/components/vetdoc/index.docvetcomp';
+import { ReservacionesPendientes, ConsultaForm, PeluqueriaForm, ServiciosActivos, ServiciosCompletados } from '@/components/vetdoc/index.docvetcomp';
 
 
 type MainView = 'nuevo' | 'activos' | 'historial' | 'completados';
@@ -68,6 +68,57 @@ const ServiciosPage: React.FC = () => {
                                     </Button>
                                 </div>
                                 <PeluqueriaForm 
+                                    reservacion={selectedReservacion}
+                                    onSuccess={() => {
+                                        setMainView('activos');
+                                        setSelectedReservacion(null);
+                                        setSelectedService(null);
+                                    }}
+                                    onCancel={() => {
+                                        setSelectedReservacion(null);
+                                    }} 
+                                />
+                            </div>
+                        );
+                    }
+                }
+                if (selectedService === 'consulta') {
+                    if (!selectedReservacion) {
+                        return (
+                            <div className="p-6">
+                                <div className="flex items-center justify-between mb-6">
+                                    <h2 className="text-2xl font-bold">
+                                        Reservaciones Pendientes - Consulta Médica
+                                    </h2>
+                                    <Button 
+                                        variant="outline" 
+                                        onClick={() => setSelectedService(null)}
+                                    >
+                                        Volver
+                                    </Button>
+                                </div>
+                                <ReservacionesPendientes 
+                                    onReservacionSelect={(reservacion) => {
+                                        setSelectedReservacion(reservacion);
+                                    }} 
+                                />
+                            </div>
+                        );
+                    } else {
+                        return (
+                            <div className="p-6">
+                                <div className="flex items-center justify-between mb-6">
+                                    <h2 className="text-2xl font-bold">
+                                        Registro de Consulta Médica
+                                    </h2>
+                                    <Button 
+                                        variant="outline" 
+                                        onClick={() => setSelectedReservacion(null)}
+                                    >
+                                        Volver a Reservaciones
+                                    </Button>
+                                </div>
+                                <ConsultaForm 
                                     reservacion={selectedReservacion}
                                     onSuccess={() => {
                                         setMainView('activos');

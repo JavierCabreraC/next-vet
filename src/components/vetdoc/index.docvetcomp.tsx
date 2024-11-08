@@ -1,3 +1,5 @@
+export * from './ConsultaForm';
+
 export * from './PeluqueriaForm';
 
 export * from './ReservacionesPendientes';
