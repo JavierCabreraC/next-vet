@@ -1,8 +1,8 @@
-import { ChangeEvent, useState, useEffect } from 'react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { ChangeEvent, useState } from 'react';
+import { useMascotas } from '@/hooks/index.hooks';
+import { Button, Input } from '@/components/ui/index.ui';
+import { ConsultaFormProps, NuevaConsulta } from '@/types/vetdoc';
 import { API_CONFIG, ApiService } from '@/services/index.services';
-import { ConsultaFormProps, NuevaConsulta, MascotaV } from '@/types/vetdoc';
 
 
 export const ConsultaForm: React.FC<ConsultaFormProps> = ({ 
@@ -10,7 +10,7 @@ export const ConsultaForm: React.FC<ConsultaFormProps> = ({
     onSuccess, 
     onCancel 
 }) => {
-    const [mascotas, setMascotas] = useState<MascotaV[]>([]);
+    const { mascotas, isLoading, error } = useMascotas(reservacion.ClienteID);
     const [formData, setFormData] = useState<NuevaConsulta>({
         Peso: 0,
         Temperatura: 0,
@@ -18,27 +18,14 @@ export const ConsultaForm: React.FC<ConsultaFormProps> = ({
         ReservacionID: reservacion.ReservacionID,
         MascotaID: 0
     });
-    const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    useEffect(() => {
-        const cargarMascotas = async () => {
-            try {
-                const data = await ApiService.fetch<MascotaV[]>(
-                    `${API_CONFIG.ENDPOINTS.DOC_MASCOTAS}/${reservacion.ClienteID}`,
-                    { method: 'GET' }
-                );
-                setMascotas(data);
-            } catch (error) {
-                console.error('Error al cargar mascotas:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
+    if (isLoading) {
+        return <div className="text-center py-8">Cargando información...</div>;
+    }
 
-        if (reservacion.ClienteID) {
-            cargarMascotas();
-        }
-    }, [reservacion.ClienteID]);
+    if (error) {
+        return <div className="text-center py-8 text-red-500">Error al cargar las mascotas</div>;
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -57,10 +44,6 @@ export const ConsultaForm: React.FC<ConsultaFormProps> = ({
             console.error('Error al registrar consulta:', error);
         }
     };
-
-    if (isLoading) {
-        return <div className="text-center py-8">Cargando información...</div>;
-    }
 
     return (
         <div className="bg-white rounded-lg shadow-md p-6 max-w-md mx-auto">

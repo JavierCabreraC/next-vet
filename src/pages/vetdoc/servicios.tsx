@@ -20,7 +20,6 @@ const ServiciosPage: React.FC = () => {
     const [selectedService, setSelectedService] = useState<ServiceType | null>(null);
     const [selectedReservacion, setSelectedReservacion] = useState<ReservacionV | null>(null);
 
-
     if (loading) {
         return <div className="flex justify-center items-center h-screen">Cargando...</div>;
     }

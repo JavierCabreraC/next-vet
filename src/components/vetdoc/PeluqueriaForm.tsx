@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { useMascotas } from '@/hooks/index.hooks';
 import { ApiService, API_CONFIG } from '@/services/index.services';
-import type { MascotaV, NuevaPeluqueria, PeluqueriaFormProps } from '@/types/index.types';
+import type { NuevaPeluqueria, PeluqueriaFormProps } from '@/types/index.types';
 
 
 export const PeluqueriaForm: React.FC<PeluqueriaFormProps> = ({ 
@@ -9,35 +10,21 @@ export const PeluqueriaForm: React.FC<PeluqueriaFormProps> = ({
     onSuccess, 
     onCancel 
 }) => {
-    const [mascotas, setMascotas] = useState<MascotaV[]>([]);
+    const { mascotas, isLoading, error } = useMascotas(reservacion.ClienteID);
     const [formData, setFormData] = useState<NuevaPeluqueria>({
         TipoCorte: '',
         Lavado: false,
         ReservacionID: reservacion.ReservacionID,
         MascotaID: 0
     });
-    const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    useEffect(() => {
-        const cargarMascotas = async () => {
-            try {
-                const data = await ApiService.fetch<MascotaV[]>(
-                    `${API_CONFIG.ENDPOINTS.DOC_MASCOTAS}/${reservacion.ClienteID}`,
-                    { method: 'GET' }
-                );
-                console.log('Mascotas cargadas:', data);
-                setMascotas(data);
-            } catch (error) {
-                console.error('Error al cargar mascotas:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
+    if (isLoading) {
+        return <div className="text-center py-8">Cargando información...</div>;
+    }
 
-        if (reservacion.ClienteID) {
-            cargarMascotas();
-        }
-    }, [reservacion.ClienteID]);
+    if (error) {
+        return <div className="text-center py-8 text-red-500">Error al cargar las mascotas</div>;
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -56,10 +43,6 @@ export const PeluqueriaForm: React.FC<PeluqueriaFormProps> = ({
             console.error('Error al registrar peluquería:', error);
         }
     };
-
-    if (isLoading) {
-        return <div className="text-center py-8">Cargando información...</div>;
-    }
 
     return (
         <div className="bg-white rounded-lg shadow-md p-6 max-w-md mx-auto">
