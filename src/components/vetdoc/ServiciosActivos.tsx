@@ -1,31 +1,54 @@
-// src/components/vetdoc/ServiciosActivos.tsx
 import React, { useState, useEffect } from 'react';
-import { Clock, PawPrint} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Clock, PawPrint, Check, Activity } from 'lucide-react';
 import { ApiService, API_CONFIG } from '@/services/index.services';
-import type { ServicioActivo } from '@/types/vetdoc';
+import type { ServicioActivo, ServicioResponse } from '@/types/vetdoc';
 
 
 export const ServiciosActivos: React.FC = () => {
     const [servicios, setServicios] = useState<ServicioActivo[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [procesando, setProcesando] = useState<number | null>(null);
+
+    const cargarServicios = async () => {
+        try {
+            const data = await ApiService.fetch<ServicioActivo[]>(
+                `${API_CONFIG.ENDPOINTS.DOC_SERVACT}`,
+                { method: 'GET' }
+            );
+            setServicios(data);
+        } catch (error) {
+            console.error('Error al cargar servicios activos:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const cargarServicios = async () => {
-            try {
-                const data = await ApiService.fetch<ServicioActivo[]>(
-                    `${API_CONFIG.ENDPOINTS.DOC_SERVACT}`,
-                    { method: 'GET' }
-                );
-                setServicios(data);
-            } catch (error) {
-                console.error('Error al cargar servicios activos:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
         cargarServicios();
     }, []);
+
+    const completarServicio = async (servicioId: number) => {
+        setProcesando(servicioId);
+        try {
+            const response = await ApiService.fetch<ServicioResponse>(
+                `${API_CONFIG.ENDPOINTS.DOC_SERVEND}`,
+                {
+                    method: 'PATCH',
+                    body: JSON.stringify({ ServicioID: servicioId })
+                }
+            );
+            
+            if (response.Respuesta === "Servicio completado") {
+                // Recargar la lista de servicios activos
+                await cargarServicios();
+            }
+        } catch (error) {
+            console.error('Error al completar servicio:', error);
+        } finally {
+            setProcesando(null);
+        }
+    };
 
     if (isLoading) {
         return (
@@ -43,6 +66,17 @@ export const ServiciosActivos: React.FC = () => {
         );
     }
 
+    // Helper para obtener el ícono según el tipo de servicio
+    const getServiceIcon = (tipo: string) => {
+        switch (tipo.toLowerCase()) {
+            case 'peluqueria':
+                return <Activity className="text-purple-500" size={20} />;
+            // Puedes agregar más casos según los tipos de servicios
+            default:
+                return <Activity className="text-blue-500" size={20} />;
+        }
+    };
+
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {servicios.map((servicio) => (
@@ -50,25 +84,47 @@ export const ServiciosActivos: React.FC = () => {
                     key={servicio.ServicioID}
                     className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow"
                 >
-                    <div className="flex items-start justify-between">
-                        <div className="space-y-2">
+                    <div className="space-y-3">
+                        <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
                                 <PawPrint className="text-blue-500" size={20} />
                                 <span className="font-medium">
                                     {servicio["Nombre de Mascota"]}
                                 </span>
                             </div>
-                            <div className="flex items-center gap-2 text-sm text-gray-600">
-                                <Clock size={16} />
-                                <span>
-                                    {new Date(servicio["Hora de inicio"]).toLocaleString()}
-                                </span>
-                            </div>
-                            <div className="mt-2">
-                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                    {servicio.Estado}
-                                </span>
-                            </div>
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                {servicio.Estado}
+                            </span>
+                        </div>
+                        
+                        <div className="flex items-center gap-2 text-sm text-gray-600">
+                            {getServiceIcon(servicio.Servicio)}
+                            <span className="font-medium">{servicio.Servicio}</span>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <Clock size={16} />
+                            <span>
+                                {new Date(servicio["Hora de inicio"]).toLocaleString()}
+                            </span>
+                        </div>
+
+                        <div className="pt-2">
+                            <Button
+                                onClick={() => completarServicio(servicio.ServicioID)}
+                                disabled={procesando === servicio.ServicioID}
+                                className="w-full"
+                                variant="outline"
+                            >
+                                {procesando === servicio.ServicioID ? (
+                                    "Procesando..."
+                                ) : (
+                                    <>
+                                        <Check size={16} className="mr-2" />
+                                        Marcar como Completado
+                                    </>
+                                )}
+                            </Button>
                         </div>
                     </div>
                 </div>

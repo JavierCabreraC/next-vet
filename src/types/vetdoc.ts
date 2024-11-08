@@ -66,6 +66,12 @@ export interface PeluqueriaFormProps {
 export interface ServicioActivo {
     ServicioID: number;
     Estado: string;
+    Servicio: string;
     "Hora de inicio": string;
     "Nombre de Mascota": string;
+}
+
+export interface ServicioResponse {
+    Respuesta: string;
+    ServicioID: number;
 }
