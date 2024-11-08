@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/index.ui';
 import { Stethoscope, LogOut, Plus, Clipboard, Search, Activity,
         Scissors, BedDouble, TestTube, Syringe, History, FileCheck
 } from 'lucide-react';
+import { ReservacionesPendientes, PeluqueriaForm } from '@/components/vetdoc/index.docvetcomp';
+import type { ReservacionV } from '@/types/vetdoc';
 
 
 type MainView = 'nuevo' | 'activos' | 'historial';
@@ -17,6 +19,8 @@ const ServiciosPage: React.FC = () => {
     const { isAuthenticated, loading } = useAuth(['Veterinario']);
     const [mainView, setMainView] = useState<MainView>('nuevo');
     const [selectedService, setSelectedService] = useState<ServiceType | null>(null);
+    const [selectedReservacion, setSelectedReservacion] = useState<ReservacionV | null>(null);
+
 
     if (loading) {
         return <div className="flex justify-center items-center h-screen">Cargando...</div>;
@@ -32,6 +36,53 @@ const ServiciosPage: React.FC = () => {
     const renderMainContent = () => {
         switch (mainView) {
             case 'nuevo':
+                if (selectedService === 'peluqueria') {
+                    if (!selectedReservacion) {
+                        return (
+                            <div className="p-6">
+                                <div className="flex items-center justify-between mb-6">
+                                    <h2 className="text-2xl font-bold">Reservaciones Pendientes - Peluquería</h2>
+                                    <Button 
+                                        variant="outline" 
+                                        onClick={() => setSelectedService(null)}
+                                    >
+                                        Volver
+                                    </Button>
+                                </div>
+                                <ReservacionesPendientes 
+                                    onReservacionSelect={(reservacion) => {
+                                        setSelectedReservacion(reservacion);
+                                    }} 
+                                />
+                            </div>
+                        );
+                    } else {
+                        return (
+                            <div className="p-6">
+                                <div className="flex items-center justify-between mb-6">
+                                    <h2 className="text-2xl font-bold">Registro de Peluquería</h2>
+                                    <Button 
+                                        variant="outline" 
+                                        onClick={() => setSelectedReservacion(null)}
+                                    >
+                                        Volver a Reservaciones
+                                    </Button>
+                                </div>
+                                <PeluqueriaForm 
+                                    reservacion={selectedReservacion}
+                                    onSuccess={() => {
+                                        setMainView('activos');
+                                        setSelectedReservacion(null);
+                                        setSelectedService(null);
+                                    }}
+                                    onCancel={() => {
+                                        setSelectedReservacion(null);
+                                    }} 
+                                />
+                            </div>
+                        );
+                    }
+                }
                 return (
                     <div className="p-6">
                         <h2 className="text-2xl font-bold mb-6">Nuevo Servicio</h2>

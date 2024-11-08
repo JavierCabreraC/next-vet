@@ -32,3 +32,33 @@ export interface VacunacionResponse {
 export interface VacunacionFormProps {
     onSuccess: () => void;
 }
+
+export interface ReservacionV {
+    ReservacionID: number;
+    Estado: string;
+    Hora: string;
+    Cliente: string;
+    ClienteID: number;
+}
+
+export interface MascotaV {
+    MascotaID: number;
+    Nombre: string;
+}
+
+export interface NuevaPeluqueria {
+    TipoCorte: string;
+    Lavado: boolean;
+    ReservacionID: number;
+    MascotaID: number;
+}
+
+export interface ReservacionesPendientesProps {
+    onReservacionSelect: (reservacion: ReservacionV) => void;
+}
+
+export interface PeluqueriaFormProps {
+    reservacion: ReservacionV;
+    onSuccess: () => void;
+    onCancel: () => void;
+}

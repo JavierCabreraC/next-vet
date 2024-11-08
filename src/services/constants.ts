@@ -12,7 +12,11 @@ export const API_CONFIG = {
         CLI_RESERVACLI:        '/cliente/reservacion/cli',
         CLI_RESERVAGRAL:       '/cliente/reservacion/gral',
         DOC_VACUNAS:           '/vetdoc/vacunas',
-        DOC_REGVAC:            '/vetdoc/regvac'
+        DOC_REGVAC:            '/vetdoc/regvac',
+        DOC_RESERVPEN:         '/vetdoc/reservaciones',
+        DOC_SERVPELU:          '/vetdoc/servicios/peluqueria',
+        DOC_SERVPELUACT:       '/vetdoc/servicios/peluqueria/active',
+        DOC_MASCOTAS:          '/vetdoc/mascotas'
     },
     ITEMS_PER_PAGE: 6
 } as const;
