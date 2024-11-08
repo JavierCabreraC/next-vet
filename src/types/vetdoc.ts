@@ -98,3 +98,28 @@ export interface ConsultaFormProps {
     onSuccess: () => void;
     onCancel: () => void;
 }
+
+export type AnalisisResultado = 'Normal' | 'Bajo' | 'Elevado' | 'Bueno' | 'Estable' | 'Critico';
+
+export interface NuevaReceta {
+    Medicamento: string;
+    Dosis: string;
+    Indicaciones: string;
+    ConsultaID: number | null;
+    InternacionID: number | null;
+}
+
+export interface NuevoAnalisis {
+    TipoAnalisis: string;
+    FechaAnalisis: string;
+    Resultado: AnalisisResultado;
+    ConsultaID: number | null;
+    InternacionID: number | null;
+}
+
+export interface CompletarServicioModalProps {
+    servicioId: number;
+    isOpen: boolean;
+    onClose: () => void;
+    onSuccess: () => void;
+}

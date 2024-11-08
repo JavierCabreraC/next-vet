@@ -1,3 +1,5 @@
+export * from './CompletarServicioModal';
+
 export * from './ConsultaForm';
 
 export * from './PeluqueriaForm';
