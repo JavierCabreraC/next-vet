@@ -5,11 +5,9 @@ import { logout } from '@/utils/index.utils';
 import { useAuth } from '@/hooks/index.hooks';
 import { Button } from '@/components/ui/index.ui';
 import type { ReservacionV } from '@/types/vetdoc';
-// import { ServiciosActivos } from '@/components/vetdoc/ServiciosActivos';
 import { Stethoscope, LogOut, Plus, Clipboard, Search, Activity, Scissors, 
     BedDouble, TestTube, Syringe, History, FileCheck, CheckCircle2} from 'lucide-react';
 import { ReservacionesPendientes, PeluqueriaForm, ServiciosActivos, ServiciosCompletados } from '@/components/vetdoc/index.docvetcomp';
-// import { ServiciosCompletados } from '@/components/vetdoc/ServiciosCompletados';
 
 
 type MainView = 'nuevo' | 'activos' | 'historial' | 'completados';
@@ -182,7 +180,6 @@ const ServiciosPage: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Header */}
             <header className="bg-white shadow-md p-4">
                 <div className="container mx-auto flex justify-between items-center">
                     <div className="flex items-center gap-8">
@@ -261,7 +258,7 @@ const ServiciosPage: React.FC = () => {
                     </nav>
                 </aside>
 
-                {/* Content Area */}
+                {/* Área de contenido */}
                 <main className="flex-1 overflow-auto bg-gray-50">
                     {renderMainContent()}
                 </main>
@@ -270,7 +267,6 @@ const ServiciosPage: React.FC = () => {
     );
 };
 
-// Components
 interface NavButtonProps {
     icon: React.ReactNode;
     text: string;
