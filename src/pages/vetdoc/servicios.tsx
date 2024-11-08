@@ -4,11 +4,11 @@ import { useRouter } from 'next/router';
 import { logout } from '@/utils/index.utils';
 import { useAuth } from '@/hooks/index.hooks';
 import { Button } from '@/components/ui/index.ui';
-import { Stethoscope, LogOut, Plus, Clipboard, Search, Activity,
-        Scissors, BedDouble, TestTube, Syringe, History, FileCheck
-} from 'lucide-react';
-import { ReservacionesPendientes, PeluqueriaForm } from '@/components/vetdoc/index.docvetcomp';
 import type { ReservacionV } from '@/types/vetdoc';
+import { Stethoscope, LogOut, Plus, Clipboard, Search, Activity,
+        Scissors, BedDouble, TestTube, Syringe, History, FileCheck } from 'lucide-react';
+import { ReservacionesPendientes, PeluqueriaForm } from '@/components/vetdoc/index.docvetcomp';
+import { ServiciosActivos } from '@/components/vetdoc/ServiciosActivos';
 
 
 type MainView = 'nuevo' | 'activos' | 'historial';
@@ -131,15 +131,18 @@ const ServiciosPage: React.FC = () => {
             case 'activos':
                 return (
                     <div className="p-6">
-                        <h2 className="text-2xl font-bold mb-6">Servicios Activos</h2>
-                        <div className="bg-white rounded-lg shadow-md p-6">
+                        <div className="mb-6">
+                            <h2 className="text-2xl font-bold mb-4">Servicios Activos</h2>
                             <div className="flex gap-4 mb-6">
-                                <Button variant="outline">En Proceso</Button>
-                                <Button variant="outline">Pendientes</Button>
-                                <Button variant="outline">Todos</Button>
+                                <Button 
+                                    variant="outline" 
+                                    onClick={() => setMainView('nuevo')}
+                                >
+                                    Nuevo Servicio
+                                </Button>
                             </div>
-                            {/* Lista de servicios activos se renderizará aquí */}
                         </div>
+                        <ServiciosActivos />
                     </div>
                 );
             case 'historial':

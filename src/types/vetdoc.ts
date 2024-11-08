@@ -62,3 +62,10 @@ export interface PeluqueriaFormProps {
     onSuccess: () => void;
     onCancel: () => void;
 }
+
+export interface ServicioActivo {
+    ServicioID: number;
+    Estado: string;
+    "Hora de inicio": string;
+    "Nombre de Mascota": string;
+}

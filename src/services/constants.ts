@@ -16,7 +16,8 @@ export const API_CONFIG = {
         DOC_RESERVPEN:         '/vetdoc/reservaciones',
         DOC_SERVPELU:          '/vetdoc/servicios/peluqueria',
         DOC_SERVPELUACT:       '/vetdoc/servicios/peluqueria/active',
-        DOC_MASCOTAS:          '/vetdoc/mascotas'
+        DOC_MASCOTAS:          '/vetdoc/mascotas',
+        DOC_SERVACT:           '/vetdoc/servicios/active'
     },
     ITEMS_PER_PAGE: 6
 } as const;
