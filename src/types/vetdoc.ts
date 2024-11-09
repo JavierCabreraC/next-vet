@@ -126,6 +126,29 @@ export interface CompletarServicioModalProps {
     onSuccess: () => void;
 }
 
-export type MainView = 'nuevo' | 'activos' | 'historial' | 'completados';
+export interface Receta {
+    ID: number;
+    Medicamento: string;
+    Dosis: string;
+    Indicaciones: string;
+    TipoServicio: string;
+    ServicioID: number;
+    Fecha: string;
+    Mascota: string;
+    Raza: string;
+}
+
+export interface Analisis {
+    ID: number;
+    TipoAnalisis: string;
+    Fecha: string;
+    Resultado: AnalisisResultado;
+    Servicio: string;
+    ServicioID: number;
+    Mascota: string;
+    Raza: string;
+}
+
+export type MainView = 'nuevo' | 'activos' | 'historial' | 'completados' | 'recetas' | 'analisis';
 
 export type ServiceType = 'consulta' | 'peluqueria' | 'internacion' | 'analisis' | 'cirugia';

@@ -1,3 +1,5 @@
+export * from './view/Analisis';
+export * from './view/Receta';
 export * from './view/ServiciosActivos';
 export * from './view/ServiciosSeleccion';
 export * from './view/Sidebar';

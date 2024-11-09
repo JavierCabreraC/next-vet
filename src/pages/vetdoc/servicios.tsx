@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/index.ui';
 import { Stethoscope, LogOut, Search } from 'lucide-react';
 import type { MainView, ReservacionV, ServiceType } from '@/types/vetdoc';
 import { ReservacionesPendientes, ConsultaForm, PeluqueriaForm, ServiciosCompletados, 
-    ServicioSelection, Sidebar, ServiciosActivosView} from '@/components/vetdoc/index.docvetcomp';
+    ServicioSelection, Sidebar, ServiciosActivosView, RecetasView, AnalisisView} from '@/components/vetdoc/index.docvetcomp';
 
 
 const ServiciosPage: React.FC = () => {
@@ -125,8 +125,7 @@ const ServiciosPage: React.FC = () => {
                     }
                 }
                 return ( <ServicioSelection onServiceSelect={setSelectedService} /> );
-            case 'activos':
-                return <ServiciosActivosView onNewService={() => setMainView('nuevo')} />;
+            case 'activos': return < ServiciosActivosView onNewService={() => setMainView('nuevo')} />;
             case 'completados':
                 return (
                     <div className="p-6">
@@ -156,8 +155,9 @@ const ServiciosPage: React.FC = () => {
                         </div>
                     </div>
                 );
-            default:
-                return null;
+            case 'recetas': return < RecetasView />;
+            case 'analisis': return < AnalisisView />;
+            default: return null;
         }
     };
 
