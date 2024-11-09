@@ -123,3 +123,7 @@ export interface CompletarServicioModalProps {
     onClose: () => void;
     onSuccess: () => void;
 }
+
+export type MainView = 'nuevo' | 'activos' | 'historial' | 'completados';
+
+export type ServiceType = 'consulta' | 'peluqueria' | 'internacion' | 'analisis' | 'cirugia';
