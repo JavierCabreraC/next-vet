@@ -2,7 +2,7 @@ import type { Vacuna } from '@/types/index.types';
 import { Column, DataTable } from './common/DataTable';
 
 
-export const VacunasList: React.FC<{ vacunas: Vacuna[] }> = ({ vacunas }) => {
+export const VacunaList: React.FC<{ vacunas: Vacuna[] }> = ({ vacunas }) => {
     const columns: Column<Vacuna>[] = [
         { key: 'Vacuna', header: 'Nombre' },
         { key: 'Descripcion', header: 'Descripción' },

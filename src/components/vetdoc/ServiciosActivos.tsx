@@ -10,7 +10,10 @@ export const ServiciosActivos: React.FC = () => {
     const [servicios, setServicios] = useState<ServicioActivo[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [procesando, setProcesando] = useState<number | null>(null);
-    const [modalServicioId, setModalServicioId] = useState<number | null>(null);
+    const [modalData, setModalData] = useState<{
+        servicioId: number;
+        servicioEspecificoId: number;
+    } | null>(null);
 
     const cargarServicios = async () => {
         try {
@@ -35,7 +38,10 @@ export const ServiciosActivos: React.FC = () => {
         
         if (servicio?.Servicio.toLowerCase() === 'consulta') {
             // Si es consulta médica, abrimos el modal
-            setModalServicioId(servicioId);
+            setModalData({
+                servicioId: servicio.ServicioID,
+                servicioEspecificoId: servicio.ServicioEspecificoID
+            });
         } else {
             // Para otros servicios, completar directamente
             setProcesando(servicioId);
@@ -97,7 +103,7 @@ export const ServiciosActivos: React.FC = () => {
                                 <div className="flex items-center gap-2">
                                     <PawPrint className="text-blue-500" size={20} />
                                     <span className="font-medium">
-                                        {servicio["Nombre de Mascota"]}
+                                        {servicio["Mascota"]}
                                     </span>
                                 </div>
                                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
@@ -113,7 +119,7 @@ export const ServiciosActivos: React.FC = () => {
                             <div className="flex items-center gap-2 text-sm text-gray-600">
                                 <Clock size={16} />
                                 <span>
-                                    {new Date(servicio["Hora de inicio"]).toLocaleString()}
+                                    {new Date(servicio["HoraInicio"]).toLocaleString()}
                                 </span>
                             </div>
 
@@ -139,13 +145,14 @@ export const ServiciosActivos: React.FC = () => {
                 ))}
             </div>
             {/* Modal para completar consulta médica */}
-            {modalServicioId && (
+            {modalData && (
                 <CompletarServicioModal
-                    servicioId={modalServicioId}
+                    servicioId={modalData.servicioId}
+                    servicioEspecificoId={modalData.servicioEspecificoId}
                     isOpen={true}
-                    onClose={() => setModalServicioId(null)}
+                    onClose={() => setModalData(null)}
                     onSuccess={() => {
-                        setModalServicioId(null);
+                        setModalData(null);
                         cargarServicios();
                     }}
                 />

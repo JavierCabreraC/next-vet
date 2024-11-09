@@ -6,7 +6,8 @@ import type { CompletarServicioModalProps, NuevaReceta, NuevoAnalisis, AnalisisR
 
 
 export const CompletarServicioModal: React.FC<CompletarServicioModalProps> = ({ 
-    servicioId, 
+    servicioId,
+    servicioEspecificoId, 
     isOpen, 
     onClose,
     onSuccess 
@@ -45,7 +46,7 @@ export const CompletarServicioModal: React.FC<CompletarServicioModalProps> = ({
                     Medicamento: formData.receta.Medicamento,
                     Dosis: formData.receta.Dosis,
                     Indicaciones: formData.receta.Indicaciones,
-                    ConsultaID: servicioId,
+                    ConsultaID: servicioEspecificoId,
                     InternacionID: null
                 };
     
@@ -63,7 +64,7 @@ export const CompletarServicioModal: React.FC<CompletarServicioModalProps> = ({
                     TipoAnalisis: formData.analisis.TipoAnalisis,
                     FechaAnalisis: formData.analisis.FechaAnalisis,
                     Resultado: formData.analisis.Resultado,
-                    ConsultaID: servicioId,
+                    ConsultaID: servicioEspecificoId,
                     InternacionID: null
                 };
     
@@ -77,7 +78,6 @@ export const CompletarServicioModal: React.FC<CompletarServicioModalProps> = ({
     
             // Esperar a que todas las operaciones se completen
             await Promise.all(promises);
-            
             // Solo después de que todo esté completo, cerrar el modal y actualizar
             await onSuccess();
             onClose();

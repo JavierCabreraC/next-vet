@@ -65,10 +65,11 @@ export interface PeluqueriaFormProps {
 
 export interface ServicioActivo {
     ServicioID: number;
-    Estado: string;
     Servicio: string;
-    "Hora de inicio": string;
-    "Nombre de Mascota": string;
+    ServicioEspecificoID: number;  // Agregamos este campo
+    Estado: string;
+    HoraInicio: string;            // Actualizado para coincidir con la respuesta
+    Mascota: string;               // Actualizado para coincidir con la respuesta
 }
 
 export interface ServicioResponse {
@@ -119,6 +120,7 @@ export interface NuevoAnalisis {
 
 export interface CompletarServicioModalProps {
     servicioId: number;
+    servicioEspecificoId: number;
     isOpen: boolean;
     onClose: () => void;
     onSuccess: () => void;

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/index.ui';
 import { API_CONFIG, ApiService } from '@/services/index.services';
 import type { Vacuna, VacunacionRegistro } from '@/types/index.types';
 import { Clipboard, Stethoscope, LogOut, Syringe, Plus, FileText } from 'lucide-react';
-import { VacunasList, VacunaForm, VacunacionForm, VacunacionList } from '@/components/vetdoc/index.docvetcomp';
+import { VacunaList, VacunaForm, VacunacionForm, VacunacionList } from '@/components/vetdoc/index.docvetcomp';
 
 
 type ViewState = 'dashboard' | 'vacunas' | 'vacunaForm' | 'vacunacion' | 'vacunacionForm' | 'registros';
@@ -95,7 +95,7 @@ const VetDocPage: React.FC = () => {
                                 Nueva Vacuna
                             </Button>
                         </div>
-                        <VacunasList vacunas={vacunas} />
+                        <VacunaList vacunas={vacunas} />
                     </>
                 );
             case 'vacunaForm':
