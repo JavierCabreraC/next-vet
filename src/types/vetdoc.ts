@@ -152,3 +152,26 @@ export interface Analisis {
 export type MainView = 'nuevo' | 'activos' | 'historial' | 'completados' | 'recetas' | 'analisis';
 
 export type ServiceType = 'consulta' | 'peluqueria' | 'internacion' | 'analisis' | 'cirugia';
+
+export interface ConsultaCompletada {
+    ServicioID: number;
+    "Hora terminada": string;
+    MascotaID: number;
+    Mascota: string;
+    Peso: string;
+    Temperatura: string;
+}
+
+export interface NuevaInternacion {
+    PesoEntrada: number;
+    TemperaturaEntrada: number;
+    Notas: string;
+    MascotaID: number;
+    CirugiaID: number | null;
+}
+
+export interface InternacionResponse {
+    Message: string;
+    ServicioID: number;
+    InternacionID: number;
+}

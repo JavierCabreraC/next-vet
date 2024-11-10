@@ -101,7 +101,7 @@ export const PeluqueriaForm: React.FC<PeluqueriaFormProps> = ({
                         className="rounded border-gray-300"
                     />
                     <label htmlFor="lavado" className="text-sm font-medium">
-                        Incluir Lavado
+                        Incluir Baño
                     </label>
                 </div>
 
