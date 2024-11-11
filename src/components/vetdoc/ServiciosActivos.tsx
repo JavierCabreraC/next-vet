@@ -3,7 +3,8 @@ import { Button } from '@/components/ui/button';
 import { CompletarServicioModal } from './CompletarServicioModal';
 import { API_CONFIG, ApiService } from '@/services/index.services';
 import type { ServicioActivo, ServicioResponse } from '@/types/vetdoc';
-import { Activity, Clock, Check, PawPrint, Scissors } from 'lucide-react';
+import { CompletarInternacionModal } from './CompletarInternacionModal';
+import { Activity, Clock, Check, PawPrint, Scissors, BedDouble } from 'lucide-react';
 
 
 export const ServiciosActivos: React.FC = () => {
@@ -11,6 +12,10 @@ export const ServiciosActivos: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [procesando, setProcesando] = useState<number | null>(null);
     const [modalData, setModalData] = useState<{
+        servicioId: number;
+        servicioEspecificoId: number;
+    } | null>(null);
+    const [modalInternacionData, setModalInternacionData] = useState<{
         servicioId: number;
         servicioEspecificoId: number;
     } | null>(null);
@@ -42,6 +47,12 @@ export const ServiciosActivos: React.FC = () => {
                 servicioId: servicio.ServicioID,
                 servicioEspecificoId: servicio.ServicioEspecificoID
             });
+        } else if (servicio?.Servicio.toLowerCase() === 'internacion') {
+            // Si es internación, abrimos el modal de internación
+            setModalInternacionData({
+                servicioId: servicio.ServicioID,
+                servicioEspecificoId: servicio.ServicioEspecificoID
+            });
         } else {
             // Para otros servicios, completar directamente
             setProcesando(servicioId);
@@ -69,6 +80,8 @@ export const ServiciosActivos: React.FC = () => {
         switch (tipo.toLowerCase()) {
             case 'peluqueria':
                 return <Scissors className="text-purple-500" size={20} />;
+            case 'internacion':
+                return <BedDouble className="text-purple-500" size={20} />;
             default:
                 return <Activity className="text-blue-500" size={20} />;
         }
@@ -153,6 +166,18 @@ export const ServiciosActivos: React.FC = () => {
                     onClose={() => setModalData(null)}
                     onSuccess={() => {
                         setModalData(null);
+                        cargarServicios();
+                    }}
+                />
+            )}
+            {modalInternacionData && (
+                <CompletarInternacionModal
+                    servicioId={modalInternacionData.servicioId}
+                    servicioEspecificoId={modalInternacionData.servicioEspecificoId}
+                    isOpen={true}
+                    onClose={() => setModalInternacionData(null)}
+                    onSuccess={async () => {
+                        setModalInternacionData(null);
                         cargarServicios();
                     }}
                 />

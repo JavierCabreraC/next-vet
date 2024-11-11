@@ -4,7 +4,8 @@ export * from './view/ServiciosActivos';
 export * from './view/ServiciosSeleccion';
 export * from './view/Sidebar';
 
-export * from './CompletarServicioModal';
+// export * from './CompletarConsultaModal';
+export * from './CompletarInternacionModal';
 export * from './ConsultaForm';
 export * from './PeluqueriaForm';
 export * from './ReservacionesPendientes';

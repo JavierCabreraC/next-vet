@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
-import { API_CONFIG, ApiService } from '@/services/index.services';
-import { Button, CustomCheckbox, Input } from '@/components/ui/index.ui';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import type { CompletarServicioModalProps, NuevaReceta, NuevoAnalisis, AnalisisResultado } from '@/types/vetdoc';
+import { useState } from "react";
+import { API_CONFIG, ApiService } from "@/services/index.services";
+import { AnalisisResultado, CompletarInternacionModalProps, NuevaReceta, NuevoAnalisis } from "@/types/vetdoc";
+import { Button, CustomCheckbox, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, Input } from "../ui/index.ui";
 
 
-export const CompletarServicioModal: React.FC<CompletarServicioModalProps> = ({ 
-    servicioId,
-    servicioEspecificoId, 
+export const CompletarInternacionModal: React.FC<CompletarInternacionModalProps> = ({ 
+    servicioId, 
+    servicioEspecificoId,
     isOpen, 
     onClose,
     onSuccess 
 }) => {
     const [formData, setFormData] = useState({
+        internacion: {
+            PesoSalida: '',
+            TemperaturaSalida: '',
+            Notas: ''
+        },
         receta: {
             requiereReceta: false,
             Medicamento: '',
@@ -32,53 +36,57 @@ export const CompletarServicioModal: React.FC<CompletarServicioModalProps> = ({
         try {
             const promises = [];
     
-            // 1. Marcar servicio como completado
+            // 1. Marcar servicio como completado y actualizar datos de salida
             promises.push(
-                ApiService.fetch(`${API_CONFIG.ENDPOINTS.DOC_SERVCONS}`, {
+                ApiService.fetch(`${API_CONFIG.ENDPOINTS.DOC_SERVINTER}`, {
                     method: 'PATCH',
-                    body: JSON.stringify({ ServicioID: servicioId, ConsultaID: servicioEspecificoId })
+                    body: JSON.stringify({ 
+                        ServicioID: servicioId,
+                        InternacionID: servicioEspecificoId,
+                        PesoSalida: parseFloat(formData.internacion.PesoSalida),
+                        TemperaturaSalida: parseFloat(formData.internacion.TemperaturaSalida),
+                        Notas: formData.internacion.Notas
+                    })
                 })
             );
     
-            // 2. Si hay receta, agregarla a las promesas
+            // 2. Si hay receta, agregarla
             if (formData.receta.requiereReceta) {
                 const recetaData: NuevaReceta = {
                     Medicamento: formData.receta.Medicamento,
                     Dosis: formData.receta.Dosis,
                     Indicaciones: formData.receta.Indicaciones,
-                    ConsultaID: servicioEspecificoId,
-                    InternacionID: null
+                    InternacionID: servicioEspecificoId,
+                    ConsultaID: null
                 };
     
                 promises.push(
-                    ApiService.fetch(`${API_CONFIG.ENDPOINTS.DOC_RECETACONS}`, {
+                    ApiService.fetch(`${API_CONFIG.ENDPOINTS.DOC_RECETAINT}`, {
                         method: 'POST',
                         body: JSON.stringify(recetaData)
                     })
                 );
             }
     
-            // 3. Si hay análisis, agregarlo a las promesas
+            // 3. Si hay análisis, agregarlo
             if (formData.analisis.requiereAnalisis) {
                 const analisisData: NuevoAnalisis = {
                     TipoAnalisis: formData.analisis.TipoAnalisis,
                     FechaAnalisis: formData.analisis.FechaAnalisis,
                     Resultado: formData.analisis.Resultado,
-                    ConsultaID: servicioEspecificoId,
-                    InternacionID: null
+                    InternacionID: servicioEspecificoId,
+                    ConsultaID: null
                 };
     
                 promises.push(
-                    ApiService.fetch(`${API_CONFIG.ENDPOINTS.DOC_ANALISISCONS}`, {
+                    ApiService.fetch(`${API_CONFIG.ENDPOINTS.DOC_ANALISISINT}`, {
                         method: 'POST',
                         body: JSON.stringify(analisisData)
                     })
                 );
             }
     
-            // Esperar a que todas las operaciones se completen
             await Promise.all(promises);
-            // Solo después de que todo esté completo, cerrar el modal y actualizar
             await onSuccess();
             onClose();
         } catch (error) {
@@ -88,13 +96,77 @@ export const CompletarServicioModal: React.FC<CompletarServicioModalProps> = ({
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent>
+            <DialogContent className="max-w-2xl">
                 <DialogHeader>
-                    <DialogTitle>Completar Servicio</DialogTitle>
+                    <DialogTitle>Completar Internación</DialogTitle>
                 </DialogHeader>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* Sección de Receta */}
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Datos de Salida de Internación */}
+                    <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
+                        <h3 className="font-semibold">Datos de Salida</h3>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-medium mb-1">
+                                    Peso de Salida (kg)
+                                </label>
+                                <Input
+                                    type="number"
+                                    step="0.01"
+                                    min="0"
+                                    max="999.99"
+                                    value={formData.internacion.PesoSalida}
+                                    onChange={(e) => setFormData(prev => ({
+                                        ...prev,
+                                        internacion: {
+                                            ...prev.internacion,
+                                            PesoSalida: e.target.value
+                                        }
+                                    }))}
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium mb-1">
+                                    Temperatura de Salida (°C)
+                                </label>
+                                <Input
+                                    type="number"
+                                    step="0.1"
+                                    min="30"
+                                    max="45"
+                                    value={formData.internacion.TemperaturaSalida}
+                                    onChange={(e) => setFormData(prev => ({
+                                        ...prev,
+                                        internacion: {
+                                            ...prev.internacion,
+                                            TemperaturaSalida: e.target.value
+                                        }
+                                    }))}
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium mb-1">
+                                Notas Finales
+                            </label>
+                            <textarea
+                                className="w-full border rounded-md p-2 min-h-[100px]"
+                                value={formData.internacion.Notas}
+                                onChange={(e) => setFormData(prev => ({
+                                    ...prev,
+                                    internacion: {
+                                        ...prev.internacion,
+                                        Notas: e.target.value
+                                    }
+                                }))}
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    {/* Sección de Receta - igual que en CompletarServicioModal */}
                     <div className="space-y-2">
                         <CustomCheckbox
                             id="requiereReceta"
@@ -110,7 +182,6 @@ export const CompletarServicioModal: React.FC<CompletarServicioModalProps> = ({
                             }
                             label="Requiere Receta"
                         />
-
                         {formData.receta.requiereReceta && (
                             <div className="space-y-2 pl-6">
                                 <Input
@@ -154,7 +225,7 @@ export const CompletarServicioModal: React.FC<CompletarServicioModalProps> = ({
                         )}
                     </div>
 
-                    {/* Sección de Análisis */}
+                    {/* Sección de Análisis - igual que en CompletarServicioModal */}
                     <div className="space-y-2">
                         <CustomCheckbox
                             id="requiereAnalisis"
@@ -170,7 +241,6 @@ export const CompletarServicioModal: React.FC<CompletarServicioModalProps> = ({
                             }
                             label="Requiere Análisis"
                         />
-
                         {formData.analisis.requiereAnalisis && (
                             <div className="space-y-2 pl-6">
                                 <Input
@@ -235,7 +305,7 @@ export const CompletarServicioModal: React.FC<CompletarServicioModalProps> = ({
                             Cancelar
                         </Button>
                         <Button type="submit">
-                            Completar Servicio
+                            Completar Internación
                         </Button>
                     </DialogFooter>
                 </form>

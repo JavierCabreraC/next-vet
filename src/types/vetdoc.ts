@@ -175,3 +175,17 @@ export interface InternacionResponse {
     ServicioID: number;
     InternacionID: number;
 }
+
+export interface FinalizarInternacionData {
+    PesoSalida: number;
+    TemperaturaSalida: number;
+    Notas: string;
+}
+
+export interface CompletarInternacionModalProps {
+    servicioId: number;
+    servicioEspecificoId: number;
+    isOpen: boolean;
+    onClose: () => void;
+    onSuccess: () => void;
+}
