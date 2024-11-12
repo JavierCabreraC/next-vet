@@ -6,6 +6,7 @@ export * from './view/Sidebar';
 
 // export * from './CompletarConsultaModal';
 export * from './CirugiaForm';
+export * from './CompletarCirugiaModal';
 export * from './CompletarInternacionModal';
 export * from './ConsultaForm';
 export * from './PeluqueriaForm';

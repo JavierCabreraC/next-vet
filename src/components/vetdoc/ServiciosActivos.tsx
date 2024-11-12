@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import { CompletarCirugiaModal } from './CompletarCirugiaModal';
 import { CompletarServicioModal } from './CompletarServicioModal';
 import { API_CONFIG, ApiService } from '@/services/index.services';
 import type { ServicioActivo, ServicioResponse } from '@/types/vetdoc';
@@ -12,13 +13,11 @@ export const ServiciosActivos: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [procesando, setProcesando] = useState<number | null>(null);
     const [modalData, setModalData] = useState<{
-        servicioId: number;
-        servicioEspecificoId: number;
-    } | null>(null);
+        servicioId: number; servicioEspecificoId: number; } | null>(null);
     const [modalInternacionData, setModalInternacionData] = useState<{
-        servicioId: number;
-        servicioEspecificoId: number;
-    } | null>(null);
+        servicioId: number; servicioEspecificoId: number; } | null>(null);
+    const [modalCirugiaData, setModalCirugiaData] = useState<{
+        servicioId: number; servicioEspecificoId: number; } | null>(null);
 
     const cargarServicios = async () => {
         try {
@@ -34,22 +33,23 @@ export const ServiciosActivos: React.FC = () => {
         }
     };
 
-    useEffect(() => {
-        cargarServicios();
-    }, []);
+    useEffect(() => { cargarServicios(); }, []);
 
     const handleCompletarServicio = async (servicioId: number) => {
         const servicio = servicios.find(s => s.ServicioID === servicioId);
         
         if (servicio?.Servicio.toLowerCase() === 'consulta') {
-            // Si es consulta médica, abrimos el modal
             setModalData({
                 servicioId: servicio.ServicioID,
                 servicioEspecificoId: servicio.ServicioEspecificoID
             });
         } else if (servicio?.Servicio.toLowerCase() === 'internacion') {
-            // Si es internación, abrimos el modal de internación
             setModalInternacionData({
+                servicioId: servicio.ServicioID,
+                servicioEspecificoId: servicio.ServicioEspecificoID
+            });
+        } else if (servicio?.Servicio.toLowerCase() === 'cirugia') {
+            setModalCirugiaData({
                 servicioId: servicio.ServicioID,
                 servicioEspecificoId: servicio.ServicioEspecificoID
             });
@@ -159,7 +159,6 @@ export const ServiciosActivos: React.FC = () => {
                     </div>
                 ))}
             </div>
-            {/* Modal para completar consulta médica */}
             {modalData && (
                 <CompletarServicioModal
                     servicioId={modalData.servicioId}
@@ -180,6 +179,18 @@ export const ServiciosActivos: React.FC = () => {
                     onClose={() => setModalInternacionData(null)}
                     onSuccess={async () => {
                         setModalInternacionData(null);
+                        cargarServicios();
+                    }}
+                />
+            )}
+            {modalCirugiaData && (
+                <CompletarCirugiaModal
+                    servicioId={modalCirugiaData.servicioId}
+                    servicioEspecificoId={modalCirugiaData.servicioEspecificoId}
+                    isOpen={true}
+                    onClose={() => setModalCirugiaData(null)}
+                    onSuccess={async () => {
+                        setModalCirugiaData(null);
                         cargarServicios();
                     }}
                 />

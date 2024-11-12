@@ -204,3 +204,19 @@ export interface CirugiaFormProps {
     onSuccess: () => void;
     onCancel: () => void;
 }
+
+export interface CompletarCirugiaModalProps {
+    servicioId: number;
+    servicioEspecificoId: number;
+    isOpen: boolean;
+    onClose: () => void;
+    onSuccess: () => void;
+}
+
+export interface FinalizarCirugiaData {
+    ServicioID: number;
+    CirugiaID: number;
+    PesoSalida: number;
+    TemperaturaSalida: number;
+    Notas: string;
+}
