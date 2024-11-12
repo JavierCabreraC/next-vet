@@ -34,7 +34,7 @@ export const CompletarServicioModal: React.FC<CompletarServicioModalProps> = ({
     
             // 1. Marcar servicio como completado
             promises.push(
-                ApiService.fetch(`${API_CONFIG.ENDPOINTS.DOC_SERVCONS}`, {
+                ApiService.fetch(`${API_CONFIG.ENDPOINTS.DOC_SERVEND}`, {
                     method: 'PATCH',
                     body: JSON.stringify({ ServicioID: servicioId, ConsultaID: servicioEspecificoId })
                 })

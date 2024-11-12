@@ -74,8 +74,8 @@ export const CompletarInternacionModal: React.FC<CompletarInternacionModalProps>
                     TipoAnalisis: formData.analisis.TipoAnalisis,
                     FechaAnalisis: formData.analisis.FechaAnalisis,
                     Resultado: formData.analisis.Resultado,
-                    ConsultaID: null,
-                    InternacionID: servicioEspecificoId
+                    InternacionID: servicioEspecificoId,
+                    ConsultaID: null
                 };
     
                 promises.push(

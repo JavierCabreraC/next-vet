@@ -39,7 +39,7 @@ export const InternacionForm: React.FC<InternacionFormProps> = ({
                 }
             );
 
-            if (response.Message === "Servicio registrado exitosamente") {
+            if (response) {
                 onSuccess();
             }
         } catch (error) {

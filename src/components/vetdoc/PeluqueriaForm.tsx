@@ -85,10 +85,10 @@ export const PeluqueriaForm: React.FC<PeluqueriaFormProps> = ({
                         required
                     >
                         <option value="">Seleccione un tipo de corte</option>
-                        <option value="bajo">Bajo</option>
-                        <option value="medio">Medio</option>
-                        <option value="alto">Alto</option>
-                        <option value="alto">Especial</option>
+                        <option value="Bajo">Bajo</option>
+                        <option value="Medio">Medio</option>
+                        <option value="Alto">Alto</option>
+                        <option value="Especial">Especial</option>
                     </select>
                 </div>
 
