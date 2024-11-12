@@ -5,6 +5,7 @@ export * from './view/ServiciosSeleccion';
 export * from './view/Sidebar';
 
 // export * from './CompletarConsultaModal';
+export * from './CirugiaForm';
 export * from './CompletarInternacionModal';
 export * from './ConsultaForm';
 export * from './PeluqueriaForm';

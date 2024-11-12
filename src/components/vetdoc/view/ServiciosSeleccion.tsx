@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/index.ui";
 import { InternacionForm } from "../InternacionForm";
-import { ConsultasCompletadasList } from "./ConsultasCompletadas";
 import { ConsultaCompletada, ServiceType } from "@/types/vetdoc";
+import { ConsultasCompletadasList } from "./ConsultasCompletadas";
 import { Activity, BedDouble, Scissors, Syringe, TestTube } from "lucide-react";
 
 
@@ -115,41 +115,3 @@ export const ServicioSelection: React.FC<ServicioSelectionProps> = ({ onServiceS
         </div>
     );
 };
-
-// export const ServicioSelection: React.FC<ServicioSelectionProps> = ({ onServiceSelect }) => (
-//     <div className="p-6">
-//         <h2 className="text-2xl font-bold mb-6">Nuevo Servicio</h2>
-//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            // <ServiceCard
-            //     icon={<Activity size={40} />}
-            //     title="Consulta Médica"
-            //     description="Registro de consulta veterinaria"
-            //     onClick={() => onServiceSelect('consulta')}
-            // />
-            // <ServiceCard
-            //     icon={<Scissors size={40} />}
-            //     title="Peluquería"
-            //     description="Registro de servicio de peluquería"
-            //     onClick={() => onServiceSelect('peluqueria')}
-            // />
-//             <ServiceCard
-//                 icon={<BedDouble size={40} />}
-//                 title="Internación"
-//                 description="Registro de internación"
-//                 onClick={() => onServiceSelect('internacion')}
-//             />
-            // <ServiceCard
-            //     icon={<TestTube size={40} />}
-            //     title="Análisis Clínico"
-            //     description="Registro de análisis clínico"
-            //     onClick={() => onServiceSelect('analisis')}
-            // />
-            // <ServiceCard
-            //     icon={<Syringe size={40} />}
-            //     title="Cirugía"
-            //     description="Registro de cirugía"
-            //     onClick={() => onServiceSelect('cirugia')}
-            // />
-//         </div>
-//     </div>
-// );

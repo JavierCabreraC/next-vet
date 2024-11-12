@@ -17,6 +17,7 @@ export const API_CONFIG = {
         DOC_SERVPELU:               '/vetdoc/servicios/peluqueria',      // para registrar servicio de peluqueria
         DOC_SERVCONS:               '/vetdoc/servicios/consulta',
         DOC_SERVINTER:              '/vetdoc/servicios/internacion',
+        DOC_SERVCIRU:               '/vetdoc/servicios/cirugia',
         DOC_MASCOTAS:               '/vetdoc/mascotas',                  // lee las mascotaservicios/completed
         DOC_SERVACT:                '/vetdoc/servicios/active',          // lee servicios en proceso
         DOC_SERVEND:                '/vetdoc/servicios',                 // para marcar un servicio como completado <----- ¡¡¡!!!

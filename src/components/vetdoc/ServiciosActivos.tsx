@@ -4,7 +4,7 @@ import { CompletarServicioModal } from './CompletarServicioModal';
 import { API_CONFIG, ApiService } from '@/services/index.services';
 import type { ServicioActivo, ServicioResponse } from '@/types/vetdoc';
 import { CompletarInternacionModal } from './CompletarInternacionModal';
-import { Activity, Clock, Check, PawPrint, Scissors, BedDouble } from 'lucide-react';
+import { Activity, Clock, Check, PawPrint, Scissors, BedDouble, Syringe } from 'lucide-react';
 
 
 export const ServiciosActivos: React.FC = () => {
@@ -78,6 +78,8 @@ export const ServiciosActivos: React.FC = () => {
 
     const getServiceIcon = (tipo: string) => {
         switch (tipo.toLowerCase()) {
+            case 'cirugia':
+                return <Syringe className="text-purple-500" size={20} />;
             case 'peluqueria':
                 return <Scissors className="text-purple-500" size={20} />;
             case 'internacion':

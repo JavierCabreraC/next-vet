@@ -6,8 +6,8 @@ import { useAuth } from '@/hooks/index.hooks';
 import { Button } from '@/components/ui/index.ui';
 import { Stethoscope, LogOut, Search } from 'lucide-react';
 import type { MainView, ReservacionV, ServiceType } from '@/types/vetdoc';
-import { ReservacionesPendientes, ConsultaForm, PeluqueriaForm, ServiciosCompletados, 
-    ServicioSelection, Sidebar, ServiciosActivosView, RecetasView, AnalisisView} from '@/components/vetdoc/index.docvetcomp';
+import { ReservacionesPendientes, ConsultaForm, PeluqueriaForm, ServiciosCompletados, ServicioSelection, 
+    Sidebar, ServiciosActivosView, RecetasView, AnalisisView, CirugiaForm} from '@/components/vetdoc/index.docvetcomp';
 
 
 const ServiciosPage: React.FC = () => {
@@ -119,6 +119,52 @@ const ServiciosPage: React.FC = () => {
                                         setSelectedService(null);
                                     }}
                                     onCancel={ () => {setSelectedReservacion(null); }} 
+                                />
+                            </div>
+                        );
+                    }
+                }
+                // En el caso 'nuevo' del switch dentro de renderMainContent
+                if (selectedService === 'cirugia') {
+                    if (!selectedReservacion) {
+                        return (
+                            <div className="p-6">
+                                <div className="flex items-center justify-between mb-6">
+                                    <h2 className="text-2xl font-bold">Reservaciones Pendientes - Cirugía</h2>
+                                    <Button 
+                                        variant="outline" 
+                                        onClick={() => setSelectedService(null)}
+                                    >
+                                        Volver
+                                    </Button>
+                                </div>
+                                <ReservacionesPendientes 
+                                    onReservacionSelect={(reservacion) => {
+                                        setSelectedReservacion(reservacion);
+                                    }} 
+                                />
+                            </div>
+                        );
+                    } else {
+                        return (
+                            <div className="p-6">
+                                <div className="flex items-center justify-between mb-6">
+                                    <h2 className="text-2xl font-bold">Registro de Cirugía</h2>
+                                    <Button 
+                                        variant="outline" 
+                                        onClick={() => setSelectedReservacion(null)}
+                                    >
+                                        Volver a Reservaciones
+                                    </Button>
+                                </div>
+                                <CirugiaForm 
+                                    reservacion={selectedReservacion}
+                                    onSuccess={() => {
+                                        setMainView('activos');
+                                        setSelectedReservacion(null);
+                                        setSelectedService(null);
+                                    }}
+                                    onCancel={() => {setSelectedReservacion(null);}} 
                                 />
                             </div>
                         );

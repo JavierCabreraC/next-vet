@@ -189,3 +189,18 @@ export interface CompletarInternacionModalProps {
     onClose: () => void;
     onSuccess: () => void;
 }
+
+export interface NuevaCirugia {
+    ReservacionID: number;
+    MascotaID: number;
+    Peso: number;
+    Temperatura: number;
+    TipoDeCirugia: string;
+    Notas: string;
+}
+
+export interface CirugiaFormProps {
+    reservacion: ReservacionV;
+    onSuccess: () => void;
+    onCancel: () => void;
+}
