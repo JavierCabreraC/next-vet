@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ApiService } from '@/services/index.services';
+import { API_CONFIG, ApiService } from '@/services/index.services';
 import { Bitacora, Cliente, Mascota, Personal, Reservacion, Usuario } from '@/types/index.types';
 
 
@@ -39,27 +39,27 @@ export const useAdminModals = () => {
     const handleViewList = async (type: 'personal' | 'clientes' | 'mascotas' | 'bitacora' | 'reservacion' | 'usuarios') => {
         switch (type) {
             case 'personal':
-                await fetchData<Personal>('/admin/personal/', setPersonalList);
+                await fetchData<Personal>(API_CONFIG.ENDPOINTS.ADM_PERSONAL, setPersonalList);
                 setShowPersonalModal(true);
                 break;
             case 'clientes':
-                await fetchData<Cliente>('/admin/clientes/', setClienteList);
+                await fetchData<Cliente>(API_CONFIG.ENDPOINTS.ADM_CLIENTES, setClienteList);
                 setShowClienteModal(true);
                 break;
             case 'mascotas':
-                await fetchData<Mascota>('/admin/mascotas/', setMascotaList);
+                await fetchData<Mascota>(API_CONFIG.ENDPOINTS.ADM_MASCOTAS, setMascotaList);
                 setShowMascotaModal(true);
                 break;
             case 'bitacora':
-                await fetchData<Bitacora>('/admin/logs/', setBitacoraList);
+                await fetchData<Bitacora>(API_CONFIG.ENDPOINTS.ADM_LOGS, setBitacoraList);
                 setShowBitacoraModal(true);
                 break;
             case 'reservacion':
-                await fetchData<Reservacion>('/admin/reservacion/', setReservacionList);
+                await fetchData<Reservacion>(API_CONFIG.ENDPOINTS.ADM_RESERV, setReservacionList);
                 setShowReservacionModal(true);
                 break;
             case 'usuarios':
-                await fetchData<Usuario>('/admin/usuarios/', setUsuarioList);
+                await fetchData<Usuario>(API_CONFIG.ENDPOINTS.ADM_USERS, setUsuarioList);
                 setShowUsuarioModal(true);
                 break;
         }
