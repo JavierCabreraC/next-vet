@@ -208,3 +208,16 @@ export interface UseAdminUpdatesProps {
     setShowReservacionModal: (show: boolean) => void;
     handleViewList: HandleViewListFunction;
 }
+
+export type ViewState = 
+    // Usuarios
+    | 'create-staff' | 'list-staff' 
+    | 'create-client' | 'list-client'
+    | 'list-active-users' | 'list-inactive-users'
+    | 'list-logs'
+    // Mascotas
+    | 'manage-breeds' | 'create-pet' | 'list-pets'
+    // Reservaciones
+    | 'list-reservations'
+    // Servicios
+    | 'list-completed-services' | 'create-receipt' | 'list-receipts';
