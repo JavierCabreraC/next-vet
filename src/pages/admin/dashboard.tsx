@@ -171,28 +171,27 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/hooks/useAuth';
 import { AdminLayout } from '@/components/admin/layout/AdminLayout';
-import { 
-    UserSection,
-    // PetSection, 
+import { UserSection, MascotaSection, 
     // ReservationSection,
     // ServiceSection 
-} from '@/components/admin/sections/UserSection';
+} from '@/components/admin/index.admincomp';
 import { logout } from '@/utils/index.utils';
-import { MascotaSection } from '@/components/admin/sections/SeccionMascota';
 
 // Tipo para las diferentes vistas
-type ViewState = 
-    // Usuarios
-    | 'create-staff' | 'list-staff' 
-    | 'create-client' | 'list-client'
-    | 'list-active-users' | 'list-inactive-users'
-    | 'list-logs'
-    // Mascotas
-    | 'manage-breeds' | 'create-pet' | 'list-pets'
-    // Reservaciones
-    | 'list-reservations'
-    // Servicios
-    | 'list-completed-services' | 'create-receipt' | 'list-receipts';
+// type ViewState = 
+//     // Usuarios
+//     | 'create-staff' | 'list-personal' 
+//     | 'create-client' | 'list-client'
+//     | 'list-active-users' | 'list-inactive-users'
+//     | 'list-logs'
+//     // Mascotas
+//     | 'manage-breeds' | 'create-pet' | 'list-pets'
+//     // Reservaciones
+//     | 'list-reservations'
+//     // Servicios
+//     | 'list-completed-services' | 'create-receipt' | 'list-receipts';
+
+import { ViewState } from '@/types/index.types';
 
 const AdminDashboard = () => {
     const router = useRouter();
@@ -222,7 +221,7 @@ const AdminDashboard = () => {
         }
 
         // Sección de Usuarios
-        if (currentView.includes('staff') || currentView.includes('client') || 
+        if (currentView.includes('personal') || currentView.includes('client') || 
             currentView.includes('users') || currentView === 'list-logs') {
             return <UserSection view={currentView} />;
         }

@@ -142,7 +142,7 @@ export const UserSection: React.FC<UserSectionProps> = ({ view }) => {
         { key: 'Estado', header: 'Estado' },
         {
             key: 'actions',
-            header: 'Editar',
+            header: 'Inhabilitar',
             render: (usuario: Usuario) => (
                 <Button
                     onClick={() => handleEditUsuario(usuario)}
@@ -252,7 +252,7 @@ export const UserSection: React.FC<UserSectionProps> = ({ view }) => {
     );
     
     // Agregar al UserSection la función de carga de clientes
-    const loadClientData = async () => {
+    const loadClienteData = async () => {
         try {
             setIsLoading(true);
             const data = await ApiService.fetch<Cliente[]>(`${API_CONFIG.ENDPOINTS.ADM_CLIENTES}`, {
@@ -266,7 +266,7 @@ export const UserSection: React.FC<UserSectionProps> = ({ view }) => {
         }
     };
 
-    const loadUserData = async () => {
+    const loadUsuarioData = async () => {
         try {
             setIsLoading(true);
             const data = await ApiService.fetch<Usuario[]>(`${API_CONFIG.ENDPOINTS.ADM_USERS}`, {
@@ -280,7 +280,7 @@ export const UserSection: React.FC<UserSectionProps> = ({ view }) => {
         }
     };
 
-    const loadStaffData = async () => {
+    const loadPersonalData = async () => {
         try {
             setIsLoading(true);
             const data = await ApiService.fetch<Personal[]>(`${API_CONFIG.ENDPOINTS.ADM_PERSONAL}`, {
@@ -339,12 +339,12 @@ export const UserSection: React.FC<UserSectionProps> = ({ view }) => {
     };
 
     useEffect(() => {
-        if (view === 'list-staff') {
-            loadStaffData();
+        if (view === 'list-personal') {
+            loadPersonalData();
         } else if (view === 'list-client') {
-            loadClientData();
+            loadClienteData();
         } else if (view === 'list-active-users') {
-            loadUserData();
+            loadUsuarioData();
         } else if (view === 'list-logs') {
             loadLogData();
         }
@@ -375,7 +375,7 @@ export const UserSection: React.FC<UserSectionProps> = ({ view }) => {
             
             // Recargar datos según el tipo
             if (updateType === 'cliente') {
-                loadClientData();
+                loadClienteData();
             }
             // ... otros casos según sea necesario
             
@@ -394,7 +394,7 @@ export const UserSection: React.FC<UserSectionProps> = ({ view }) => {
                     </form>
                 </div>
             );
-        case 'list-staff':
+        case 'list-personal':
             return (
                 <div>
                     <h2 className="text-2xl font-bold mb-6">Lista de Personal</h2>

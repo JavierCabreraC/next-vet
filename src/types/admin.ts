@@ -211,7 +211,7 @@ export interface UseAdminUpdatesProps {
 
 export type ViewState = 
     // Usuarios
-    | 'create-staff' | 'list-staff' 
+    | 'create-staff' | 'list-personal' 
     | 'create-client' | 'list-client'
     | 'list-active-users' | 'list-inactive-users'
     | 'list-logs'
@@ -221,3 +221,4 @@ export type ViewState =
     | 'list-reservations'
     // Servicios
     | 'list-completed-services' | 'create-receipt' | 'list-receipts';
+

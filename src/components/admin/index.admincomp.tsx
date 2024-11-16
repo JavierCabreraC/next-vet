@@ -11,3 +11,7 @@ export * from './view/Actions';
 export * from './view/Cards';
 
 export * from './view/Header';
+
+export * from './sections/SeccionMascota';
+
+export * from './sections/UserSection';
