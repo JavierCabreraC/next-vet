@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { ApiService } from '@/services/index.services';
-import { Bitacora, Cliente, Mascota, Personal, Reservacion, 
-    Usuario } from '@/types/index.types';
+import { Bitacora, Cliente, Mascota, Personal, Reservacion, Usuario } from '@/types/index.types';
 
 
 export const useAdminModals = () => {
