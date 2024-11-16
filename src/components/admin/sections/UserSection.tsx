@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { Pencil } from 'lucide-react';
 import { Button } from '@/components/ui/index.ui';
 import { useFormHandler } from '@/hooks/common/useFormHandler';
+import { UpdateModal } from '@/components/admin/shared/UpdateModal';
 import { API_CONFIG, ApiService,  } from '@/services/index.services';
 import { Column, DataTable } from '@/components/vetdoc/common/DataTable';
-import { Bitacora, Cliente, Personal, Usuario, ViewState } from '@/types/admin';
+import { Bitacora, Cliente, Personal, Usuario, ViewState, UpdateForms, UpdateType } from '@/types/admin';
 
 
 interface UserSectionProps {
@@ -17,6 +18,15 @@ export const UserSection: React.FC<UserSectionProps> = ({ view }) => {
     const [clientList, setClientList] = useState<Cliente[]>([]);
     const [userList, setUserList] = useState<Usuario[]>([]);
     const [logList, setLogList] = useState<Bitacora[]>([]);
+    const [showUpdateModal, setShowUpdateModal] = useState(false);
+    const [updateType, setUpdateType] = useState<UpdateType | null>(null);
+    const [updateForm, setUpdateForm] = useState<UpdateForms>({
+        personalUpdate: { ID: 0 },
+        clienteUpdate: { ClienteID: 0 },
+        mascotaUpdate: { ID: 0 },
+        usuarioUpdate: { UsuarioID: 0 },
+        reservacionUpdate: { ReservacionID: 0 }
+    });
 
     // Columnas para la tabla de personal
     const staffColumns: Column<Personal>[] = [
@@ -304,9 +314,24 @@ export const UserSection: React.FC<UserSectionProps> = ({ view }) => {
         console.log('Editar personal:', personal);
     };
 
-    const handleEditCliente = (personal: Cliente) => {
-        // Implementar lógica de edición
-        console.log('Editar Cliente:', personal);
+    // const handleEditCliente = (personal: Cliente) => {
+    //     // Implementar lógica de edición
+    //     console.log('Editar Cliente:', personal);
+    // };
+
+    const handleEditCliente = (cliente: Cliente) => {
+        setUpdateType('cliente');
+        setUpdateForm({
+            ...updateForm,
+            clienteUpdate: { 
+                ClienteID: cliente.ClienteID,
+                // Inicializar con los valores actuales
+                NombreCompleto: cliente.NombreCompleto,
+                Telefono: cliente.Telefono,
+                Direccion: cliente.Direccion
+            }
+        });
+        setShowUpdateModal(true);
     };
 
     const handleEditUsuario = (usuario: Usuario) => {
@@ -324,6 +349,40 @@ export const UserSection: React.FC<UserSectionProps> = ({ view }) => {
             loadLogData();
         }
     }, [view]);
+
+    const handleUpdate = async () => {
+        if (!updateType) return;
+
+        const endpointMap: Record<UpdateType, string> = {
+            personal: API_CONFIG.ENDPOINTS.ADM_PERSONAL,
+            cliente: API_CONFIG.ENDPOINTS.ADM_CLIENTES,
+            mascota: API_CONFIG.ENDPOINTS.ADM_MASCOTAS,
+            reservacion: API_CONFIG.ENDPOINTS.ADM_RESERV,
+            usuario: API_CONFIG.ENDPOINTS.ADM_USERS
+        };
+
+        try {
+            await ApiService.fetch(endpointMap[updateType], {
+                method: 'PATCH',
+                body: JSON.stringify(
+                    updateType === 'cliente' 
+                        ? updateForm.clienteUpdate 
+                        : updateForm[`${updateType}Update`]
+                )
+            });
+
+            setShowUpdateModal(false);
+            
+            // Recargar datos según el tipo
+            if (updateType === 'cliente') {
+                loadClientData();
+            }
+            // ... otros casos según sea necesario
+            
+        } catch (error) {
+            console.error('Error al actualizar:', error);
+        }
+    };
 
     switch (view) {
         case 'create-staff':
@@ -367,6 +426,17 @@ export const UserSection: React.FC<UserSectionProps> = ({ view }) => {
                             renderMobileCard={renderClientMobileCard}
                         />
                     )}
+                    <UpdateModal
+                        isOpen={showUpdateModal}
+                        onClose={() => setShowUpdateModal(false)}
+                        type={updateType}
+                        updateForm={updateForm}
+                        setUpdateForm={setUpdateForm}
+                        onSubmit={handleUpdate}
+                        setShowPersonalModal={() => {}}  // Función vacía
+                        setShowClienteModal={() => {}}   // Función vacía
+                        setShowMascotaModal={() => {}}   // Función vacía
+                    />
                 </div>
             );
         case 'list-active-users':
