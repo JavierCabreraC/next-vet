@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Pencil } from 'lucide-react';
 import { Button } from '@/components/ui/index.ui';
-import { Personal, ViewState } from '@/types/admin';
+import { Cliente, Personal, ViewState } from '@/types/admin';
 import { useFormHandler } from '@/hooks/common/useFormHandler';
 import { API_CONFIG, ApiService,  } from '@/services/index.services';
 import { Column, DataTable } from '@/components/vetdoc/common/DataTable';
@@ -14,7 +14,7 @@ interface UserSectionProps {
 export const UserSection: React.FC<UserSectionProps> = ({ view }) => {
     const [staffList, setStaffList] = useState<Personal[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    // const [clientList, setClientList] = useState<Cliente[]>([]);
+    const [clientList, setClientList] = useState<Cliente[]>([]);
     // const [userList, setUserList] = useState<Usuario[]>([]);
     // const [logList, setLogList] = useState<Bitacora[]>([]);
 
@@ -34,10 +34,10 @@ export const UserSection: React.FC<UserSectionProps> = ({ view }) => {
         },
         {
             key: 'actions',
-            header: 'Acciones',
+            header: 'Editar',
             render: (personal: Personal) => (
                 <Button
-                    onClick={() => handleEdit(personal)}
+                    onClick={() => handleEditPersonal(personal)}
                     className="bg-yellow-500 hover:bg-yellow-600"
                     size="sm"
                 >
@@ -83,7 +83,7 @@ export const UserSection: React.FC<UserSectionProps> = ({ view }) => {
                 <span>{new Date(personal.Fecha_De_Contratacion).toLocaleDateString()}</span>
             </div>
             <Button
-                onClick={() => handleEdit(personal)}
+                onClick={() => handleEditPersonal(personal)}
                 className="w-full bg-yellow-500 hover:bg-yellow-600 mt-2"
             >
                 <Pencil className="h-4 w-4 mr-2" />
@@ -105,6 +105,75 @@ export const UserSection: React.FC<UserSectionProps> = ({ view }) => {
         }
     });
 
+    const clientColumns: Column<Cliente>[] = [
+        { key: 'ClienteID', header: 'ID' },
+        { key: 'NombreCompleto', header: 'Nombre Completo' },
+        { key: 'Telefono', header: 'Teléfono' },
+        { key: 'Direccion', header: 'Dirección' },
+        { key: 'Email', header: 'Email' },
+        {
+            key: 'actions',
+            header: 'Editar',
+            render: (cliente: Cliente) => (
+                <Button
+                    onClick={() => handleEditCliente(cliente)}
+                    className="bg-yellow-500 hover:bg-yellow-600"
+                    size="sm"
+                >
+                    <Pencil className="h-4 w-4" />
+                </Button>
+            )
+        }
+    ];
+    
+    // Renderizado móvil para cliente
+    const renderClientMobileCard = (cliente: Cliente) => (
+        <div key={cliente.ClienteID} className="bg-white rounded-lg shadow-md p-4 mb-4">
+            <div className="mb-2">
+                <span className="font-semibold">ID: </span>
+                <span>{cliente.ClienteID}</span>
+            </div>
+            <div className="mb-2">
+                <span className="font-semibold">Nombre: </span>
+                <span>{cliente.NombreCompleto}</span>
+            </div>
+            <div className="mb-2">
+                <span className="font-semibold">Teléfono: </span>
+                <span>{cliente.Telefono}</span>
+            </div>
+            <div className="mb-2">
+                <span className="font-semibold">Dirección: </span>
+                <span>{cliente.Direccion}</span>
+            </div>
+            <div className="mb-2">
+                <span className="font-semibold">Email: </span>
+                <span>{cliente.Email}</span>
+            </div>
+            <Button
+                onClick={() => handleEditCliente(cliente)}
+                className="w-full bg-yellow-500 hover:bg-yellow-600 mt-2"
+            >
+                <Pencil className="h-4 w-4 mr-2" />
+                Editar
+            </Button>
+        </div>
+    );
+    
+    // Agregar al UserSection la función de carga de clientes
+    const loadClientData = async () => {
+        try {
+            setIsLoading(true);
+            const data = await ApiService.fetch<Cliente[]>(`${API_CONFIG.ENDPOINTS.ADM_CLIENTES}`, {
+                method: 'GET',
+            });
+            setClientList(data);
+        } catch (error) {
+            console.error('Error al cargar clientes:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     const loadStaffData = async () => {
         try {
             setIsLoading(true);
@@ -120,14 +189,21 @@ export const UserSection: React.FC<UserSectionProps> = ({ view }) => {
         }
     };
 
-    const handleEdit = (personal: Personal) => {
+    const handleEditPersonal = (personal: Personal) => {
         // Implementar lógica de edición
         console.log('Editar personal:', personal);
+    };
+
+    const handleEditCliente = (personal: Cliente) => {
+        // Implementar lógica de edición
+        console.log('Editar Cliente:', personal);
     };
 
     useEffect(() => {
         if (view === 'list-staff') {
             loadStaffData();
+        } else if (view === 'list-client') {
+            loadClientData();
         }
     }, [view]);
 
@@ -154,6 +230,23 @@ export const UserSection: React.FC<UserSectionProps> = ({ view }) => {
                             data={staffList}
                             columns={staffColumns}
                             renderMobileCard={renderStaffMobileCard}
+                        />
+                    )}
+                </div>
+            );
+        case 'list-client':
+            return (
+                <div>
+                    <h2 className="text-2xl font-bold mb-6">Lista de Clientes</h2>
+                    {isLoading ? (
+                        <div className="flex justify-center items-center p-8">
+                            Cargando...
+                        </div>
+                    ) : (
+                        <DataTable
+                            data={clientList}
+                            columns={clientColumns}
+                            renderMobileCard={renderClientMobileCard}
                         />
                     )}
                 </div>

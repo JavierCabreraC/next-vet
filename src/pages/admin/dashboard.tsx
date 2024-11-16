@@ -178,6 +178,7 @@ import {
     // ServiceSection 
 } from '@/components/admin/sections/UserSection';
 import { logout } from '@/utils/index.utils';
+import { MascotaSection } from '@/components/admin/sections/SeccionMascota';
 
 // Tipo para las diferentes vistas
 type ViewState = 
@@ -215,7 +216,7 @@ const AdminDashboard = () => {
             return (
                 <div className="flex flex-col items-center justify-center h-full">
                     <h1 className="text-2xl font-bold mb-4">Bienvenido al Panel de Administración</h1>
-                    <p className="text-gray-600">Seleccione una opción del menú para comenzar</p>
+                    <p className="text-gray-600">Seleccione una opción del menú de la barra lateral para comenzar</p>
                 </div>
             );
         }
@@ -226,10 +227,10 @@ const AdminDashboard = () => {
             return <UserSection view={currentView} />;
         }
 
-        // // Sección de Mascotas
-        // if (currentView.includes('pet') || currentView.includes('breeds')) {
-        //     return <PetSection view={currentView} />;
-        // }
+        // Sección de Mascotas
+        if (currentView.includes('pet') || currentView.includes('breeds')) {
+            return <MascotaSection view={currentView} />;
+        }
 
         // // Sección de Reservaciones
         // if (currentView.includes('reservations')) {
