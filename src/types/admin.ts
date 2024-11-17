@@ -222,7 +222,7 @@ export interface RazaForm {
 
 export type ViewState = 
     // Usuarios
-    | 'create-staff' | 'list-personal' 
+    | 'create-personal' | 'list-personal' 
     | 'create-client' | 'list-client'
     | 'list-active-users' | 'list-inactive-users'
     | 'list-logs'

@@ -24,7 +24,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView })
             title: 'Usuarios',
             icon: <Users className="w-5 h-5" />,
             items: [
-                { label: 'Crear Personal', value: 'create-staff' },
+                { label: 'Crear Personal', value: 'create-personal' },
                 { label: 'Listar Personal', value: 'list-personal' },
                 { label: 'Crear Cliente', value: 'create-client' },
                 { label: 'Listar Clientes', value: 'list-client' },
