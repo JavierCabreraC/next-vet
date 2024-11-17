@@ -209,6 +209,17 @@ export interface UseAdminUpdatesProps {
     handleViewList: HandleViewListFunction;
 }
 
+export interface Raza {
+    RazaID: number;
+    NombreRaza: string;
+    NombreEspecie: string;
+}
+
+export interface RazaForm {
+    NombreRaza: string;
+    EspecieID: number;
+}
+
 export type ViewState = 
     // Usuarios
     | 'create-staff' | 'list-personal' 
@@ -216,9 +227,8 @@ export type ViewState =
     | 'list-active-users' | 'list-inactive-users'
     | 'list-logs'
     // Mascotas
-    | 'manage-breeds' | 'create-pet' | 'list-pets'
+    | 'manage-breeds' | 'create-breed' | 'create-pet' | 'list-pets'
     // Reservaciones
     | 'list-reservations'
     // Servicios
     | 'list-completed-services' | 'create-receipt' | 'list-receipts';
-
