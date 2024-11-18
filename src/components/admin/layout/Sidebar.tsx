@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { ViewState } from '@/types/admin';
-import { Users, PawPrint, Calendar, Briefcase } from 'lucide-react';
+import { Users, PawPrint, Calendar, Briefcase, ChevronDown } from 'lucide-react';
 
 
 interface SidebarProps {
@@ -19,6 +20,8 @@ interface MenuSection {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView }) => {
+    const [expandedSection, setExpandedSection] = useState<string | null>(null);
+
     const menuItems: MenuSection[] = [
         {
             title: 'Usuarios',
@@ -28,8 +31,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView })
                 { label: 'Listar Personal', value: 'list-personal' },
                 { label: 'Crear Cliente', value: 'create-cliente' },
                 { label: 'Listar Clientes', value: 'list-cliente' },
-                { label: 'Usuarios Activos', value: 'list-active-users' },
-                { label: 'Usuarios Inactivos', value: 'list-inactive-users' },
+                { label: 'Usuarios Activos', value: 'list-usuarios-activos' },
+                { label: 'Usuarios Inactivos', value: 'list-usuarios-inactivos' },
                 { label: 'Ver Bitácora', value: 'list-logs' }
             ]
         },
@@ -60,33 +63,55 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView })
         }
     ];
 
+    // Manejar el click en una sección
+    const handleSectionClick = (sectionTitle: string) => {
+        setExpandedSection(expandedSection === sectionTitle ? null : sectionTitle);
+    };
+
     return (
         <aside className="w-64 bg-blue-800 text-white h-[calc(100vh-64px)]">
-            <div className="p-4 overflow-y-auto h-full">
-                <h2 className="text-xl font-bold mb-6">Actividades:</h2>
+            <div className="p-4">
+                <h2 className="text-xl font-bold mb-6">Actividades</h2>
                 <nav>
                     {menuItems.map((section) => (
-                        <div key={section.title} className="mb-6">
-                            <div className="flex items-center mb-2 text-gray-300">
+                        <div key={section.title} className="mb-2">
+                            <button
+                                onClick={() => handleSectionClick(section.title)}
+                                className={`flex items-center w-full px-2 py-2 rounded transition-colors hover:bg-blue-700/50 ${
+                                    expandedSection === section.title ? 'bg-blue-700/50' : ''
+                                }`}
+                            >
                                 {section.icon}
                                 <span className="ml-2 font-semibold">{section.title}</span>
-                            </div>
-                            <ul className="space-y-2">
+                                <ChevronDown 
+                                    className={`ml-auto w-4 h-4 transition-transform ${
+                                        expandedSection === section.title ? 'rotate-180' : ''
+                                    }`}
+                                />
+                            </button>
+                            
+                            {/* Elementos de la sección */}
+                            <div
+                                className={`mt-1 space-y-1 overflow-hidden transition-all duration-200 ${
+                                    expandedSection === section.title 
+                                        ? 'max-h-96 opacity-100' 
+                                        : 'max-h-0 opacity-0'
+                                }`}
+                            >
                                 {section.items.map((item) => (
-                                    <li key={item.value}>
-                                        <button
-                                            onClick={() => setCurrentView(item.value)}
-                                            className={`w-full text-left px-4 py-2 rounded transition-colors ${
-                                                currentView === item.value
-                                                    ? 'bg-blue-700 text-white'
-                                                    : 'hover:bg-blue-700/50'
-                                            }`}
-                                        >
-                                            {item.label}
-                                        </button>
-                                    </li>
+                                    <button
+                                        key={item.value}
+                                        onClick={() => setCurrentView(item.value)}
+                                        className={`w-full text-left px-9 py-2 rounded transition-colors ${
+                                            currentView === item.value
+                                                ? 'bg-blue-700 text-white'
+                                                : 'hover:bg-blue-700/50 text-gray-300'
+                                        }`}
+                                    >
+                                        {item.label}
+                                    </button>
                                 ))}
-                            </ul>
+                            </div>
                         </div>
                     ))}
                 </nav>

@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { ViewState } from '@/types/admin';
-import { BitacoraList, ClienteList, CrearPersonalForm, 
-    PersonalList, UsuarioList } from '@/components/admin/index.admincomp';
-import { CreateClienteForm } from '../usuarios/formularios/CrearClienteForm';
+import { BitacoraList, ClienteList, CreateClienteForm, CrearPersonalForm, 
+    PersonalList, UsuarioInactivoList, UsuarioList } from '@/components/admin/index.admincomp';
 
 
 interface UsuarioSectionProps {
@@ -25,8 +24,11 @@ export const UsuarioSection: React.FC<UsuarioSectionProps> = ({ view }) => {
         case 'list-cliente':
             return <ClienteList isLoading={ isLoading } setIsLoading={ setIsLoading } />;
             
-        case 'list-active-users':
+        case 'list-usuarios-activos':
             return <UsuarioList isLoading={ isLoading } setIsLoading={ setIsLoading } />;
+
+        case 'list-usuarios-inactivos':
+            return <UsuarioInactivoList isLoading={ isLoading } setIsLoading={ setIsLoading } />;
     
         case 'list-logs':
             return <BitacoraList isLoading={ isLoading } setIsLoading={ setIsLoading } />;

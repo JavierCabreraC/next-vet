@@ -224,7 +224,7 @@ export type ViewState =
     // Usuarios
     | 'create-personal' | 'list-personal' 
     | 'create-cliente' | 'list-cliente'
-    | 'list-active-users' | 'list-inactive-users'
+    | 'list-usuarios-activos' | 'list-usuarios-inactivos'
     | 'list-logs'
     // Mascotas
     | 'list-raza' | 'create-raza' | 'create-mascota' | 'list-mascota'

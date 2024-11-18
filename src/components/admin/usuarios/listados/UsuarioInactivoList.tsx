@@ -6,25 +6,25 @@ import { API_CONFIG, ApiService,  } from '@/services/index.services';
 import { Column, DataTable } from '@/components/vetdoc/common/DataTable';
 
 
-interface UsuarioListProps {
+interface UsuarioInactivoListProps {
     isLoading: boolean;
     setIsLoading: (loading: boolean) => void;
 }
 
-export const UsuarioList: React.FC<UsuarioListProps> = ({ isLoading, setIsLoading }) => {
-    const [userList, setUserList] = useState<Usuario[]>([]);
+export const UsuarioInactivoList: React.FC<UsuarioInactivoListProps> = ({ isLoading, setIsLoading }) => {
+    const [usuarioInactivoList, setUsuarioInactivoList] = useState<Usuario[]>([]);
 
-    const userColumns: Column<Usuario>[] = [
+    const usuarioInactivoColumnas: Column<Usuario>[] = [
         { key: 'UsuarioID', header: 'ID' },
         { key: 'Rol', header: 'Rol' },
         { key: 'Nombre', header: 'Nombre' },
         { key: 'Estado', header: 'Estado' },
         {
             key: 'actions',
-            header: 'Inhabilitar',
+            header: 'Habilitar',
             render: (usuario: Usuario) => (
                 <Button
-                    onClick={() => handleEditUsuario(usuario)}
+                    onClick={() => handleEditUsuarioInactivo(usuario)}
                     className="bg-yellow-500 hover:bg-yellow-600"
                     size="sm"
                 >
@@ -34,7 +34,7 @@ export const UsuarioList: React.FC<UsuarioListProps> = ({ isLoading, setIsLoadin
         }
     ];
 
-    const renderUserMobileCard = (usuario: Usuario) => (
+    const renderUsuarioInactivoMobileCard = (usuario: Usuario) => (
         <div key={usuario.UsuarioID} className="bg-white rounded-lg shadow-md p-4 mb-4">
             <div className="mb-2">
                 <span className="font-semibold">ID: </span>
@@ -53,7 +53,7 @@ export const UsuarioList: React.FC<UsuarioListProps> = ({ isLoading, setIsLoadin
                 <span>{usuario.Estado}</span>
             </div>
             <Button
-                onClick={() => handleEditUsuario(usuario)}
+                onClick={() => handleEditUsuarioInactivo(usuario)}
                 className="w-full bg-yellow-500 hover:bg-yellow-600 mt-2"
             >
                 <Pencil className="h-4 w-4 mr-2" />
@@ -62,13 +62,13 @@ export const UsuarioList: React.FC<UsuarioListProps> = ({ isLoading, setIsLoadin
         </div>
     );
 
-    const loadUsuarioData = async () => {
+    const loadUsuarioInactivoData = async () => {
         try {
             setIsLoading(true);
-            const data = await ApiService.fetch<Usuario[]>(`${API_CONFIG.ENDPOINTS.ADM_USERS}`, {
+            const data = await ApiService.fetch<Usuario[]>(`${API_CONFIG.ENDPOINTS.ADM_USERSINACTIVOS}`, {
                 method: 'GET',
             });
-            setUserList(data);
+            setUsuarioInactivoList(data);
         } catch (error) {
             console.error('Error al cargar usuarios:', error);
         } finally {
@@ -76,14 +76,14 @@ export const UsuarioList: React.FC<UsuarioListProps> = ({ isLoading, setIsLoadin
         }
     };
 
-    const handleEditUsuario = async (usuario: Usuario) => {
+    const handleEditUsuarioInactivo = async (usuario: Usuario) => {
         try {
             setIsLoading(true);
-            await ApiService.fetch(API_CONFIG.ENDPOINTS.ADM_USERS, {
+            await ApiService.fetch(API_CONFIG.ENDPOINTS.ADM_USERSINACTIVOS, {
                 method: 'PATCH',
                 body: JSON.stringify({ UsuarioID: usuario.UsuarioID })
             });
-            await loadUsuarioData(); // Recargar la lista después de la actualización
+            await loadUsuarioInactivoData(); // Recargar la lista después de la actualización
         } catch (error) {
             console.error('Error al inhabilitar usuario:', error);
         } finally {
@@ -92,21 +92,21 @@ export const UsuarioList: React.FC<UsuarioListProps> = ({ isLoading, setIsLoadin
     };
 
     useEffect(() => {
-        loadUsuarioData();
+        loadUsuarioInactivoData();
     }, []);
 
     return (
         <div>
-            <h2 className="text-2xl font-bold mb-6">Lista de Usuarios</h2>
+            <h2 className="text-2xl font-bold mb-6">Lista de Usuarios Inactivos</h2>
             {isLoading ? (
                 <div className="flex justify-center items-center p-8">
                     Cargando...
                 </div>
             ) : (
                 <DataTable
-                    data={userList}
-                    columns={userColumns}
-                    renderMobileCard={renderUserMobileCard}
+                    data={usuarioInactivoList}
+                    columns={usuarioInactivoColumnas}
+                    renderMobileCard={renderUsuarioInactivoMobileCard}
                 />
             )}
         </div>
