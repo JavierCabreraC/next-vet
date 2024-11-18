@@ -208,3 +208,27 @@ export interface UseAdminUpdatesProps {
     setShowReservacionModal: (show: boolean) => void;
     handleViewList: HandleViewListFunction;
 }
+
+export interface Raza {
+    RazaID: number;
+    NombreRaza: string;
+    NombreEspecie: string;
+}
+
+export interface RazaForm {
+    NombreRaza: string;
+    EspecieID: number;
+}
+
+export type ViewState = 
+    // Usuarios
+    | 'create-personal' | 'list-personal' 
+    | 'create-cliente' | 'list-cliente'
+    | 'list-usuarios-activos' | 'list-usuarios-inactivos'
+    | 'list-logs'
+    // Mascotas
+    | 'list-raza' | 'create-raza' | 'create-mascota' | 'list-mascota'
+    // Reservaciones
+    | 'list-reservaciones'
+    // Servicios
+    | 'list-completed-services' | 'create-receipt' | 'list-receipts';

@@ -6,7 +6,7 @@ import { AdminHeaderProps } from '@/types/index.types';
 
 export const AdminHeader: React.FC<AdminHeaderProps> = ({ onLogout }) => {
     return (
-        <header className="bg-white shadow-md py-3 px-4">
+        <header className="bg-gray-100 border-b border-gray-200 py-3 px-8">
             <div className="container mx-auto flex flex-wrap justify-between items-center gap-4">
                 <h1 className="text-2xl md:text-3xl font-bold text-blue-600 flex-shrink-0">
                     <span className="flex items-center">

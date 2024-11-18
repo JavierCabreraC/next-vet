@@ -8,20 +8,20 @@ export const VacunacionList: React.FC<{ registros: VacunacionRegistro[] }> = ({ 
     };
 
     const columns: Column<VacunacionRegistro>[] = [
-      { key: 'MascotaID', header: 'MascotaID' },
-      { key: 'Nombre', header: 'Mascota' },
-      { key: 'Raza', header: 'Raza' },
-      { key: 'Vacuna', header: 'Vacuna' },
-      { 
-        key: 'Fecha_De_Vacunacion', 
-        header: 'Fecha de Vacunación',
-        render: (registro) => formatDate(registro.Fecha_De_Vacunacion)
-      },
-      { 
-        key: 'Proxima_Fecha', 
-        header: 'Próxima Fecha',
-        render: (registro) => formatDate(registro.Proxima_Fecha)
-      }
+        { key: 'MascotaID', header: 'MascotaID' },
+        { key: 'Nombre', header: 'Mascota' },
+        { key: 'Raza', header: 'Raza' },
+        { key: 'Vacuna', header: 'Vacuna' },
+        { 
+          key: 'Fecha_De_Vacunacion', 
+          header: 'Fecha de Vacunación',
+          render: (registro) => formatDate(registro.Fecha_De_Vacunacion)
+        },
+        { 
+          key: 'Proxima_Fecha', 
+          header: 'Próxima Fecha',
+          render: (registro) => formatDate(registro.Proxima_Fecha)
+        }
     ];
 
     const renderMobileCard = (registro: VacunacionRegistro) => (

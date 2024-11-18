@@ -80,6 +80,7 @@ export const VacunaForm: React.FC<VacunacionFormProps> = ({ onSuccess }) => {
                         <option value="">Seleccione un tipo</option>
                         <option value="Canina">Canina</option>
                         <option value="Felina">Felina</option>
+                        <option value="Felina">General</option>
                     </select>
                 </div>
 
