@@ -8,7 +8,7 @@ export * from './view/Cards';
 export * from './layout/Header';
 
 export * from './sections/SeccionMascota';
-export * from './sections/UserSection';
+export * from './sections/SeccionUsuario';
 
 export * from './usuarios/formularios/CrearPersonalForm';
 export * from './usuarios/listados/BitacoraList';

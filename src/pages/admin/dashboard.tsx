@@ -5,7 +5,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { logout } from '@/utils/index.utils';
 import { ViewState } from '@/types/index.types';
 import { AdminLayout } from '@/components/admin/layout/AdminLayout';
-import { UserSection, MascotaSection, 
+import { UsuarioSection, MascotaSection, 
     // ReservationSection,
     // ServiceSection 
 } from '@/components/admin/index.admincomp';
@@ -41,7 +41,7 @@ const AdminDashboard = () => {
         // Sección de Usuarios
         if (currentView.includes('personal') || currentView.includes('cliente') || 
             currentView.includes('users') || currentView === 'list-logs') {
-            return <UserSection view={currentView} />;
+            return <UsuarioSection view={currentView} />;
         }
 
         // Sección de Mascotas

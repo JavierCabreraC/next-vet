@@ -61,9 +61,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView })
     ];
 
     return (
-        <aside className="w-64 bg-blue-800 text-white min-h-screen">
-            <div className="p-4">
-                <h2 className="text-xl font-bold mb-6">Actividades</h2>
+        <aside className="w-64 bg-blue-800 text-white h-[calc(100vh-64px)]">
+            <div className="p-4 overflow-y-auto h-full">
+                <h2 className="text-xl font-bold mb-6">Actividades:</h2>
                 <nav>
                     {menuItems.map((section) => (
                         <div key={section.title} className="mb-6">

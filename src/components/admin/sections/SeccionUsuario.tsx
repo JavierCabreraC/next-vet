@@ -5,11 +5,11 @@ import { BitacoraList, ClienteList, CrearPersonalForm,
 import { CreateClienteForm } from '../usuarios/formularios/CrearClienteForm';
 
 
-interface UserSectionProps {
+interface UsuarioSectionProps {
     view: ViewState;
 }
 
-export const UserSection: React.FC<UserSectionProps> = ({ view }) => {
+export const UsuarioSection: React.FC<UsuarioSectionProps> = ({ view }) => {
     const [isLoading, setIsLoading] = useState(false);
 
     switch (view) {
