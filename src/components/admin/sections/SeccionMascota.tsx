@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ViewState } from '@/types/admin';
-import { CrearRazaForm, MascotaList, RazaList } from '../index.admincomp';
+import { CrearRazaForm, CreateMascotaForm, MascotaList, RazaList } from '../index.admincomp';
 
 
 interface MascotaSectionProps {
@@ -12,18 +12,21 @@ export const MascotaSection: React.FC<MascotaSectionProps> = ({ view, setCurrent
     const [isLoading, setIsLoading] = useState(false);
 
     switch (view) {
+        case 'create-mascota':
+            return < CreateMascotaForm />;
+
         case 'list-mascota':
-            return <MascotaList isLoading={isLoading} setIsLoading={setIsLoading} />;
+            return < MascotaList isLoading={isLoading} setIsLoading={setIsLoading} />;
             
         case 'list-raza':
-            return <RazaList 
+            return < RazaList 
                 isLoading={isLoading} 
                 setIsLoading={setIsLoading}
                 setCurrentView={setCurrentView}
             />;
 
         case 'create-raza':
-            return <CrearRazaForm setCurrentView={setCurrentView} />;
+            return < CrearRazaForm setCurrentView={setCurrentView} />;
             
         // Implementar otros casos...
         default:
