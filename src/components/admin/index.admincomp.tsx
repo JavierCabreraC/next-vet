@@ -17,11 +17,10 @@ export * from './sections/SeccionMascota';
 export * from './sections/UserSection';
 
 export * from './usuarios/formularios/CrearPersonalForm';
-
 export * from './usuarios/listados/BitacoraList';
-
 export * from './usuarios/listados/ClienteList';
-
 export * from './usuarios/listados/PersonalList';
-
 export * from './usuarios/listados/UsuarioList';
+
+export * from './mascotas/formularios/CrearRazaForm';
+export * from './mascotas/listados/RazaList';

@@ -45,7 +45,7 @@ const AdminDashboard = () => {
         }
 
         // Sección de Mascotas
-        if (currentView.includes('pet') || currentView.includes('breeds') || currentView.includes('create-breed')) {
+        if (currentView.includes('pet') || currentView.includes('list-raza') || currentView.includes('create-raza')) {
             return <MascotaSection view={currentView} setCurrentView={setCurrentView}/>;
         }
 

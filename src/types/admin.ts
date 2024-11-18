@@ -227,7 +227,7 @@ export type ViewState =
     | 'list-active-users' | 'list-inactive-users'
     | 'list-logs'
     // Mascotas
-    | 'manage-breeds' | 'create-breed' | 'create-pet' | 'list-pets'
+    | 'list-raza' | 'create-raza' | 'create-pet' | 'list-pets'
     // Reservaciones
     | 'list-reservations'
     // Servicios
