@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/index.ui";
 import { InternacionForm } from "../InternacionForm";
 import { ConsultaCompletada, ServiceType } from "@/types/vetdoc";
 import { ConsultasCompletadasList } from "./ConsultasCompletadas";
-import { Activity, BedDouble, Scissors, Syringe, TestTube } from "lucide-react";
+import { Activity, BedDouble, Scissors, Syringe, TestTube, BookPlus } from "lucide-react";
 
 
 interface ServiceCardProps {
@@ -99,16 +99,22 @@ export const ServicioSelection: React.FC<ServicioSelectionProps> = ({ onServiceS
                     onClick={() => setShowConsultas(true)}
                 />
                 <ServiceCard
-                icon={<TestTube size={40} />}
-                title="Análisis Clínico"
-                description="Registro de análisis clínico"
-                onClick={() => onServiceSelect('analisis')}
-                />
-                <ServiceCard
                     icon={<Syringe size={40} />}
                     title="Cirugía"
                     description="Registro de cirugía"
                     onClick={() => onServiceSelect('cirugia')}
+                />
+                <ServiceCard
+                    icon={<TestTube size={40} />}
+                    title="Análisis Clínico"
+                    description="Registro de análisis clínico"
+                    onClick={() => onServiceSelect('analisis')}
+                />
+                <ServiceCard
+                    icon={<BookPlus size={40} />}
+                    title="Recetas"
+                    description="Registro de recetas médicas"
+                    onClick={() => onServiceSelect('receta')}
                 />
                 {/* ... otros servicios ... */}
             </div>

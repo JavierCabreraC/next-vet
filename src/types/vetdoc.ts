@@ -151,7 +151,7 @@ export interface Analisis {
 
 export type MainView = 'nuevo' | 'activos' | 'historial' | 'completados' | 'recetas' | 'analisis';
 
-export type ServiceType = 'consulta' | 'peluqueria' | 'internacion' | 'analisis' | 'cirugia';
+export type ServiceType = 'consulta' | 'peluqueria' | 'internacion' | 'analisis' | 'cirugia' | 'receta';
 
 export interface ConsultaCompletada {
     ServicioID: number;
