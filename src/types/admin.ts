@@ -223,7 +223,7 @@ export interface RazaForm {
 export type ViewState = 
     // Usuarios
     | 'create-personal' | 'list-personal' 
-    | 'create-client' | 'list-client'
+    | 'create-cliente' | 'list-cliente'
     | 'list-active-users' | 'list-inactive-users'
     | 'list-logs'
     // Mascotas

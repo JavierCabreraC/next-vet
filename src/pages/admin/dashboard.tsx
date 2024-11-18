@@ -39,7 +39,7 @@ const AdminDashboard = () => {
         }
 
         // Sección de Usuarios
-        if (currentView.includes('personal') || currentView.includes('client') || 
+        if (currentView.includes('personal') || currentView.includes('cliente') || 
             currentView.includes('users') || currentView === 'list-logs') {
             return <UserSection view={currentView} />;
         }

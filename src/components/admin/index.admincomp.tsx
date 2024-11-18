@@ -5,7 +5,7 @@ export * from './shared/UpdateModal';
 
 export * from './view/Actions';
 export * from './view/Cards';
-export * from './view/Header';
+export * from './layout/Header';
 
 export * from './sections/SeccionMascota';
 export * from './sections/UserSection';

@@ -1,6 +1,6 @@
 import { Sidebar } from './Sidebar';
 import { ViewState } from '@/types/admin';
-import { AdminHeader } from '../view/Header';
+import { AdminHeader } from './Header';
 
 
 interface AdminLayoutProps {
