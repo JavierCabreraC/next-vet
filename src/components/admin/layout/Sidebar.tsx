@@ -38,8 +38,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView })
             icon: <PawPrint className="w-5 h-5" />,
             items: [
                 { label: 'Gestionar Razas', value: 'list-raza' },
-                { label: 'Crear Mascota', value: 'create-pet' },
-                { label: 'Listar Mascotas', value: 'list-pets' }
+                { label: 'Crear Mascota', value: 'create-mascota' },
+                { label: 'Listar Mascotas', value: 'list-mascota' }
             ]
         },
         {

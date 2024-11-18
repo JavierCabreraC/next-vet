@@ -23,4 +23,5 @@ export * from './usuarios/listados/PersonalList';
 export * from './usuarios/listados/UsuarioList';
 
 export * from './mascotas/formularios/CrearRazaForm';
+export * from './mascotas/listados/MascotaList';
 export * from './mascotas/listados/RazaList';
