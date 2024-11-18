@@ -6,12 +6,12 @@ import { API_CONFIG, ApiService,  } from '@/services/index.services';
 import { Column, DataTable } from '@/components/vetdoc/common/DataTable';
 
 
-interface UserListProps {
+interface UsuarioListProps {
     isLoading: boolean;
     setIsLoading: (loading: boolean) => void;
 }
 
-export const UsuarioList: React.FC<UserListProps> = ({ isLoading, setIsLoading }) => {
+export const UsuarioList: React.FC<UsuarioListProps> = ({ isLoading, setIsLoading }) => {
     const [userList, setUserList] = useState<Usuario[]>([]);
 
     const userColumns: Column<Usuario>[] = [
@@ -57,7 +57,7 @@ export const UsuarioList: React.FC<UserListProps> = ({ isLoading, setIsLoading }
         </div>
     );
 
-    const loadUserData = async () => {
+    const loadUsuarioData = async () => {
         try {
             setIsLoading(true);
             const data = await ApiService.fetch<Usuario[]>(`${API_CONFIG.ENDPOINTS.ADM_USERS}`, {
@@ -78,7 +78,7 @@ export const UsuarioList: React.FC<UserListProps> = ({ isLoading, setIsLoading }
                 method: 'PATCH',
                 body: JSON.stringify({ UsuarioID: usuario.UsuarioID })
             });
-            await loadUserData(); // Recargar la lista después de la actualización
+            await loadUsuarioData(); // Recargar la lista después de la actualización
         } catch (error) {
             console.error('Error al inhabilitar usuario:', error);
         } finally {
@@ -87,7 +87,7 @@ export const UsuarioList: React.FC<UserListProps> = ({ isLoading, setIsLoading }
     };
 
     useEffect(() => {
-        loadUserData();
+        loadUsuarioData();
     }, []);
 
     return (
