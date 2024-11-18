@@ -88,10 +88,15 @@ export interface ServicioCompletado {
 export interface NuevaConsulta {
     Peso: number;
     Temperatura: number;
-    Diagnostico: string;
-    Tratamiento?: string;
     ReservacionID: number;
     MascotaID: number;
+}
+
+export interface FinalizarConsulta {
+    ServicioID: number;
+    ConsultaID: number;
+    Diagnostico: string;
+    Tratamiento: string;
 }
 
 export interface ConsultaFormProps {

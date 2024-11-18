@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 import { useMascotas } from '@/hooks/index.hooks';
 import { Button, Input } from '@/components/ui/index.ui';
 import { ConsultaFormProps, NuevaConsulta } from '@/types/vetdoc';
@@ -14,7 +14,6 @@ export const ConsultaForm: React.FC<ConsultaFormProps> = ({
     const [formData, setFormData] = useState<NuevaConsulta>({
         Peso: 0,
         Temperatura: 0,
-        Diagnostico: '',
         ReservacionID: reservacion.ReservacionID,
         MascotaID: 0
     });
@@ -109,39 +108,12 @@ export const ConsultaForm: React.FC<ConsultaFormProps> = ({
                     />
                 </div>
 
-                <div>
-                    <label className="block text-sm font-medium mb-1">Diagnóstico</label>
-                    <textarea
-                        className="w-full border rounded-md p-2 min-h-[100px]"
-                        maxLength={500}
-                        value={formData.Diagnostico}
-                        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setFormData({
-                            ...formData,
-                            Diagnostico: e.target.value
-                        })}
-                        required
-                    />
-                </div>
-
-                <div>
-                    <label className="block text-sm font-medium mb-1">Tratamiento (Opcional)</label>
-                    <textarea
-                        className="w-full border rounded-md p-2 min-h-[100px]"
-                        maxLength={500}
-                        value={formData.Tratamiento || ''}
-                        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setFormData({
-                            ...formData,
-                            Tratamiento: e.target.value
-                        })}
-                    />
-                </div>
-
                 <div className="flex justify-end space-x-2 pt-4">
                     <Button variant="outline" onClick={onCancel}>
                         Cancelar
                     </Button>
                     <Button type="submit">
-                        Registrar Consulta
+                        Iniciar Consulta
                     </Button>
                 </div>
             </form>

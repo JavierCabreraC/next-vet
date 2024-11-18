@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { CompletarCirugiaModal } from './CompletarCirugiaModal';
-import { CompletarServicioModal } from './CompletarServicioModal';
+import { CompletarConsultaModal } from './CompletarConsultaModal';
 import { API_CONFIG, ApiService } from '@/services/index.services';
 import type { ServicioActivo, ServicioResponse } from '@/types/vetdoc';
 import { CompletarInternacionModal } from './CompletarInternacionModal';
@@ -160,7 +160,7 @@ export const ServiciosActivos: React.FC = () => {
                 ))}
             </div>
             {modalData && (
-                <CompletarServicioModal
+                <CompletarConsultaModal
                     servicioId={modalData.servicioId}
                     servicioEspecificoId={modalData.servicioEspecificoId}
                     isOpen={true}
