@@ -8,6 +8,7 @@ export * from './view/Cards';
 export * from './layout/Header';
 
 export * from './sections/SeccionMascota';
+export * from './sections/SeccionReservacion';
 export * from './sections/SeccionUsuario';
 
 export * from './usuarios/formularios/CrearClienteForm';
@@ -22,3 +23,5 @@ export * from './mascotas/formularios/CrearMascotaForm';
 export * from './mascotas/formularios/CrearRazaForm';
 export * from './mascotas/listados/MascotaList';
 export * from './mascotas/listados/RazaList';
+
+export * from './reservaciones/ReservacionesList';

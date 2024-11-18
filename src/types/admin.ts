@@ -229,6 +229,6 @@ export type ViewState =
     // Mascotas
     | 'list-raza' | 'create-raza' | 'create-mascota' | 'list-mascota'
     // Reservaciones
-    | 'list-reservations'
+    | 'list-reservaciones'
     // Servicios
     | 'list-completed-services' | 'create-receipt' | 'list-receipts';

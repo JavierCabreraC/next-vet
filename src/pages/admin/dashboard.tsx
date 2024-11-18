@@ -5,10 +5,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { logout } from '@/utils/index.utils';
 import { ViewState } from '@/types/index.types';
 import { AdminLayout } from '@/components/admin/layout/AdminLayout';
-import { UsuarioSection, MascotaSection, 
-    // ReservationSection,
-    // ServiceSection 
-} from '@/components/admin/index.admincomp';
+import { UsuarioSection, MascotaSection, ReservacionSection } from '@/components/admin/index.admincomp';
 
 
 const AdminDashboard = () => {
@@ -49,10 +46,10 @@ const AdminDashboard = () => {
             return <MascotaSection view={currentView} setCurrentView={setCurrentView}/>;
         }
 
-        // // Sección de Reservaciones, por implementar
-        // if (currentView.includes('reservations')) {
-        //     return <ReservationSection view={currentView} />;
-        // }
+        // Sección de Reservaciones
+        if (currentView.includes('reservaciones')) {
+            return <ReservacionSection view={currentView} />;
+        }
 
         // // Sección de Servicios, por implementar
         // if (currentView.includes('services') || currentView.includes('receipt')) {
