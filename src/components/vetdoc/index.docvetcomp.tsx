@@ -3,10 +3,12 @@ export * from './view/ServiciosSeleccion';
 export * from './view/Sidebar';
 export * from './view/VetHeader';
 
+export * from './formularios/AnalisisForm';
 export * from './formularios/CirugiaForm';
 export * from './formularios/ConsultaForm';
 export * from './formularios/InternacionForm';
 export * from './formularios/PeluqueriaForm';
+export * from './formularios/RecetaForm';
 export * from './formularios/VacunaForm';
 export * from './formularios/VacunationForm'
 ;
