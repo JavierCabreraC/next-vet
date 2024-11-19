@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { AnalisisFormProps } from "@/types/vetdoc";
+import { AnalisisRecetaFormProps } from "@/types/vetdoc";
 import { Button, Input } from "@/components/ui/index.ui";
 import { ApiService, API_CONFIG } from '@/services/index.services';
 
 
-export const RecetaForm: React.FC<AnalisisFormProps> = ({
+export const RecetaForm: React.FC<AnalisisRecetaFormProps> = ({
     servicio,
     onSuccess,
     onCancel

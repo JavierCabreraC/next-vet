@@ -124,7 +124,7 @@ export interface NuevoAnalisis {
     InternacionID?: number;
 }
 
-export interface AnalisisFormProps {
+export interface AnalisisRecetaFormProps {
     servicio: ServicioCompletado;
     onSuccess: () => void;
     onCancel: () => void;
@@ -161,7 +161,7 @@ export interface Analisis {
     Raza: string;
 }
 
-export type MainView = 'nuevo' | 'activos' | 'historial' | 'completados' | 'recetas' | 'analisis';
+export type MainView = 'nuevo' | 'activos' | 'historial' | 'completados' | 'recetas' | 'analisis' | 'vacunas' | 'vacunaForm';
 
 export type ServiceType = 'consulta' | 'peluqueria' | 'internacion' | 'analisis' | 'cirugia' | 'receta';
 

@@ -1,13 +1,16 @@
 import '@/app/globals.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { logout } from '@/utils/index.utils';
 import { useAuth } from '@/hooks/index.hooks';
 import { Button } from '@/components/ui/index.ui';
-import { Stethoscope, LogOut, Search } from 'lucide-react';
-import type { MainView, ReservacionV, ServiceType } from '@/types/vetdoc';
+import { Stethoscope, LogOut, Search, Plus } from 'lucide-react';
+import type { MainView, ReservacionV, ServiceType, Vacuna } from '@/types/vetdoc';
 import { ReservacionesPendientes, ConsultaForm, PeluqueriaForm, ServiciosCompletados, ServicioSelection, 
-    Sidebar, ServiciosActivosView, RecetasView, AnalisisView, CirugiaForm} from '@/components/vetdoc/index.docvetcomp';
+    Sidebar, ServiciosActivosView, RecetasView, AnalisisView, CirugiaForm,
+    VacunaList,
+    VacunaForm} from '@/components/vetdoc/index.docvetcomp';
+import { API_CONFIG, ApiService } from '@/services/index.services';
 
 
 const ServiciosPage: React.FC = () => {
@@ -16,7 +19,24 @@ const ServiciosPage: React.FC = () => {
     const [mainView, setMainView] = useState<MainView>('nuevo');
     const [selectedService, setSelectedService] = useState<ServiceType | null>(null);
     const [selectedReservacion, setSelectedReservacion] = useState<ReservacionV | null>(null);
+    const [vacunas, setVacunas] = useState<Vacuna[]>([]);
 
+    useEffect(() => {
+        const cargarVacunas = async () => {
+            if (mainView === 'vacunas') {
+                try {
+                    const data = await ApiService.fetch<Vacuna[]>(`${API_CONFIG.ENDPOINTS.DOC_VACUNAS}`, {
+                        method: 'GET',
+                    });
+                    setVacunas(data);
+                } catch (error) {
+                    console.error('Error al obtener vacunas:', error);
+                }
+            }
+        };
+        cargarVacunas();
+    }, [mainView]);
+    
     if (loading) {
         return <div className="flex justify-center items-center h-screen">Cargando...</div>;
     }
@@ -25,6 +45,18 @@ const ServiciosPage: React.FC = () => {
     }
     const handleLogout = () => {
         logout(router);
+    };
+
+    const handleVacunasClick = async () => {
+        try {
+            const data = await ApiService.fetch<Vacuna[]>(`${API_CONFIG.ENDPOINTS.DOC_VACUNAS}`, {
+                method: 'GET',
+            });
+            setVacunas(data);
+            setMainView('vacunas');
+        } catch (error) {
+            console.error('Error al obtener vacunas:', error);
+        }
     };
 
     const renderMainContent = () => {
@@ -171,7 +203,34 @@ const ServiciosPage: React.FC = () => {
                     }
                 }
                 return ( <ServicioSelection onServiceSelect={setSelectedService} /> );
+
             case 'activos': return < ServiciosActivosView onNewService={() => setMainView('nuevo')} />;
+
+            case 'vacunas':
+                return (
+                    <div className="p-6">
+                        <div className="flex justify-between items-center mb-6">
+                            <h2 className="text-2xl font-bold">Vacunas Registradas</h2>
+                            <Button onClick={() => setMainView('vacunaForm')}>
+                                <Plus className="mr-2" size={16} />
+                                Nueva Vacuna
+                            </Button>
+                        </div>
+                        <VacunaList vacunas={vacunas} />
+                    </div>
+                );
+
+            case 'vacunaForm':
+                return (
+                    <>
+                        <h2 className="text-2xl font-bold mb-4">Registrar Nueva Vacuna</h2>
+                        <VacunaForm onSuccess={() => {
+                            handleVacunasClick();
+                            setMainView('vacunas');
+                        }} />
+                    </>
+                );
+            
             case 'completados':
                 return (
                     <div className="p-6">
@@ -179,6 +238,7 @@ const ServiciosPage: React.FC = () => {
                         <ServiciosCompletados />
                     </div>
                 );
+
             case 'historial':
                 return (
                     <div className="p-6">
@@ -201,8 +261,11 @@ const ServiciosPage: React.FC = () => {
                         </div>
                     </div>
                 );
+
             case 'recetas': return < RecetasView />;
+
             case 'analisis': return < AnalisisView />;
+            
             default: return null;
         }
     };
