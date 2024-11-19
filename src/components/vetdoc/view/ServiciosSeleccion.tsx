@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/index.ui";
-import { ConsultaCompletada, ServiceType } from "@/types/vetdoc";
+import { AnalisisForm } from "../formularios/AnalisisForm";
 import { ConsultasCompletadasList } from "./ConsultasCompletadas";
+import { ServiciosCompletadosList } from "./ServiciosCompletadosList";
 import { InternacionForm } from "@/components/vetdoc/index.docvetcomp";
+import { ConsultaCompletada, ServiceType, ServicioCompletado } from "@/types/vetdoc";
 import { Activity, BedDouble, Scissors, Syringe, TestTube, BookPlus } from "lucide-react";
 
 
@@ -31,6 +33,9 @@ interface ServicioSelectionProps {
 export const ServicioSelection: React.FC<ServicioSelectionProps> = ({ onServiceSelect }) => {
     const [showConsultas, setShowConsultas] = useState<boolean>(false);
     const [selectedConsulta, setSelectedConsulta] = useState<ConsultaCompletada | null>(null);
+    const [showServiciosCompletados, setShowServiciosCompletados] = useState<boolean>(false);
+    const [selectedServicio, setSelectedServicio] = useState<ServicioCompletado | null>(null);
+
 
     if (showConsultas) {
         if (selectedConsulta) {
@@ -76,6 +81,56 @@ export const ServicioSelection: React.FC<ServicioSelectionProps> = ({ onServiceS
         );
     }
 
+    // Vista para análisis
+    if (showServiciosCompletados) {
+        if (selectedServicio) {
+            if (selectedServicio.Servicio !== 'Consulta' && selectedServicio.Servicio !== 'Internacion') {
+                setSelectedServicio(null);
+                return null;
+            }
+
+            return (
+                <div className="p-6">
+                    <div className="flex items-center justify-between mb-6">
+                        <h2 className="text-2xl font-bold">Registro de Análisis</h2>
+                        <Button 
+                            variant="outline" 
+                            onClick={() => setSelectedServicio(null)}
+                        >
+                            Volver a Servicios
+                        </Button>
+                    </div>
+                    <AnalisisForm
+                        servicio={selectedServicio}
+                        onSuccess={() => {
+                            setShowServiciosCompletados(false);
+                            setSelectedServicio(null);
+                            onServiceSelect('analisis');
+                        }}
+                        onCancel={() => setSelectedServicio(null)}
+                    />
+                </div>
+            );
+        }
+
+        return (
+            <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-2xl font-bold">Servicios Completados</h2>
+                    <Button 
+                        variant="outline" 
+                        onClick={() => setShowServiciosCompletados(false)}
+                    >
+                        Volver
+                    </Button>
+                </div>
+                <ServiciosCompletadosList
+                    onServicioSelect={setSelectedServicio}
+                />
+            </div>
+        );
+    }
+
     return (
         <div className="p-6">
             <h2 className="text-2xl font-bold mb-6">Nuevo Servicio</h2>
@@ -108,7 +163,7 @@ export const ServicioSelection: React.FC<ServicioSelectionProps> = ({ onServiceS
                     icon={<TestTube size={40} />}
                     title="Análisis Clínico"
                     description="Registro de análisis clínico"
-                    onClick={() => onServiceSelect('analisis')}
+                    onClick={() => setShowServiciosCompletados(true)}
                 />
                 <ServiceCard
                     icon={<BookPlus size={40} />}

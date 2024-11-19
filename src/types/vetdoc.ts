@@ -120,8 +120,14 @@ export interface NuevoAnalisis {
     TipoAnalisis: string;
     FechaAnalisis: string;
     Resultado: AnalisisResultado;
-    ConsultaID: number | null;
-    InternacionID: number | null;
+    ConsultaID?: number;
+    InternacionID?: number;
+}
+
+export interface AnalisisFormProps {
+    servicio: ServicioCompletado;
+    onSuccess: () => void;
+    onCancel: () => void;
 }
 
 export interface CompletarServicioModalProps {
