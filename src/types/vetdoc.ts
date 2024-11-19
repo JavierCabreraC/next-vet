@@ -161,6 +161,7 @@ export type ServiceType = 'consulta' | 'peluqueria' | 'internacion' | 'analisis'
 export interface ConsultaCompletada {
     ServicioID: number;
     "Hora terminada": string;
+    ServicioEspecificoID: number;
     MascotaID: number;
     Mascota: string;
     Peso: string;
@@ -173,6 +174,7 @@ export interface NuevaInternacion {
     Notas: string;
     MascotaID: number;
     CirugiaID: number | null;
+    ConsultaID: number | null;
 }
 
 export interface InternacionResponse {
@@ -182,6 +184,8 @@ export interface InternacionResponse {
 }
 
 export interface FinalizarInternacionData {
+    ServicioID: number;
+    InternacionID: number;
     PesoSalida: number;
     TemperaturaSalida: number;
     Notas: string;

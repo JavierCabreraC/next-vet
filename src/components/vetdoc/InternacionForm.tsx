@@ -28,6 +28,7 @@ export const InternacionForm: React.FC<InternacionFormProps> = ({
                 TemperaturaEntrada: parseFloat(consulta.Temperatura),
                 Notas: notas,
                 MascotaID: consulta.MascotaID,
+                ConsultaID: consulta.ServicioEspecificoID,
                 CirugiaID: null
             };
 
