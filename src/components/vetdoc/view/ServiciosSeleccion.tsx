@@ -81,16 +81,16 @@ export const ServicioSelection: React.FC<ServicioSelectionProps> = ({ onServiceS
             <h2 className="text-2xl font-bold mb-6">Nuevo Servicio</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <ServiceCard
-                icon={<Activity size={40} />}
-                title="Consulta Médica"
-                description="Registro de consulta veterinaria"
-                onClick={() => onServiceSelect('consulta')}
-                />
-                <ServiceCard
                     icon={<Scissors size={40} />}
                     title="Peluquería"
                     description="Registro de servicio de peluquería"
                     onClick={() => onServiceSelect('peluqueria')}
+                />
+                <ServiceCard
+                    icon={<Activity size={40} />}
+                    title="Consulta Médica"
+                    description="Registro de consulta veterinaria"
+                    onClick={() => onServiceSelect('consulta')}
                 />
                 <ServiceCard
                     icon={<BedDouble size={40} />}

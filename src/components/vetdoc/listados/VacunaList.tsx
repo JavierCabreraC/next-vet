@@ -1,5 +1,5 @@
 import type { Vacuna } from '@/types/index.types';
-import { Column, DataTable } from './common/DataTable';
+import { Column, DataTable } from '../common/DataTable';
 
 
 export const VacunaList: React.FC<{ vacunas: Vacuna[] }> = ({ vacunas }) => {

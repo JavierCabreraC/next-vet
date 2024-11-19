@@ -1,4 +1,4 @@
-import { Column, DataTable } from './common/DataTable';
+import { Column, DataTable } from '../common/DataTable';
 import type { VacunacionRegistro } from '@/types/index.types';
 
 

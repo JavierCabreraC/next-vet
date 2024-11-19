@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { ServicioCompletado } from '@/types/vetdoc';
 import { ApiService, API_CONFIG } from '@/services/index.services';
-import { Clock, PawPrint, Activity, CheckCircle2 } from 'lucide-react';
+import { Clock, PawPrint, Activity, CheckCircle2, Scissors, BedDouble, Syringe } from 'lucide-react';
 
 
 export const ServiciosCompletados: React.FC = () => {
@@ -46,9 +46,13 @@ export const ServiciosCompletados: React.FC = () => {
     const getServiceIcon = (tipo: string) => {
         switch (tipo.toLowerCase()) {
             case 'peluqueria':
+                return <Scissors className="text-purple-500" size={20} />;
+            case 'consulta':
                 return <Activity className="text-purple-500" size={20} />;
-            default:
-                return <Activity className="text-blue-500" size={20} />;
+            case 'internacion':
+                return <BedDouble className="text-purple-500" size={20} />;
+            case 'cirugia':
+                return <Syringe className="text-purple-500" size={20} />;
         }
     };
 

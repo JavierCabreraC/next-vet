@@ -80,6 +80,7 @@ export interface ServicioResponse {
 export interface ServicioCompletado {
     ServicioID: number;
     Servicio: string;
+    ServicioEspecificoID: number;
     Estado: string;
     "Hora de finalización": string;
     "Nombre de Mascota": string;
