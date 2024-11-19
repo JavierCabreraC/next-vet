@@ -161,9 +161,9 @@ export interface Analisis {
     Raza: string;
 }
 
-export type MainView = 'nuevo' | 'activos' | 'historial' | 'completados' | 'recetas' | 'analisis' | 'vacunas' | 'vacunaForm';
+export type MainView = 'nuevo' | 'activos' | 'historial' | 'completados' | 'recetas' | 'analisis' | 'vacunas' | 'vacunaForm' | 'vacunacion';
 
-export type ServiceType = 'consulta' | 'peluqueria' | 'internacion' | 'analisis' | 'cirugia' | 'receta';
+export type ServiceType = 'consulta' | 'peluqueria' | 'internacion' | 'analisis' | 'cirugia' | 'receta' | 'vacunacion';
 
 export interface ConsultaCompletada {
     ServicioID: number;

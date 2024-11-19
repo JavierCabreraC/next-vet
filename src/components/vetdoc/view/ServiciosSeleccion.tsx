@@ -220,6 +220,12 @@ export const ServicioSelection: React.FC<ServicioSelectionProps> = ({ onServiceS
                     description="Registro de recetas médicas"
                     onClick={() => setShowServiciosReceta(true)}
                 />
+                <ServiceCard
+                    icon={<Syringe size={40} />}
+                    title="Vacunación"
+                    description="Registro de vacunación de mascota"
+                    onClick={() => onServiceSelect('vacunacion')}
+                />
                 {/* ... otros servicios ... */}
             </div>
         </div>

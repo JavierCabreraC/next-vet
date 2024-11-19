@@ -9,7 +9,8 @@ import type { MainView, ReservacionV, ServiceType, Vacuna } from '@/types/vetdoc
 import { ReservacionesPendientes, ConsultaForm, PeluqueriaForm, ServiciosCompletados, ServicioSelection, 
     Sidebar, ServiciosActivosView, RecetasView, AnalisisView, CirugiaForm,
     VacunaList,
-    VacunaForm} from '@/components/vetdoc/index.docvetcomp';
+    VacunaForm,
+    VacunacionForm} from '@/components/vetdoc/index.docvetcomp';
 import { API_CONFIG, ApiService } from '@/services/index.services';
 
 
@@ -201,6 +202,27 @@ const ServiciosPage: React.FC = () => {
                             </div>
                         );
                     }
+                }
+                if (selectedService === 'vacunacion') {
+                    return (
+                        <div className="p-6">
+                            <div className="flex items-center justify-between mb-6">
+                                <h2 className="text-2xl font-bold">Registro de Vacunación</h2>
+                                <Button 
+                                    variant="outline" 
+                                    onClick={() => setSelectedService(null)}
+                                >
+                                    Volver
+                                </Button>
+                            </div>
+                            <VacunacionForm 
+                                onSuccess={() => {
+                                    setMainView('nuevo');
+                                    setSelectedService(null);
+                                }}
+                            />
+                        </div>
+                    );
                 }
                 return ( <ServicioSelection onServiceSelect={setSelectedService} /> );
 
