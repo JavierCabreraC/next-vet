@@ -28,8 +28,7 @@ export const InternacionForm: React.FC<InternacionFormProps> = ({
                 TemperaturaEntrada: parseFloat(consulta.Temperatura),
                 Notas: notas,
                 MascotaID: consulta.MascotaID,
-                ConsultaID: consulta.ServicioEspecificoID,
-                CirugiaID: null
+                ConsultaID: consulta.ServicioEspecificoID
             };
 
             const response = await ApiService.fetch<InternacionResponse>(
@@ -62,7 +61,7 @@ export const InternacionForm: React.FC<InternacionFormProps> = ({
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label className="block text-sm font-medium mb-1">
-                        Notas de Progreso
+                        Notas de Ingreso
                     </label>
                     <textarea
                         className="w-full border rounded-md p-2 min-h-[150px]"

@@ -173,8 +173,7 @@ export interface NuevaInternacion {
     TemperaturaEntrada: number;
     Notas: string;
     MascotaID: number;
-    CirugiaID: number | null;
-    ConsultaID: number | null;
+    ConsultaID: number;
 }
 
 export interface InternacionResponse {
