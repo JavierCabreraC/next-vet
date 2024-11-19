@@ -1,4 +1,4 @@
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/index.ui";
 import { LogOut, Stethoscope } from "lucide-react";
 
 

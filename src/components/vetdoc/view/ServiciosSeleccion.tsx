@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/index.ui";
-import { InternacionForm } from "../InternacionForm";
 import { ConsultaCompletada, ServiceType } from "@/types/vetdoc";
 import { ConsultasCompletadasList } from "./ConsultasCompletadas";
+import { InternacionForm } from "@/components/vetdoc/index.docvetcomp";
 import { Activity, BedDouble, Scissors, Syringe, TestTube, BookPlus } from "lucide-react";
 
 

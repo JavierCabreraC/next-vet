@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { API_CONFIG, ApiService } from '@/services/index.services';
 import { CompletarServicioModalProps, FinalizarConsulta } from "@/types/vetdoc";
-import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../ui/index.ui";
+import { Button, Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/index.ui";
 
 
 export const CompletarConsultaModal: React.FC<CompletarServicioModalProps> = ({ 

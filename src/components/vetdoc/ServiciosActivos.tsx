@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { CompletarCirugiaModal } from './CompletarCirugiaModal';
-import { CompletarConsultaModal } from './CompletarConsultaModal';
 import { API_CONFIG, ApiService } from '@/services/index.services';
 import type { ServicioActivo, ServicioResponse } from '@/types/vetdoc';
-import { CompletarInternacionModal } from './CompletarInternacionModal';
 import { Activity, Clock, Check, PawPrint, Scissors, BedDouble, Syringe } from 'lucide-react';
+import { CompletarCirugiaModal, CompletarConsultaModal, CompletarInternacionModal } from '@/components/vetdoc/index.docvetcomp';
 
 
 export const ServiciosActivos: React.FC = () => {

@@ -22,7 +22,7 @@ export const API_CONFIG = {
         DOC_SERVCIRU:               '/vetdoc/servicios/cirugia',
         DOC_MASCOTAS:               '/vetdoc/mascotas',                  // lee las mascotaservicios/completed
         DOC_SERVACT:                '/vetdoc/servicios/active',          // lee servicios en proceso
-        DOC_SERVEND:                '/vetdoc/servicios',                 // para marcar un servicio como completado <----- ¡¡¡!!!
+        DOC_SERVEND:                '/vetdoc/servicios/peluqueria',                 // para marcar un servicio como completado <----- ¡¡¡!!!
         DOC_SERVCOM:                '/vetdoc/servicios/completed',       // lee servicios completados
         DOC_RECETACONS:             '/vetdoc/receta/consulta',
         DOC_RECETAINT:              '/vetdoc/receta/internacion',

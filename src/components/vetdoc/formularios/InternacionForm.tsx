@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "../ui/index.ui";
+import { Button } from "@/components/ui/index.ui";
 import { API_CONFIG, ApiService } from "@/services/index.services";
 import { ConsultaCompletada, InternacionResponse, NuevaInternacion } from "@/types/vetdoc";
 
@@ -28,7 +28,7 @@ export const InternacionForm: React.FC<InternacionFormProps> = ({
                 TemperaturaEntrada: parseFloat(consulta.Temperatura),
                 Notas: notas,
                 MascotaID: consulta.MascotaID,
-                ConsultaID: consulta.ServicioEspecificoID
+                ConsultaID: consulta.ConsultaID
             };
 
             const response = await ApiService.fetch<InternacionResponse>(

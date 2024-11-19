@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Button, Input } from '@/components/ui/index.ui';
 import { CompletarCirugiaModalProps } from '@/types/vetdoc';
 import { API_CONFIG, ApiService } from "@/services/index.services";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
