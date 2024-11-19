@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { MainView, ServiceType } from '@/types/vetdoc';
-import { Plus, Clipboard, CheckCircle2, History, FileCheck, FileText, ClipboardList, Syringe } from 'lucide-react';
+import { Plus, Clipboard, CheckCircle2, History, FileCheck, FileText, ClipboardList, Syringe, CalendarClock } from 'lucide-react';
 
 
 interface NavButtonProps {
@@ -102,6 +102,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         active={mainView === 'vacunas'}
                         onClick={() => {
                             onViewChange('vacunas');
+                            onServiceClear();
+                        }}
+                    />
+                    <NavButton
+                        icon={<CalendarClock size={20} />}
+                        text="Historial Vacunaciones"
+                        active={mainView === 'historialVacunas'}
+                        onClick={() => {
+                            onViewChange('historialVacunas');
                             onServiceClear();
                         }}
                     />
