@@ -36,6 +36,7 @@ export interface VacunacionFormProps {
 export interface ReservacionV {
     ReservacionID: number;
     Estado: string;
+    Motivo: string;
     Hora: string;
     Cliente: string;
     ClienteID: number;
