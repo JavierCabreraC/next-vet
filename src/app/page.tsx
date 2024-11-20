@@ -1,9 +1,8 @@
-'use client';
+"use client";
 import React, { useState } from 'react';
 import { ServiceCardProps } from '@/types/index.types';
 import { PawPrint, Calendar, Stethoscope } from 'lucide-react';
 import { Button, ChangePasswordForm, LoginForm } from '@/components/ui/index.ui';
-
 
 const VetClinicWelcomePage: React.FC = () => {
     const [showLogin, setShowLogin] = useState(false);
@@ -40,18 +39,29 @@ const VetClinicWelcomePage: React.FC = () => {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                             <ServiceCard 
                                 icon={<Stethoscope size={40} />}
-                                title="Atención Veterinaria"
+                                title="Gestionar Usuario"
                                 description="Consultas y tratamientos especializados para todo tipo de mascotas"
+                                items={["Iniciar Sesion", "Cerrar Sesion", "Gestionar Personal","Gestionar Rol", "Gestionar Cliente", "Cambiar Contraseña"
+                                    , "Gestionar bitacora","Editar Perfil de Usuario"
+                                ]}
                             />
                             <ServiceCard 
                                 icon={<Calendar size={40} />}
-                                title="Citas Online"
+                                title="Reservacion"
                                 description="Reserve su cita de forma rápida y sencilla a través de nuestra plataforma"
+                                items={["Gestionar Horario", "Gestionar Reservacion"]}
                             />
                             <ServiceCard 
                                 icon={<PawPrint size={40} />}
-                                title="Cuidados Especiales"
+                                title="Servicio"
                                 description="Servicios de peluquería, spa y cuidados especiales para su mascota"
+                                items={["Peluqueria", "Consulta Medica", "Internacion","Cirujia"]}
+                            />
+                             <ServiceCard 
+                                icon={<PawPrint size={40} />}
+                                title="Gestionar Mascota"
+                                description="Servicios de peluquería, spa y cuidados especiales para su mascota"
+                                items={["Gestionar Mascota", "Reguistro de vacunacion", "Gestionar receta","Gestionar Analisis", "Historia Clinico"]}
                             />
                         </div>
                         
@@ -70,12 +80,33 @@ const VetClinicWelcomePage: React.FC = () => {
     );
 };
 
-const ServiceCard: React.FC<ServiceCardProps> = ({ icon, title, description }) => (
-    <div className="bg-white p-6 rounded-lg shadow-md transition-transform hover:scale-105">
-        <div className="text-blue-500 mb-4">{icon}</div>
-        <h3 className="text-xl font-semibold mb-2">{title}</h3>
-        <p className="text-gray-600">{description}</p>
-    </div>
-);
+// Modificar el componente ServiceCard para incluir el despliegue de la lista
+const ServiceCard: React.FC<ServiceCardProps & { items?: string[] }> = ({ icon, title, description, items }) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleList = () => {
+        setIsOpen(!isOpen);
+    };
+
+    return (
+        <div 
+            className="bg-white p-6 rounded-lg shadow-md transition-transform hover:scale-105 cursor-pointer"
+            onClick={toggleList} // Al hacer clic, se alterna el despliegue de la lista
+        >
+            <div className="text-blue-500 mb-4">{icon}</div>
+            <h3 className="text-xl font-semibold mb-2">{title}</h3>
+            <p className="text-gray-600">{description}</p>
+            
+            {/* Renderizar la lista si isOpen es verdadero */}
+            {isOpen && items && (
+                <ul className="mt-4 text-left">
+                    {items.map((item, index) => (
+                        <li key={index} className="text-gray-500 list-disc list-inside">{item}</li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    );
+};
 
 export default VetClinicWelcomePage;
