@@ -65,7 +65,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView })
             title: 'Reportes',
             icon: <FileText className="w-5 h-5" />,
             items: [
-                { label: 'Reporte de Bitácora', value: 'report-bitacora' }
+                { label: 'Reporte de Bitácora', value: 'report-bitacora' },
+                { label: 'Servicios por Cliente', value: 'report-servicios' }
             ]
         }
     ];

@@ -10,6 +10,7 @@ export const API_CONFIG = {
         ADM_USERSINACTIVOS:         '/admin/usuariosInactivos',
         ADM_RESERV:                 '/admin/reservacion',
         ADM_REPORTBITACORA:         '/admin/report/bitacora',
+        ADM_REPORTSERVICIO:         '/admin/report/servicios',
         CLI_MASCOTAS:               '/cliente/mascotas',
         CLI_RESERVA:                '/cliente/reservacion',
         CLI_RESERVACLI:             '/cliente/reservacion/cli',

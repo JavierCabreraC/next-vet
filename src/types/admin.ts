@@ -259,6 +259,11 @@ export interface BitacoraReport {
     Accion: string;
 }
 
+export interface ServicioReport {
+    TipoServicio: string;
+    "Total Servicios": number;
+}
+
 export type ViewState = 
     // Usuarios
     | 'create-personal' | 'list-personal' 
@@ -272,4 +277,4 @@ export type ViewState =
     // Servicios
     | 'list-completed-services' | 'create-receipt' | 'list-receipts'
     // Reportes
-    | 'report-bitacora';
+    | 'report-bitacora' | 'report-servicios';
