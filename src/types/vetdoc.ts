@@ -162,7 +162,12 @@ export interface Analisis {
     Raza: string;
 }
 
-export type MainView = 'nuevo' | 'activos' | 'historial' | 'completados' | 'recetas' | 'analisis' | 'vacunas' | 'vacunaForm' | 'vacunacion' | 'historialVacunas';;
+export interface NuevaReservacionCirugia {
+    CI: number;
+    FechaHoraReservada: string;
+}
+
+export type MainView = 'nuevo' | 'activos' | 'historial' | 'completados' | 'recetas' | 'analisis' | 'vacunas' | 'vacunaForm' | 'vacunacion' | 'historialVacunas' | 'agendarCirugia';
 
 export type ServiceType = 'consulta' | 'peluqueria' | 'internacion' | 'analisis' | 'cirugia' | 'receta' | 'vacunacion';
 

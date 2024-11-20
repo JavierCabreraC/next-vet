@@ -29,7 +29,8 @@ export const API_CONFIG = {
         DOC_ANALISISINT:            '/vetdoc/analisis/internacion',
         DOC_ANALISISCONS:           '/vetdoc/analisis/consulta',
         DOC_ANALISIS:               '/vetdoc/analisis',
-        DOC_RECETA:                 '/vetdoc/receta'
+        DOC_RECETA:                 '/vetdoc/receta',
+        DOC_RESERVACIRUGIA:         '/vetdoc/reservacion'
     },
     ITEMS_PER_PAGE: 6
 } as const;

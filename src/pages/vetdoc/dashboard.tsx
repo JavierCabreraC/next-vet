@@ -8,8 +8,8 @@ import { Stethoscope, LogOut, Search, Plus } from 'lucide-react';
 import { API_CONFIG, ApiService } from '@/services/index.services';
 import type { MainView, ReservacionV, ServiceType, Vacuna, VacunacionRegistro } from '@/types/vetdoc';
 import { ReservacionesPendientes, ConsultaForm, PeluqueriaForm, ServiciosCompletados, ServicioSelection, Sidebar, 
-    ServiciosActivosView, RecetasView, AnalisisView, CirugiaForm, VacunaList, VacunaForm, VacunacionForm, VacunacionList
-} from '@/components/vetdoc/index.docvetcomp';
+    ServiciosActivosView, RecetasView, AnalisisView, CirugiaForm, VacunaList, VacunaForm, VacunacionForm, VacunacionList,
+    AgendarCirugiaForm } from '@/components/vetdoc/index.docvetcomp';
 
 
 const ServiciosPage: React.FC = () => {
@@ -305,6 +305,18 @@ const ServiciosPage: React.FC = () => {
                     <div className="p-6">
                         <h2 className="text-2xl font-bold mb-6">Registros de Vacunación</h2>
                         <VacunacionList registros={registrosVacunacion} />
+                    </div>
+                );
+            
+            case 'agendarCirugia':
+                return (
+                    <div className="p-6">
+                        <h2 className="text-2xl font-bold mb-6">Agendar Nueva Cirugía</h2>
+                        <AgendarCirugiaForm 
+                            onSuccess={() => {
+                                setMainView('nuevo');
+                            }}
+                        />
                     </div>
                 );
 

@@ -9,9 +9,10 @@ export * from './formularios/ConsultaForm';
 export * from './formularios/InternacionForm';
 export * from './formularios/PeluqueriaForm';
 export * from './formularios/RecetaForm';
+export * from './formularios/ReservCirugia';
 export * from './formularios/VacunaForm';
-export * from './formularios/VacunationForm'
-;
+export * from './formularios/VacunationForm';
+
 export * from './listados/Analisis';
 export * from './listados/Receta';
 export * from './listados/VacunaList';

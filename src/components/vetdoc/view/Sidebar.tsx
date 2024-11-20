@@ -1,6 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { MainView, ServiceType } from '@/types/vetdoc';
-import { Plus, Clipboard, CheckCircle2, History, FileCheck, FileText, ClipboardList, Syringe, CalendarClock } from 'lucide-react';
+import { Plus, Clipboard, CheckCircle2, History, FileCheck, FileText, 
+    ClipboardList, Syringe, CalendarClock, 
+    Scissors} from 'lucide-react';
 
 
 interface NavButtonProps {
@@ -93,6 +95,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         active={mainView === 'analisis'}
                         onClick={() => {
                             onViewChange('analisis');
+                            onServiceClear();
+                        }}
+                    />
+                    <NavButton
+                        icon={<Scissors size={20} />}
+                        text="Agendar Cirugía"
+                        active={mainView === 'agendarCirugia'}
+                        onClick={() => {
+                            onViewChange('agendarCirugia');
                             onServiceClear();
                         }}
                     />
