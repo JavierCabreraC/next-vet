@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ViewState } from '@/types/admin';
-import { Users, PawPrint, Calendar, Briefcase, ChevronDown } from 'lucide-react';
+import { Users, PawPrint, Calendar, Briefcase, ChevronDown, FileText } from 'lucide-react';
 
 
 interface SidebarProps {
@@ -59,6 +59,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView })
                 { label: 'Servicios Completados', value: 'list-completed-services' },
                 { label: 'Crear Recibo', value: 'create-receipt' },
                 { label: 'Listar Recibos', value: 'list-receipts' }
+            ]
+        },
+        {
+            title: 'Reportes',
+            icon: <FileText className="w-5 h-5" />,
+            items: [
+                { label: 'Reporte de Bitácora', value: 'report-bitacora' }
             ]
         }
     ];

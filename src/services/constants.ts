@@ -1,5 +1,5 @@
 export const API_CONFIG = {
-    BASE_URL: 'https://neon-demo-production.up.railway.app/api',
+    BASE_URL: 'http://localhost:3333/api',
     ENDPOINTS: {
         ADM_PERSONAL:               '/admin/personal',
         ADM_CLIENTES:               '/admin/clientes',
@@ -9,6 +9,7 @@ export const API_CONFIG = {
         ADM_USERS:                  '/admin/usuarios',
         ADM_USERSINACTIVOS:         '/admin/usuariosInactivos',
         ADM_RESERV:                 '/admin/reservacion',
+        ADM_REPORTBITACORA:         '/admin/report/bitacora',
         CLI_MASCOTAS:               '/cliente/mascotas',
         CLI_RESERVA:                '/cliente/reservacion',
         CLI_RESERVACLI:             '/cliente/reservacion/cli',

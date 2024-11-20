@@ -223,6 +223,42 @@ export interface RazaForm {
     EspecieID: number;
 }
 
+export interface AutoTableColumn {
+    header: string;
+    dataKey?: string;
+ }
+ 
+ export interface AutoTableSettings {
+    head: string[][];
+    body: string[][];
+    startY?: number;
+    theme?: 'striped' | 'grid' | 'plain';
+    margin?: { top: number; right: number; bottom: number; left: number };
+    headStyles?: {
+        fillColor?: number[];
+        textColor?: number[];
+        fontStyle?: 'normal' | 'bold' | 'italic';
+        fontSize?: number;
+    };
+    bodyStyles?: {
+        fillColor?: number[];
+        textColor?: number[];
+        fontSize?: number;
+    };
+    alternateRowStyles?: {
+        fillColor?: number[];
+    };
+    tableWidth?: 'auto' | number;
+    tableLineColor?: number[];
+    tableLineWidth?: number;
+ }
+
+export interface BitacoraReport {
+    FechaHora: string;
+    IPDir: string;
+    Accion: string;
+}
+
 export type ViewState = 
     // Usuarios
     | 'create-personal' | 'list-personal' 
@@ -234,4 +270,6 @@ export type ViewState =
     // Reservaciones
     | 'list-reservaciones'
     // Servicios
-    | 'list-completed-services' | 'create-receipt' | 'list-receipts';
+    | 'list-completed-services' | 'create-receipt' | 'list-receipts'
+    // Reportes
+    | 'report-bitacora';
