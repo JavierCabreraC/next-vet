@@ -1,12 +1,85 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { MascotaCli } from '@/types/index.types';
+import {ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight} from "lucide-react";
 
 
 interface MascotasListProps {
     mascotas: MascotaCli[];
+    itemsPerPage?: number;
 }
 
-export const MascotasList: React.FC<MascotasListProps> = ({ mascotas }) => {
+export const MascotasList: React.FC<MascotasListProps> = ({
+        mascotas, itemsPerPage = 4 }) => {
+
+    const [currentPage, setCurrentPage] = useState(1);
+
+    // Cálculos para la paginación
+    const totalPages = Math.ceil(mascotas.length / itemsPerPage);
+    const lastItemIndex = currentPage * itemsPerPage;
+    const firstItemIndex = lastItemIndex - itemsPerPage;
+    const currentItems = mascotas.slice(firstItemIndex, lastItemIndex);
+
+    const handlePageChange = (pageNumber: number) => {
+        setCurrentPage(pageNumber);
+    };
+
+    // Componente para los botones de paginación
+    const PaginationButton: React.FC<{
+        onClick: () => void;
+        disabled: boolean;
+        children: React.ReactNode;
+    }> = ({ onClick, disabled, children }) => (
+        <button
+            onClick={onClick}
+            disabled={disabled}
+            className={`
+                flex items-center justify-center px-3 py-2 border rounded-md
+                ${disabled
+                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                : 'bg-white text-gray-700 hover:bg-gray-50 hover:text-blue-600'}
+            `}
+        >
+            {children}
+        </button>
+    );
+
+    // Componente de paginación
+    const Pagination = () => (
+        <div className="flex justify-center items-center space-x-2 mt-4">
+            <PaginationButton
+                onClick={() => handlePageChange(1)}
+                disabled={currentPage === 1}
+            >
+                <ChevronsLeft className="h-4 w-4" />
+            </PaginationButton>
+
+            <PaginationButton
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+            >
+                <ChevronLeft className="h-4 w-4" />
+            </PaginationButton>
+
+            <span className="px-4 py-2 text-sm text-gray-700">
+                Página {currentPage} de {totalPages}
+            </span>
+
+            <PaginationButton
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+            >
+                <ChevronRight className="h-4 w-4" />
+            </PaginationButton>
+
+            <PaginationButton
+                onClick={() => handlePageChange(totalPages)}
+                disabled={currentPage === totalPages}
+            >
+                <ChevronsRight className="h-4 w-4" />
+            </PaginationButton>
+        </div>
+    );
+
     // Renderizado para dispositivos móviles
     const renderMobileCard = (mascota: MascotaCli) => (
         <div key={mascota.ID} className="bg-white rounded-lg shadow-md p-4 mb-4">
@@ -76,15 +149,25 @@ export const MascotasList: React.FC<MascotasListProps> = ({ mascotas }) => {
 
     return (
         <div className="bg-white rounded-lg shadow p-4">
-            {/* Vista móvil */}
-            <div className="md:hidden">
-                {mascotas.map(mascota => renderMobileCard(mascota))}
-            </div>
+            {mascotas.length === 0 ? (
+                <div className="text-center text-gray-500 py-8">
+                    No tienes mascotas registradas
+                </div>
+            ) : (
+                <>
+                    {/* Vista móvil */}
+                    <div className="md:hidden">
+                        {currentItems.map(mascota => renderMobileCard(mascota))}
+                        <Pagination />
+                    </div>
 
-            {/* Vista desktop */}
-            <div className="hidden md:block">
-                {renderDesktopTable()}
-            </div>
+                    {/* Vista desktop */}
+                    <div className="hidden md:block">
+                        {renderDesktopTable()}
+                        <Pagination />
+                    </div>
+                </>
+            )}
         </div>
     );
 };

@@ -18,8 +18,20 @@ export const Dialog: React.FC<DialogProps> = ({ open, onOpenChange, children }) 
     );
 };
 
-export const DialogContent: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    return <div className="p-6">{children}</div>;
+interface DialogContentProps {
+    children: React.ReactNode;
+    className?: string;
+}
+
+export const DialogContent: React.FC<DialogContentProps> = ({ 
+    children, 
+    className = "" 
+}) => {
+    return (
+        <div className={`p-6 ${className}`}>
+            {children}
+        </div>
+    );
 };
 
 export const DialogHeader: React.FC<{ children: React.ReactNode }> = ({ children }) => {

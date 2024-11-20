@@ -17,6 +17,7 @@ export interface Personal extends Record<string, unknown> {
 export interface Cliente extends Record<string, unknown> {
     ClienteID: number;
     NombreCompleto: string;
+    CI: string;
     Telefono: string;
     Direccion: string;
     Email: string;
@@ -128,6 +129,7 @@ export interface UpdateModalProps {
 export type PersonalForm = {
     NombreCompleto: string;
     Telefono: string;
+    NumeroCI: number;
     Direccion: string;
     Email: string;
     FechaContratacion: string;
@@ -140,6 +142,7 @@ export type ClienteForm = {
     Telefono: string;
     Direccion: string;
     Email: string;
+    NumeroCI: number;
 };
 
 export type MascotaForm = {
@@ -147,7 +150,7 @@ export type MascotaForm = {
     Sexo: string;
     FechaDeNacimiento: string;
     Observaciones: string;
-    ClienteID: number;
+    ClienteCI: number;
     RazaID: number;
 };
 
@@ -157,9 +160,19 @@ export interface CurrentItemType {
     personal?: Personal;
     cliente?: Cliente;
     mascota?: Mascota;
+    reservacion?: Reservacion;
+    usuario?: Usuario;
 }
 
-export type UpdateType = 'personal' | 'cliente' | 'mascota';
+export interface ReservacionUpdate extends Record<string, unknown> {
+    ReservacionID: number;
+}
+
+export interface UsuarioUpdate extends Record<string, unknown> {
+    UsuarioID: number;
+}
+
+export type UpdateType = 'personal' | 'cliente' | 'mascota' | 'reservacion' | 'usuario';
 
 export interface UpdateForms {
     personalUpdate: {
@@ -182,10 +195,43 @@ export interface UpdateForms {
         Observaciones?: string;
         ClienteID?: string;
     };
+    reservacionUpdate: { ReservacionID: number };
+    usuarioUpdate: { UsuarioID: number };
 }
+
+export type ViewListType = 'personal' | 'clientes' | 'mascotas' | 'bitacora' | 'usuarios' | 'reservacion';
+
+export type HandleViewListFunction = (type: ViewListType) => Promise<void>;
 
 export interface UseAdminUpdatesProps {
     setShowPersonalModal: (show: boolean) => void;
     setShowClienteModal: (show: boolean) => void;
     setShowMascotaModal: (show: boolean) => void;
+    setShowUsuarioModal: (show: boolean) => void;
+    setShowReservacionModal: (show: boolean) => void;
+    handleViewList: HandleViewListFunction;
 }
+
+export interface Raza {
+    RazaID: number;
+    NombreRaza: string;
+    NombreEspecie: string;
+}
+
+export interface RazaForm {
+    NombreRaza: string;
+    EspecieID: number;
+}
+
+export type ViewState = 
+    // Usuarios
+    | 'create-personal' | 'list-personal' 
+    | 'create-cliente' | 'list-cliente'
+    | 'list-usuarios-activos' | 'list-usuarios-inactivos'
+    | 'list-logs'
+    // Mascotas
+    | 'list-raza' | 'create-raza' | 'create-mascota' | 'list-mascota'
+    // Reservaciones
+    | 'list-reservaciones'
+    // Servicios
+    | 'list-completed-services' | 'create-receipt' | 'list-receipts';

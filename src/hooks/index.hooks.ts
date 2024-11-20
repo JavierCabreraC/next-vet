@@ -11,3 +11,5 @@ export * from './common/useUpdateHandler';
 export * from './useAuth';
 
 export * from './shared/useTimeSlots';
+
+export * from './shared/useMascotas';

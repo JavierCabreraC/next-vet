@@ -1,30 +1,35 @@
 import { useUpdateHandler } from '@/hooks/index.hooks';
-import type { Cliente, Mascota, Personal, UpdateType, UseAdminUpdatesProps } from '@/types/admin';
+import type { Cliente, Mascota, Personal, Reservacion, UpdateType, 
+    UseAdminUpdatesProps, Usuario } from '@/types/admin';
 
 
 export const useAdminUpdates = ({
-    setShowPersonalModal,
-    setShowClienteModal,
-    setShowMascotaModal
+    handleViewList
 }: UseAdminUpdatesProps) => {
     const updateHandler = useUpdateHandler({
-        onUpdateSuccess: (type) => {
-            // Cerrar el modal correspondiente después de una actualización exitosa
+        onUpdateSuccess: async (type) => {
+            // Refrescar los datos según el tipos
             switch (type) {
                 case 'personal':
-                    setShowPersonalModal(false);
+                    await handleViewList('personal');
                     break;
                 case 'cliente':
-                    setShowClienteModal(false);
+                    await handleViewList('clientes');
                     break;
                 case 'mascota':
-                    setShowMascotaModal(false);
+                    await handleViewList('mascotas');
+                    break;
+                case 'usuario':
+                    await handleViewList('usuarios');
+                    break;
+                case 'reservacion':
+                    await handleViewList('reservacion');
                     break;
             }
         }
     });
 
-    const handleEdit = (record: Personal | Cliente | Mascota, type: UpdateType) => {
+    const handleEdit = (record: Personal | Cliente | Mascota | Reservacion | Usuario, type: UpdateType) => {
         updateHandler.initializeUpdate(record, type);
     };
 
