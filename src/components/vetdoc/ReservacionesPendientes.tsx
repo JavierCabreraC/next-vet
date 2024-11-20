@@ -72,7 +72,9 @@ export const ReservacionesPendientes: React.FC<ReservacionesPendientesProps> = (
                                 </div>
                                 <div className="text-sm">
                                     <span className="font-medium">Estado:</span> {reservacion.Estado}
-                                    <span className="font-medium"> - Motivo:</span> {reservacion.Motivo}
+                                </div>
+                                <div className="text-sm">
+                                    <span className="font-medium">Motivo:</span> {reservacion.Motivo}
                                 </div>
                             </div>
                             <Button 

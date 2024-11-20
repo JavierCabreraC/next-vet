@@ -12,7 +12,8 @@ export const CreateClienteForm: React.FC = () => {
         NombreCompleto: '',
         Telefono: '',
         Direccion: '',
-        Email: ''
+        Email: '',
+        NumeroCI: 0
     });
 
     const handleCreateCliente = async (e: React.FormEvent) => {
@@ -28,7 +29,8 @@ export const CreateClienteForm: React.FC = () => {
                 NombreCompleto: '',
                 Telefono: '',
                 Direccion: '',
-                Email: ''
+                Email: '',
+                NumeroCI: 0
             });
             setSuccessMessage("El cliente ha sido registrado exitosamente");
             setTimeout(() => setSuccessMessage(null), 2000);
@@ -66,6 +68,20 @@ export const CreateClienteForm: React.FC = () => {
                             NombreCompleto: e.target.value
                         })}
                         placeholder="Nombre Completo"
+                        required
+                    />
+                </div>
+                <div>
+                    <label className="block text-sm font-medium mb-1">
+                        Número de Cédula de Identidad
+                    </label>
+                    <Input
+                        value={clienteForm.NumeroCI}
+                        onChange={(e) => setClienteForm({
+                            ...clienteForm,
+                            NumeroCI: parseInt(e.target.value, 10)
+                        })}
+                        placeholder="Número de Carnet"
                         required
                     />
                 </div>

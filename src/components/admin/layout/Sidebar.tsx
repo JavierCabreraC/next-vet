@@ -27,9 +27,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView })
             title: 'Usuarios',
             icon: <Users className="w-5 h-5" />,
             items: [
-                { label: 'Crear Personal', value: 'create-personal' },
+                { label: 'Registrar Personal', value: 'create-personal' },
                 { label: 'Listar Personal', value: 'list-personal' },
-                { label: 'Crear Cliente', value: 'create-cliente' },
+                { label: 'Registrar Cliente', value: 'create-cliente' },
                 { label: 'Listar Clientes', value: 'list-cliente' },
                 { label: 'Usuarios Activos', value: 'list-usuarios-activos' },
                 { label: 'Usuarios Inactivos', value: 'list-usuarios-inactivos' },
@@ -41,7 +41,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView })
             icon: <PawPrint className="w-5 h-5" />,
             items: [
                 { label: 'Gestionar Razas', value: 'list-raza' },
-                { label: 'Crear Mascota', value: 'create-mascota' },
+                { label: 'Registrar Mascota', value: 'create-mascota' },
                 { label: 'Listar Mascotas', value: 'list-mascota' }
             ]
         },

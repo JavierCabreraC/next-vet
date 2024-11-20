@@ -17,6 +17,7 @@ export interface Personal extends Record<string, unknown> {
 export interface Cliente extends Record<string, unknown> {
     ClienteID: number;
     NombreCompleto: string;
+    CI: string;
     Telefono: string;
     Direccion: string;
     Email: string;
@@ -128,6 +129,7 @@ export interface UpdateModalProps {
 export type PersonalForm = {
     NombreCompleto: string;
     Telefono: string;
+    NumeroCI: number;
     Direccion: string;
     Email: string;
     FechaContratacion: string;
@@ -140,6 +142,7 @@ export type ClienteForm = {
     Telefono: string;
     Direccion: string;
     Email: string;
+    NumeroCI: number;
 };
 
 export type MascotaForm = {
@@ -147,7 +150,7 @@ export type MascotaForm = {
     Sexo: string;
     FechaDeNacimiento: string;
     Observaciones: string;
-    ClienteID: number;
+    ClienteCI: number;
     RazaID: number;
 };
 

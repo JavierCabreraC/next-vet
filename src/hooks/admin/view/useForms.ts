@@ -19,6 +19,7 @@ export const useAdminForms = () => {
         initialState: {
             NombreCompleto: '',
             Telefono: '',
+            NumeroCI: 0,
             Direccion: '',
             Email: '',
             FechaContratacion: '',
@@ -38,6 +39,7 @@ export const useAdminForms = () => {
         formType: 'cliente',
         initialState: {
             NombreCompleto: '',
+            NumeroCI: 0,
             Telefono: '',
             Direccion: '',
             Email: ''
@@ -58,7 +60,7 @@ export const useAdminForms = () => {
             Sexo: '',
             FechaDeNacimiento: '',
             Observaciones: '',
-            ClienteID: 0,
+            ClienteCI: 0,
             RazaID: 0
         },
         onSuccess: (response) => {

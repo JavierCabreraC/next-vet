@@ -14,7 +14,7 @@ export const CreateMascotaForm: React.FC = () => {
         Sexo: '',
         FechaDeNacimiento: '',
         Observaciones: '',
-        ClienteID: 0,
+        ClienteCI: 0,
         RazaID: 0
     });
 
@@ -58,7 +58,7 @@ export const CreateMascotaForm: React.FC = () => {
                 Sexo: '',
                 FechaDeNacimiento: '',
                 Observaciones: '',
-                ClienteID: 0,
+                ClienteCI: 0,
                 RazaID: 0
             });
             setSuccessMessage("La mascota ha sido registrada exitosamente");
@@ -147,14 +147,14 @@ export const CreateMascotaForm: React.FC = () => {
                 </div>
                 <div>
                     <label className="block text-sm font-medium mb-1">
-                        ID del Cliente (Dueño)
+                        CI del Cliente (Dueño)
                     </label>
                     <Input
                         type="number"
-                        value={mascotaForm.ClienteID || ''}
+                        value={mascotaForm.ClienteCI || ''}
                         onChange={(e) => setMascotaForm({
                             ...mascotaForm,
-                            ClienteID: parseInt(e.target.value)
+                            ClienteCI: parseInt(e.target.value)
                         })}
                         required
                     />
