@@ -5,7 +5,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { logout } from '@/utils/index.utils';
 import { ViewState } from '@/types/index.types';
 import { AdminLayout } from '@/components/admin/layout/AdminLayout';
-import { UsuarioSection, MascotaSection, ReservacionSection } from '@/components/admin/index.admincomp';
+import { UsuarioSection, MascotaSection, ReporteSection, ReservacionSection } from '@/components/admin/index.admincomp';
 
 
 const AdminDashboard = () => {
@@ -49,6 +49,11 @@ const AdminDashboard = () => {
         // Sección de Reservaciones
         if (currentView.includes('reservaciones')) {
             return <ReservacionSection view={currentView} />;
+        }
+
+        // Sección de Reportes
+        if (currentView.includes('report-')) {
+            return <ReporteSection view={currentView} />;
         }
 
         // // Sección de Servicios, por implementar
