@@ -241,3 +241,11 @@ export interface FinalizarCirugiaData {
     TemperaturaSalida: number;
     Notas: string;
 }
+
+export interface MascotaCirugia {
+    MascotaID: number;
+    Nombre: string;
+    puede_operar: boolean;
+    raza: string;
+    edad_meses: number;
+}
