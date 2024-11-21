@@ -108,6 +108,7 @@ export const AnalisisForm: React.FC<AnalisisRecetaFormProps> = ({
                     >
                         <option value="Normal">Normal</option>
                         <option value="Bajo">Bajo</option>
+                        <option value="Estable">Estable</option>
                         <option value="Elevado">Elevado</option>
                         <option value="Bueno">Bueno</option>
                         <option value="Critico">Crítico</option>
