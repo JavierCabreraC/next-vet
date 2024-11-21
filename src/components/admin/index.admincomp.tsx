@@ -3,6 +3,7 @@ export * from './shared/UpdateModal';
 export * from './layout/Header';
 
 export * from './sections/SeccionMascota';
+export * from './sections/SeccionReportes';
 export * from './sections/SeccionReservacion';
 export * from './sections/SeccionUsuario';
 

@@ -5,8 +5,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { logout } from '@/utils/index.utils';
 import { ViewState } from '@/types/index.types';
 import { AdminLayout } from '@/components/admin/layout/AdminLayout';
-import { UsuarioSection, MascotaSection, ReservacionSection } from '@/components/admin/index.admincomp';
-import { ReporteSection } from '@/components/admin/sections/SeccionReportes';
+import { UsuarioSection, MascotaSection, ReporteSection, ReservacionSection } from '@/components/admin/index.admincomp';
 
 
 const AdminDashboard = () => {
