@@ -1,8 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { MainView, ServiceType } from '@/types/vetdoc';
 import { Plus, Clipboard, CheckCircle2, History, FileCheck, FileText, 
-    ClipboardList, Syringe, CalendarClock, 
-    Scissors} from 'lucide-react';
+    ClipboardList, Syringe, CalendarClock, Scissors} from 'lucide-react';
 
 
 interface NavButtonProps {

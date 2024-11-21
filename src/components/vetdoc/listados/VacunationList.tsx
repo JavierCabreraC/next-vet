@@ -1,8 +1,31 @@
+import { useEffect, useState } from 'react';
 import { Column, DataTable } from '../common/DataTable';
 import type { VacunacionRegistro } from '@/types/index.types';
+import { API_CONFIG, ApiService } from '@/services/index.services';
 
 
-export const VacunacionList: React.FC<{ registros: VacunacionRegistro[] }> = ({ registros }) => {
+export const VacunacionList: React.FC = () => {
+    const [registros, setRegistros] = useState<VacunacionRegistro[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        const cargarRegistros = async () => {
+            try {
+                const data = await ApiService.fetch<VacunacionRegistro[]>(
+                    `${API_CONFIG.ENDPOINTS.DOC_REGVAC}`,
+                    { method: 'GET' }
+                );
+                setRegistros(data);
+            } catch (error) {
+                console.error('Error al cargar registros:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        cargarRegistros();
+    }, []);
+
     const formatDate = (dateString: string): string => {
         return new Date(dateString).toLocaleDateString();
     };
@@ -54,11 +77,18 @@ export const VacunacionList: React.FC<{ registros: VacunacionRegistro[] }> = ({ 
         </div>
     );
 
+    if (isLoading) {
+        return <div className="text-center py-8">Cargando registros...</div>;
+    }
+
     return (
-        <DataTable<VacunacionRegistro>
-            data={registros}
-            columns={columns}
-            renderMobileCard={renderMobileCard}
-        />
+        <div className="p-6">
+            <h2 className="text-2xl font-bold mb-6">Registros de Vacunación</h2>
+            <DataTable<VacunacionRegistro>
+                data={registros}
+                columns={columns}
+                renderMobileCard={renderMobileCard}
+            />
+        </div>
     );
 };

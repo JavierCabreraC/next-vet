@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Input } from '@/components/ui/index.ui';
 import { Card, CardContent, CardHeader } from './card';
+import { Button, Input } from '@/components/ui/index.ui';
 
 
 interface ChangePasswordFormProps {

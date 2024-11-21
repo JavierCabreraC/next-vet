@@ -6,20 +6,18 @@ import { useAuth } from '@/hooks/index.hooks';
 import { Button } from '@/components/ui/index.ui';
 import { Stethoscope, LogOut, Search, Plus } from 'lucide-react';
 import { API_CONFIG, ApiService } from '@/services/index.services';
-import type { MainView, ReservacionV, ServiceType, Vacuna, VacunacionRegistro } from '@/types/vetdoc';
-import { ReservacionesPendientes, ConsultaForm, PeluqueriaForm, ServiciosCompletados, ServicioSelection, Sidebar, 
-    ServiciosActivosView, RecetasView, AnalisisView, CirugiaForm, VacunaList, VacunaForm, VacunacionForm, VacunacionList,
-    AgendarCirugiaForm } from '@/components/vetdoc/index.docvetcomp';
+import type { MainView, ReservacionV, ServiceType, Vacuna } from '@/types/vetdoc';
+import { ReservacionesPendientes, ConsultaForm, PeluqueriaForm, ServiciosCompletados, ServicioSelection, Sidebar, ServiciosActivosView, 
+    RecetasView, AnalisisView, CirugiaForm, VacunaList, VacunaForm, VacunacionForm, VacunacionList, AgendarCirugiaForm } from '@/components/vetdoc/index.docvetcomp';
 
 
-const ServiciosPage: React.FC = () => {
+const VeterinarioPage: React.FC = () => {
     const router = useRouter();
     const { isAuthenticated, loading } = useAuth(['Veterinario']);
     const [mainView, setMainView] = useState<MainView>('nuevo');
     const [selectedService, setSelectedService] = useState<ServiceType | null>(null);
     const [selectedReservacion, setSelectedReservacion] = useState<ReservacionV | null>(null);
     const [vacunas, setVacunas] = useState<Vacuna[]>([]);
-    const [registrosVacunacion, setRegistrosVacunacion] = useState<VacunacionRegistro[]>([]);
 
     useEffect(() => {
         const cargarVacunas = async () => {
@@ -35,23 +33,6 @@ const ServiciosPage: React.FC = () => {
             }
         };
         cargarVacunas();
-    }, [mainView]);
-
-    useEffect(() => {
-        if (mainView === 'historialVacunas') {
-            const cargarRegistros = async () => {
-                try {
-                    const data = await ApiService.fetch<VacunacionRegistro[]>(
-                        `${API_CONFIG.ENDPOINTS.DOC_REGVAC}`,
-                        { method: 'GET' }
-                    );
-                    setRegistrosVacunacion(data);
-                } catch (error) {
-                    console.error('Error al obtener registros:', error);
-                }
-            };
-            cargarRegistros();
-        }
     }, [mainView]);
     
     if (loading) {
@@ -300,13 +281,7 @@ const ServiciosPage: React.FC = () => {
                     </div>
                 );
 
-            case 'historialVacunas':
-                return (
-                    <div className="p-6">
-                        <h2 className="text-2xl font-bold mb-6">Registros de Vacunación</h2>
-                        <VacunacionList registros={registrosVacunacion} />
-                    </div>
-                );
+            case 'historialVacunas': return < VacunacionList />;
             
             case 'agendarCirugia':
                 return (
@@ -360,4 +335,4 @@ const ServiciosPage: React.FC = () => {
     );
 };
 
-export default ServiciosPage;
+export default VeterinarioPage;
