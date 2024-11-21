@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import { es } from 'date-fns/locale';
-import { format } from 'date-fns'; // añadir addHours en caso de fallo
+import { addHours, format } from 'date-fns'; // añadir addHours en caso de fallo
 import { PendingReservation } from '@/types/index.types';
 
 
