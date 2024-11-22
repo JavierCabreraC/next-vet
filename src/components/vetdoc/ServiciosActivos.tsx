@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { API_CONFIG, ApiService } from '@/services/index.services';
 import type { ServicioActivo, ServicioResponse } from '@/types/vetdoc';
-import { Activity, Clock, Check, PawPrint, Scissors, BedDouble, Syringe } from 'lucide-react';
+import { Activity, Clock, Check, PawPrint, Scissors, BedDouble, MonitorDot } from 'lucide-react';
 import { CompletarCirugiaModal, CompletarConsultaModal, CompletarInternacionModal } from '@/components/vetdoc/index.docvetcomp';
 
 
@@ -77,7 +77,7 @@ export const ServiciosActivos: React.FC = () => {
     const getServiceIcon = (tipo: string) => {
         switch (tipo.toLowerCase()) {
             case 'cirugia':
-                return <Syringe className="text-purple-500" size={20} />;
+                return <MonitorDot className="text-purple-500" size={20} />;
             case 'peluqueria':
                 return <Scissors className="text-purple-500" size={20} />;
             case 'internacion':

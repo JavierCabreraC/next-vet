@@ -22,6 +22,7 @@ export * from './modals/CompletarCirugiaModal';
 export * from './modals/CompletarConsultaModal';
 export * from './modals/CompletarInternacionModal';
 
+export * from './ReservacionesCirugias';
 export * from './ReservacionesPendientes';
 export * from './ServiciosActivos';
 export * from './ServiciosCompletados';

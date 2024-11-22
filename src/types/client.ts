@@ -42,6 +42,7 @@ export interface User {
 
 export interface PendingReservation {
     ReservacionID: number;
+    Motivo: string;
     Fecha_Hora: string;
     Estado: 'Pendiente';
 }

@@ -33,7 +33,6 @@ export const ReservationsList: React.FC<ReservationsListProps> = ({ reservations
         const adjustedDate = addHours(date, 4); // importar de 'date-fns' // main ciclo 2
         return format(adjustedDate, "d 'de' MMMM 'de' yyyy 'a las' HH:mm", { locale: es }); // main ciclo 2
         // return format(date, "d 'de' MMMM 'de' yyyy 'a las' HH:mm", { locale: es }); // viene asi en redesign
-
     };
 
     // Renderizado para dispositivos móviles
@@ -43,6 +42,12 @@ export const ReservationsList: React.FC<ReservationsListProps> = ({ reservations
                 <span className="font-semibold text-gray-700">Fecha y Hora: </span>
                 <span className="text-gray-600">
                     {formatDateTime(reservation.Fecha_Hora)}
+                </span>
+            </div>
+            <div className="mb-2">
+                <span className="font-semibold text-gray-700">Motivo: </span>
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    {reservation.Motivo}
                 </span>
             </div>
             <div className="mb-2">
@@ -79,6 +84,9 @@ export const ReservationsList: React.FC<ReservationsListProps> = ({ reservations
                             Fecha y Hora
                         </th>
                         <th className="p-3 bg-gray-100 text-center font-semibold text-sm text-gray-600 uppercase tracking-wider">
+                            Motivo
+                        </th>
+                        <th className="p-3 bg-gray-100 text-center font-semibold text-sm text-gray-600 uppercase tracking-wider">
                             Estado
                         </th>
                         <th className="p-3 bg-gray-100 text-center font-semibold text-sm text-gray-600 uppercase tracking-wider">
@@ -97,6 +105,13 @@ export const ReservationsList: React.FC<ReservationsListProps> = ({ reservations
                             </td>
                             <td className="p-3 border-b border-gray-200">
                                 {formatDateTime(reservation.Fecha_Hora)}
+                            </td>
+                            <td className="p-3 border-b border-gray-200">
+                                <div className="flex justify-center">
+                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                        {reservation.Motivo}
+                                    </span>
+                                </div>
                             </td>
                             <td className="p-3 border-b border-gray-200">
                                 <div className="flex justify-center">
