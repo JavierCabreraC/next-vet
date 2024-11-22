@@ -67,10 +67,10 @@ export interface PeluqueriaFormProps {
 export interface ServicioActivo {
     ServicioID: number;
     Servicio: string;
-    ServicioEspecificoID: number;  // Agregamos este campo
+    ServicioEspecificoID: number;
     Estado: string;
-    HoraInicio: string;            // Actualizado para coincidir con la respuesta
-    Mascota: string;               // Actualizado para coincidir con la respuesta
+    HoraInicio: string;
+    Mascota: string;
 }
 
 export interface ServicioResponse {
@@ -240,4 +240,12 @@ export interface FinalizarCirugiaData {
     PesoSalida: number;
     TemperaturaSalida: number;
     Notas: string;
+}
+
+export interface MascotaCirugia {
+    MascotaID: number;
+    Nombre: string;
+    puede_operar: boolean;
+    raza: string;
+    edad_meses: number;
 }

@@ -17,20 +17,22 @@ export const API_CONFIG = {
         CLI_RESERVAGRAL:            '/cliente/reservacion/gral',
         DOC_VACUNAS:                '/vetdoc/vacunas',
         DOC_REGVAC:                 '/vetdoc/regvac',
-        DOC_RESERVPEN:              '/vetdoc/reservaciones',             // lee las reservaciones pendientes
-        DOC_SERVPELU:               '/vetdoc/servicios/peluqueria',      // para registrar servicio de peluqueria
+        DOC_RESERVPEN:              '/vetdoc/reservaciones',
+        DOC_SERVPELU:               '/vetdoc/servicios/peluqueria',
         DOC_SERVCONS:               '/vetdoc/servicios/consulta',
         DOC_SERVINTER:              '/vetdoc/servicios/internacion',
         DOC_SERVCIRU:               '/vetdoc/servicios/cirugia',
-        DOC_MASCOTAS:               '/vetdoc/mascotas',                  // lee las mascotaservicios/completed
-        DOC_SERVACT:                '/vetdoc/servicios/active',          // lee servicios en proceso
-        DOC_SERVEND:                '/vetdoc/servicios/peluqueria',                 // para marcar un servicio como completado <----- ¡¡¡!!!
-        DOC_SERVCOM:                '/vetdoc/servicios/completed',       // lee servicios completados
+        DOC_MASCOTAS:               '/vetdoc/mascotas',
+        DOC_SERVACT:                '/vetdoc/servicios/active',
+        DOC_SERVEND:                '/vetdoc/servicios/peluqueria',
+        DOC_SERVCOM:                '/vetdoc/servicios/completed',
         DOC_RECETACONS:             '/vetdoc/receta/consulta',
         DOC_RECETAINT:              '/vetdoc/receta/internacion',
         DOC_ANALISISINT:            '/vetdoc/analisis/internacion',
         DOC_ANALISISCONS:           '/vetdoc/analisis/consulta',
         DOC_ANALISIS:               '/vetdoc/analisis',
+        DOC_ANALISISMASCOTA:        '/vetdoc/analisisMascota',
+        DOC_RECETAMASCOTA:          '/vetdoc/recetasMascota',
         DOC_RECETA:                 '/vetdoc/receta',
         DOC_RESERVACIRUGIA:         '/vetdoc/reservacion'
     },

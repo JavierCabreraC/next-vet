@@ -29,7 +29,7 @@ export const ReporteSection: React.FC<ReporteSectionProps> = ({ view }) => {
             });
             console.log(reportData);
             setReportData(data);
-            await generatePDF(data, ci); // pasamos el ci
+            await generatePDF(data, ci);
         } catch (error) {
             console.error('Error al generar reporte:', error);
         } finally {
