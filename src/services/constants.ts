@@ -18,6 +18,7 @@ export const API_CONFIG = {
         DOC_VACUNAS:                '/vetdoc/vacunas',
         DOC_REGVAC:                 '/vetdoc/regvac',
         DOC_RESERVPEN:              '/vetdoc/reservaciones',
+        DOC_RESERVCIRUGIA:          '/vetdoc/reservCirugia',
         DOC_SERVPELU:               '/vetdoc/servicios/peluqueria',
         DOC_SERVCONS:               '/vetdoc/servicios/consulta',
         DOC_SERVINTER:              '/vetdoc/servicios/internacion',
@@ -34,7 +35,8 @@ export const API_CONFIG = {
         DOC_ANALISISMASCOTA:        '/vetdoc/analisisMascota',
         DOC_RECETAMASCOTA:          '/vetdoc/recetasMascota',
         DOC_RECETA:                 '/vetdoc/receta',
-        DOC_RESERVACIRUGIA:         '/vetdoc/reservacion'
+        DOC_RESERVACIRUGIA:         '/vetdoc/reservacion',
+        DOC_CIRUGIAFIN:             '/vetdoc/cirugiaFin'
     },
     ITEMS_PER_PAGE: 6
 } as const;

@@ -21,7 +21,7 @@ export const CompletarCirugiaModal: React.FC<CompletarCirugiaModalProps> = ({
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await ApiService.fetch(`${API_CONFIG.ENDPOINTS.DOC_SERVCIRU}`, {
+            await ApiService.fetch(`${API_CONFIG.ENDPOINTS.DOC_CIRUGIAFIN}`, {
                 method: 'PATCH',
                 body: JSON.stringify({
                     ServicioID: servicioId,

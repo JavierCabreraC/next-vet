@@ -7,8 +7,9 @@ import { Button } from '@/components/ui/index.ui';
 import { Stethoscope, LogOut, Search, Plus } from 'lucide-react';
 import { API_CONFIG, ApiService } from '@/services/index.services';
 import type { MainView, ReservacionV, ServiceType, Vacuna } from '@/types/vetdoc';
-import { ReservacionesPendientes, ConsultaForm, PeluqueriaForm, ServiciosCompletados, ServicioSelection, Sidebar, ServiciosActivosView, 
-    RecetasView, AnalisisView, CirugiaForm, VacunaList, VacunaForm, VacunacionForm, VacunacionList, AgendarCirugiaForm } from '@/components/vetdoc/index.docvetcomp';
+import { ReservacionesPendientes, ConsultaForm, PeluqueriaForm, ServiciosCompletados, ServicioSelection, Sidebar, 
+    ServiciosActivosView, RecetasView, AnalisisView, CirugiaForm, VacunaList, VacunaForm, VacunacionForm, VacunacionList, 
+    AgendarCirugiaForm, ReservacionesCirugia} from '@/components/vetdoc/index.docvetcomp';
 
 
 const VeterinarioPage: React.FC = () => {
@@ -154,13 +155,12 @@ const VeterinarioPage: React.FC = () => {
                         );
                     }
                 }
-                // En el caso 'nuevo' del switch dentro de renderMainContent
                 if (selectedService === 'cirugia') {
                     if (!selectedReservacion) {
                         return (
                             <div className="p-6">
                                 <div className="flex items-center justify-between mb-6">
-                                    <h2 className="text-2xl font-bold">Reservaciones Pendientes - Cirugía</h2>
+                                    <h2 className="text-2xl font-bold">Reservaciones de Cirugías Programadas</h2>
                                     <Button 
                                         variant="outline" 
                                         onClick={() => setSelectedService(null)}
@@ -168,7 +168,7 @@ const VeterinarioPage: React.FC = () => {
                                         Volver
                                     </Button>
                                 </div>
-                                <ReservacionesPendientes 
+                                <ReservacionesCirugia 
                                     onReservacionSelect={(reservacion) => {
                                         setSelectedReservacion(reservacion);
                                     }} 
