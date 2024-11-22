@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
-import { format } from 'date-fns'; // añadir addHours en caso de fallo
 import { es } from 'date-fns/locale';
+import { addHours, format } from 'date-fns'; // añadir addHours en caso de fallo
 import { PendingReservation } from '@/types/index.types';
 
 
@@ -30,9 +30,9 @@ export const ReservationsList: React.FC<ReservationsListProps> = ({ reservations
 
     const formatDateTime = (dateTimeStr: string): string => {
         const date = new Date(dateTimeStr);
-        // const adjustedDate = addHours(date, 4); // importar de 'date-fns' // main ciclo 2
-        // return format(adjustedDate, "d 'de' MMMM 'de' yyyy 'a las' HH:mm", { locale: es }); // main ciclo 2
-        return format(date, "d 'de' MMMM 'de' yyyy 'a las' HH:mm", { locale: es }); // viene asi en redesign
+        const adjustedDate = addHours(date, 4); // importar de 'date-fns' // main ciclo 2
+        return format(adjustedDate, "d 'de' MMMM 'de' yyyy 'a las' HH:mm", { locale: es }); // main ciclo 2
+        // return format(date, "d 'de' MMMM 'de' yyyy 'a las' HH:mm", { locale: es }); // viene asi en redesign
     };
 
     // Renderizado para dispositivos móviles
