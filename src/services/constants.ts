@@ -31,6 +31,8 @@ export const API_CONFIG = {
         DOC_ANALISISINT:            '/vetdoc/analisis/internacion',
         DOC_ANALISISCONS:           '/vetdoc/analisis/consulta',
         DOC_ANALISIS:               '/vetdoc/analisis',
+        DOC_ANALISISMASCOTA:        '/vetdoc/analisisMascota',
+        DOC_RECETAMASCOTA:          '/vetdoc/recetasMascota',
         DOC_RECETA:                 '/vetdoc/receta',
         DOC_RESERVACIRUGIA:         '/vetdoc/reservacion'
     },
