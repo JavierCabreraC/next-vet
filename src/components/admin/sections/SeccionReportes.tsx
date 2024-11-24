@@ -55,6 +55,23 @@ export const ReporteSection: React.FC<ReporteSectionProps> = ({ view }) => {
         }
     };
 
+    const handleGenerateVetServiciosReport = async (ci: string) => {
+        try {
+            setIsLoading(true);
+            const data = await ApiService.fetch<VetServicioReport[]>(
+                `${API_CONFIG.ENDPOINTS.ADM_REPORTVETSERV}/${ci}`,
+                { method: 'GET' }
+            );
+            console.log(vetServiciosData);
+            setVetServiciosData(data);
+            await generateVetServiciosPDF(data, ci);
+        } catch (error) {
+            console.error('Error al generar reporte de servicios de veterinario:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     const generatePDF = async (data: BitacoraReport[], ci: string) => { // añadimos ci como parámetro
         const doc = new jsPDF();
         
@@ -86,55 +103,6 @@ export const ReporteSection: React.FC<ReporteSectionProps> = ({ view }) => {
     
         // Descargar PDF
         doc.save(`reporte-bitacora-${ci}.pdf`); // incluimos el CI en el nombre del archivo
-    };
-
-    // const generateServiciosPDF = async (data: ServicioReport[], ci: string) => {
-    //     const doc = new jsPDF();
-        
-    //     // Título
-    //     doc.setFontSize(16);
-    //     doc.text('Reporte de Servicios por Cliente', 20, 20);
-        
-    //     // Información del CI
-    //     doc.setFontSize(12);
-    //     doc.text(`Cliente CI: ${ci}`, 20, 30);
-        
-    //     // Fecha de generación
-    //     doc.text(`Fecha de generación: ${new Date().toLocaleString()}`, 20, 40);
-        
-    //     // Datos
-    //     const headers = [['Tipo de Servicio', 'Total de Servicios']];
-    //     const rows = data.map(item => [
-    //         item.TipoServicio,
-    //         item['Total Servicios'].toString()
-    //     ]);
-
-    //     doc.autoTable({
-    //         head: headers,
-    //         body: rows,
-    //         startY: 50,
-    //         theme: 'grid'
-    //     });
-
-    //     // Descargar PDF
-    //     doc.save(`reporte-servicios-${ci}.pdf`);
-    // };
-
-    const handleGenerateVetServiciosReport = async (ci: string) => {
-        try {
-            setIsLoading(true);
-            const data = await ApiService.fetch<VetServicioReport[]>(
-                `${API_CONFIG.ENDPOINTS.ADM_REPORTVETSERV}/${ci}`,
-                { method: 'GET' }
-            );
-            console.log(vetServiciosData);
-            setVetServiciosData(data);
-            await generateVetServiciosPDF(data, ci);
-        } catch (error) {
-            console.error('Error al generar reporte de servicios de veterinario:', error);
-        } finally {
-            setIsLoading(false);
-        }
     };
 
     const generateServiciosPDF = async (data: ServicioReport[], ci: string) => {

@@ -49,7 +49,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
           
             switch (data.rol) {
                 case 'Administrador':
-                    router.push('/admin/dashboard');
+                    router.push('/admin/adminDashboard');
                     break;
                 case 'Veterinario':
                     router.push('/vetdoc/dashboard');
