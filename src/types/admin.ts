@@ -18,6 +18,7 @@ export interface Cliente extends Record<string, unknown> {
     ClienteID: number;
     NombreCompleto: string;
     CI: string;
+    Contacto: string;
     Telefono: string;
     Direccion: string;
     Email: string;
@@ -141,6 +142,7 @@ export type ClienteForm = {
     NombreCompleto: string;
     Telefono: string;
     Direccion: string;
+    Contacto: string;
     Email: string;
     NumeroCI: number;
 };
@@ -186,6 +188,7 @@ export interface UpdateForms {
         ClienteID?: number;
         NombreCompleto?: string;
         Telefono?: string;
+        Contacto?: string;
         Direccion?: string;
     };
     mascotaUpdate: {
@@ -240,6 +243,20 @@ export interface AutoTableColumn {
         fontStyle?: 'normal' | 'bold' | 'italic';
         fontSize?: number;
     };
+    styles?: {
+        fontSize?: number;
+        cellPadding?: number;
+        font?: string;
+        textColor?: number[];
+        fontStyle?: string;
+    };
+    columnStyles?: {
+        [key: number]: {
+            cellWidth?: number;
+            fontSize?: number;
+            fontStyle?: string;
+        };
+    };
     bodyStyles?: {
         fillColor?: number[];
         textColor?: number[];
@@ -264,6 +281,15 @@ export interface ServicioReport {
     "Total Servicios": number;
 }
 
+export interface VetServicioReport {
+    TipoServicio: string;
+    "Nombre Mascota": string;
+    NombreRaza: string;
+    "Nombre Dueño": string;
+    FechaHoraInicio: string;
+    FechaHoraFin: string;
+}
+
 export type ViewState = 
     // Usuarios
     | 'create-personal' | 'list-personal' 
@@ -277,4 +303,4 @@ export type ViewState =
     // Servicios
     | 'list-completed-services' | 'create-receipt' | 'list-receipts'
     // Reportes
-    | 'report-bitacora' | 'report-servicios';
+    | 'report-bitacora' | 'report-servicios' | 'report-vet-servicios';;

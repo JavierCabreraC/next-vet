@@ -41,6 +41,7 @@ export const useAdminForms = () => {
             NombreCompleto: '',
             NumeroCI: 0,
             Telefono: '',
+            Contacto: '',
             Direccion: '',
             Email: ''
         },
