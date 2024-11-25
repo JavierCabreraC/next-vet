@@ -25,7 +25,7 @@ export const BitacoraReportForm: React.FC<BitacoraReportFormProps> = ({ onSubmit
                     type="text"
                     value={ci}
                     onChange={(e) => setCI(e.target.value)}
-                    placeholder="Ingrese el número de carnet activo"
+                    placeholder="Ingrese número de carnet activo"
                     required
                 />
             </div>

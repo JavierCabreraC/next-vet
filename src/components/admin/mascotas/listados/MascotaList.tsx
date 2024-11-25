@@ -4,7 +4,6 @@ import { API_CONFIG, ApiService } from '@/services/index.services';
 import { UpdateModal } from '@/components/admin/shared/UpdateModal';
 import { Button, Column, DataTable } from '@/components/ui/index.ui';
 import type { Mascota, UpdateType, UpdateForms } from '@/types/admin';
-// import { Column, DataTable } from '@/components/ui/DataTable';
 
 
 interface MascotaListProps {
