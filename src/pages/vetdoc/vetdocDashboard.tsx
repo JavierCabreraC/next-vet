@@ -1,9 +1,8 @@
 import '@/app/globals.css';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { logout } from '@/utils/index.utils';
-import { useAuth } from '@/hooks/index.hooks';
 import { Button } from '@/components/ui/index.ui';
+import { logout, useAuth } from '@/hooks/index.hooks';
 import { Stethoscope, LogOut, Search, Plus } from 'lucide-react';
 import type { MainView, ReservacionV, ServiceType } from '@/types/vetdoc';
 import { ReservacionesPendientes, ConsultaForm, PeluqueriaForm, ServiciosCompletados, ServicioSelection, Sidebar, 

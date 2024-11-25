@@ -52,10 +52,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
                     router.push('/admin/adminDashboard');
                     break;
                 case 'Veterinario':
-                    router.push('/vetdoc/dashboard');
+                    router.push('/vetdoc/vetdocDashboard');
                     break;
                 case 'Cliente':
-                    router.push('/client/dashboard');
+                    router.push('/client/clienteDashboard');
                     break;
                 default:
                     setError('Unknown role');

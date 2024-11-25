@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import { Column, DataTable } from './common/DataTable';
-import { Button } from '../ui/index.ui';
+import { Button } from '@/components/ui/index.ui';
 import type { ServicioCompletado } from '@/types/vetdoc';
 import { ApiService, API_CONFIG } from '@/services/index.services';
 import { Clock, PawPrint, Activity, Scissors, BedDouble, Syringe, CheckCircle2 } from 'lucide-react';

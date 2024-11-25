@@ -2,6 +2,29 @@ import React from 'react';
 import { ApiResponse } from './index.types';
 
 
+export type ViewState = 
+    // Usuarios
+    | 'create-personal' | 'list-personal' 
+    | 'create-cliente' | 'list-cliente'
+    | 'list-usuarios-activos' | 'list-usuarios-inactivos'
+    | 'list-logs'
+    // Mascotas
+    | 'list-raza' | 'create-raza' | 'create-mascota' | 'list-mascota'
+    // Reservaciones
+    | 'list-reservaciones'
+    // Servicios
+    | 'list-completed-services' | 'create-receipt' | 'list-receipts'
+    // Reportes
+    | 'report-bitacora' | 'report-servicios' | 'report-vet-servicios' | 'report-dinamico';
+
+export type TipoServicio = 'Consulta' | 'Peluqueria' | 'Internacion' | 'Cirugia';
+
+export type EstadoServicio = 'En Proceso' | 'Completado';
+
+export type CampoOrdenamiento = 'fecha' | 'tipo' | 'veterinario' | 'cantidad';
+
+export type Agrupacion = 'dia' | 'semana' | 'mes' | 'veterinario' | 'tipoServicio';
+
 export interface Personal extends Record<string, unknown> {
     ID: number;
     Nombre: string;
@@ -290,26 +313,6 @@ export interface VetServicioReport {
     FechaHoraFin: string;
 }
 
-export type ViewState = 
-    // Usuarios
-    | 'create-personal' | 'list-personal' 
-    | 'create-cliente' | 'list-cliente'
-    | 'list-usuarios-activos' | 'list-usuarios-inactivos'
-    | 'list-logs'
-    // Mascotas
-    | 'list-raza' | 'create-raza' | 'create-mascota' | 'list-mascota'
-    // Reservaciones
-    | 'list-reservaciones'
-    // Servicios
-    | 'list-completed-services' | 'create-receipt' | 'list-receipts'
-    // Reportes
-    | 'report-bitacora' | 'report-servicios' | 'report-vet-servicios' | 'report-dinamico';
-
-export type TipoServicio = 'Consulta' | 'Peluqueria' | 'Internacion' | 'Cirugia';
-export type EstadoServicio = 'En Proceso' | 'Completado';
-export type CampoOrdenamiento = 'fecha' | 'tipo' | 'veterinario' | 'cantidad';
-export type Agrupacion = 'dia' | 'semana' | 'mes' | 'veterinario' | 'tipoServicio';
-
 export interface OrdenServicio {
     campo: CampoOrdenamiento;
     direccion: 'ASC' | 'DESC';
@@ -324,8 +327,6 @@ export interface FiltrosServicio {
     agruparPor?: Agrupacion[];
     ordenarPor: OrdenServicio;
 }
-
-// ... interfaces previas ...
 
 export interface ServicioDinamicoReport {
     ServicioID: number;

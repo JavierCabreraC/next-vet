@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Column, DataTable } from '../common/DataTable';
+import { Column, DataTable } from '@/components/ui/index.ui';
 import type { VacunacionRegistro } from '@/types/index.types';
 import { API_CONFIG, ApiService } from '@/services/index.services';
 

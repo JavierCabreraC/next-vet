@@ -6,6 +6,8 @@ export * from './ChangePassword';
 
 export * from './CustomCheckbox';
 
+export * from './DataTable';
+
 export * from './dialog';
 
 export * from './input';

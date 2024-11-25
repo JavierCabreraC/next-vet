@@ -1,8 +1,7 @@
 import '@/app/globals.css';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
-import { logout } from '@/utils/index.utils';
-import { useAuth } from '@/hooks/index.hooks';
+import { logout, useAuth } from '@/hooks/index.hooks';
 import { PawPrint, Calendar, ClipboardList } from 'lucide-react';
 import { API_CONFIG, ApiService } from '@/services/index.services';
 import { CancelReservationRequest, MascotaCli, PendingReservation } from '@/types/index.types';

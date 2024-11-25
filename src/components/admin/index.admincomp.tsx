@@ -1,6 +1,8 @@
 export * from './shared/UpdateModal';
 
+export * from './layout/AdminLayout';
 export * from './layout/Header';
+export * from './layout/Sidebar';
 
 export * from './sections/SeccionMascota';
 export * from './sections/SeccionReportes';

@@ -1,11 +1,9 @@
 import '@/app/globals.css';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useAuth } from '@/hooks/useAuth';
-import { logout } from '@/utils/index.utils';
 import { ViewState } from '@/types/index.types';
-import { AdminLayout } from '@/components/admin/layout/AdminLayout';
-import { UsuarioSection, MascotaSection, ReporteSection, ReservacionSection } from '@/components/admin/index.admincomp';
+import { logout, useAuth } from '@/hooks/index.hooks';
+import { AdminLayout, UsuarioSection, MascotaSection, ReporteSection, ReservacionSection } from '@/components/admin/index.admincomp';
 
 
 const AdminDashboard = () => {

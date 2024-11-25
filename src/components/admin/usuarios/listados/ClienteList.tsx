@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Pencil } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { UpdateModal } from '@/components/admin/shared/UpdateModal';
+import { Button, Column, DataTable } from '@/components/ui/index.ui';
 import { API_CONFIG, ApiService,  } from '@/services/index.services';
 import type { Cliente, UpdateType, UpdateForms } from '@/types/admin';
-import { Column, DataTable } from '@/components/vetdoc/common/DataTable';
+// import { Column, DataTable } from '@/components/ui/DataTable';
 
 
 interface ClientListProps {

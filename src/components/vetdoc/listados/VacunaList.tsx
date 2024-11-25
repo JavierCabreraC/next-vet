@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { Vacuna } from '@/types/index.types';
-import { Column, DataTable } from '../common/DataTable';
+import { Column, DataTable } from '@/components/ui/index.ui';
 import { API_CONFIG, ApiService } from '@/services/index.services';
 
 

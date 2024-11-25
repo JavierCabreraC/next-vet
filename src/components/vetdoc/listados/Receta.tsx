@@ -1,9 +1,9 @@
-import { Receta } from "@/types/vetdoc";
 import { useEffect, useState } from "react";
 import { Loader2, Search, X } from "lucide-react";
-import { Column, DataTable } from "../common/DataTable";
-import { Button, Input } from "@/components/ui/index.ui";
+import { Receta } from "@/types/vetdoc";
+// import { Column, DataTable } from "../../ui/DataTable";
 import { API_CONFIG, ApiService } from "@/services/index.services";
+import { Button, Column, DataTable, Input } from "@/components/ui/index.ui";
 
 
 export const RecetasView: React.FC = () => {

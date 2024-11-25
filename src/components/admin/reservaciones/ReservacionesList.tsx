@@ -1,9 +1,9 @@
-import { Reservacion } from "@/types/admin";
 import { useEffect, useState } from "react";
 import { Pencil } from "lucide-react";
-import { Button } from '@/components/ui/button';
+import { Reservacion } from "@/types/admin";
 import { API_CONFIG, ApiService } from '@/services/index.services';
-import { Column, DataTable } from '@/components/vetdoc/common/DataTable';
+import { Button, Column, DataTable } from '@/components/ui/index.ui';
+// import { Column, DataTable } from '@/components/ui/DataTable';
 
 
 interface ReservacionListProps {
