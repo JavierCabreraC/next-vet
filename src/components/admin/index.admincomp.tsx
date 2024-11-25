@@ -21,4 +21,6 @@ export * from './mascotas/listados/MascotaList';
 export * from './mascotas/listados/RazaList';
 
 export * from './reservaciones/ReservacionesList';
- 
+
+export * from './report/BitacoraReportForm';
+export * from './report/ServicioReportForm';

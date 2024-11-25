@@ -67,7 +67,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView })
             items: [
                 { label: 'Reporte de Bitácora', value: 'report-bitacora' },
                 { label: 'Servicios por Cliente', value: 'report-servicios' },
-                { label: 'Servicios de Veterinario', value: 'report-vet-servicios' }
+                { label: 'Servicios de Veterinario', value: 'report-vet-servicios' },
+                { label: 'Reporte Dinámico de Servicios', value: 'report-dinamico' }
             ]
         }
     ];

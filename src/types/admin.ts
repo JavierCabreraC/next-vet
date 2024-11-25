@@ -303,4 +303,70 @@ export type ViewState =
     // Servicios
     | 'list-completed-services' | 'create-receipt' | 'list-receipts'
     // Reportes
-    | 'report-bitacora' | 'report-servicios' | 'report-vet-servicios';;
+    | 'report-bitacora' | 'report-servicios' | 'report-vet-servicios' | 'report-dinamico';
+
+export type TipoServicio = 'Consulta' | 'Peluqueria' | 'Internacion' | 'Cirugia';
+export type EstadoServicio = 'En Proceso' | 'Completado';
+export type CampoOrdenamiento = 'fecha' | 'tipo' | 'veterinario' | 'cantidad';
+export type Agrupacion = 'dia' | 'semana' | 'mes' | 'veterinario' | 'tipoServicio';
+
+export interface OrdenServicio {
+    campo: CampoOrdenamiento;
+    direccion: 'ASC' | 'DESC';
+}
+
+export interface FiltrosServicio {
+    fechaInicio?: Date;
+    fechaFin?: Date;
+    tipoServicio?: TipoServicio[];
+    estado?: EstadoServicio[];
+    veterinarioId?: number;
+    agruparPor?: Agrupacion[];
+    ordenarPor: OrdenServicio;
+}
+
+// ... interfaces previas ...
+
+export interface ServicioDinamicoReport {
+    ServicioID: number;
+    TipoServicio: TipoServicio;
+    Estado: EstadoServicio;
+    FechaHoraInicio: string;
+    FechaHoraFin: string | null;
+    NombreVeterinario: string;
+    NombreMascota: string;
+    NombreCliente: string;
+}
+
+export interface ServicioAgrupado {
+    grupo: string;
+    cantidad: number;
+    servicios: ServicioDinamicoReport[];
+}
+
+export type ResultadoReporteDinamico = ServicioAgrupado[];
+
+export interface AutoTableColumnStyles {
+    cellWidth?: number;
+    fontSize?: number;
+    fontStyle?: string;
+}
+
+export interface AutoTableStyles {
+    fontSize?: number;
+    cellPadding?: number;
+    font?: string;
+    textColor?: number[];
+    fontStyle?: string;
+}
+
+export interface AutoTableSettings {
+    head: string[][];
+    body: string[][];
+    startY?: number;
+    theme?: 'striped' | 'grid' | 'plain';
+    styles?: AutoTableStyles;
+    columnStyles?: {
+        [key: number]: AutoTableColumnStyles;
+    };
+}

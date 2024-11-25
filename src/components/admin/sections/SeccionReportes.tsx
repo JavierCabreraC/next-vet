@@ -1,13 +1,17 @@
-import { useState } from "react";
 import 'jspdf-autotable';
-import jsPDF from 'jspdf';
-import { BitacoraReportForm } from "../report/BitacoraReportForm";
+import { jsPDF } from 'jspdf';
+import { useState } from "react";
 import { API_CONFIG, ApiService } from '@/services/index.services';
-import { AutoTableSettings, BitacoraReport, ServicioReport, VetServicioReport, ViewState } from "@/types/admin";
+import { BitacoraReportForm, ServicioReportForm } from "../index.admincomp";
+import { AutoTableSettings, BitacoraReport, FiltrosServicio, ResultadoReporteDinamico, 
+    ServicioReport, VetServicioReport, ViewState } from "@/types/admin";
 
 
 declare module 'jspdf' {
     interface jsPDF {
+        lastAutoTable: {
+            finalY: number;
+        };
         autoTable: (options: AutoTableSettings) => jsPDF;
     }
 }
@@ -21,7 +25,7 @@ export const ReporteSection: React.FC<ReporteSectionProps> = ({ view }) => {
     const [reportData, setReportData] = useState<BitacoraReport[]>([]);
     const [serviciosData, setServiciosData] = useState<ServicioReport[]>([]);
     const [vetServiciosData, setVetServiciosData] = useState<VetServicioReport[]>([]);
-
+    
     const handleGenerateReport = async (ci: string) => {
         try {
             setIsLoading(true);
@@ -72,7 +76,25 @@ export const ReporteSection: React.FC<ReporteSectionProps> = ({ view }) => {
         }
     };
 
-    const generatePDF = async (data: BitacoraReport[], ci: string) => { // añadimos ci como parámetro
+    const handleGenerateDynamicReport = async (filtros: FiltrosServicio) => {
+        try {
+            setIsLoading(true);
+            const data = await ApiService.fetch<ResultadoReporteDinamico>(
+                `${API_CONFIG.ENDPOINTS.ADM_REPORTDINAMICO}`,
+                {
+                    method: 'POST',
+                    body: JSON.stringify(filtros)
+                }
+            );
+            await generateDynamicPDF(data, filtros);
+        } catch (error) {
+            console.error('Error al generar reporte dinámico:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const generatePDF = async (data: BitacoraReport[], ci: string) => {
         const doc = new jsPDF();
         
         // Título
@@ -178,6 +200,89 @@ export const ReporteSection: React.FC<ReporteSectionProps> = ({ view }) => {
         doc.save(`reporte-servicios-vet-${ci}.pdf`);
     };
     
+    const generateDynamicPDF = async (data: ResultadoReporteDinamico, filtros: FiltrosServicio) => {
+        const doc = new jsPDF();
+        
+        doc.setFontSize(16);
+        doc.text('Reporte Dinámico de Servicios', 20, 20);
+        
+        doc.setFontSize(10);
+        let yPos = 30;
+        
+        if (filtros.fechaInicio || filtros.fechaFin) {
+            const fechaInicio = filtros.fechaInicio ? new Date(filtros.fechaInicio).toLocaleDateString() : 'No especificada';
+            const fechaFin = filtros.fechaFin ? new Date(filtros.fechaFin).toLocaleDateString() : 'No especificada';
+            doc.text(`Período: ${fechaInicio} - ${fechaFin}`, 20, yPos);
+            yPos += 10;
+        }
+
+        if (filtros.tipoServicio?.length) {
+            doc.text(`Tipos de servicio: ${filtros.tipoServicio.join(', ')}`, 20, yPos);
+            yPos += 10;
+        }
+
+        if (filtros.estado?.length) {
+            doc.text(`Estados: ${filtros.estado.join(', ')}`, 20, yPos);
+            yPos += 10;
+        }
+
+        doc.text(`Generado el: ${new Date().toLocaleString()}`, 20, yPos);
+        yPos += 10;
+
+        data.forEach((grupo) => {
+            yPos += 10;
+            doc.setFontSize(12);
+            doc.text(`${grupo.grupo} (Total: ${grupo.cantidad})`, 20, yPos);
+            yPos += 10;
+
+            // Tabla de servicios del grupo
+            const headers = [
+                ['ID', 'Tipo', 'Estado', 'Inicio', 'Fin', 'Veterinario', 'Mascota', 'Cliente']
+            ];
+
+            const rows = grupo.servicios.map(servicio => [
+                servicio.ServicioID.toString(),
+                servicio.TipoServicio,
+                servicio.Estado,
+                new Date(servicio.FechaHoraInicio).toLocaleString(),
+                servicio.FechaHoraFin ? new Date(servicio.FechaHoraFin).toLocaleString() : '-',
+                servicio.NombreVeterinario,
+                servicio.NombreMascota,
+                servicio.NombreCliente
+            ]);
+
+            const tableSettings: AutoTableSettings = {
+                head: headers,
+                body: rows,
+                startY: yPos,
+                theme: 'grid',
+                styles: { 
+                    fontSize: 8 
+                },
+                columnStyles: {
+                    0: { cellWidth: 15 },
+                    1: { cellWidth: 25 },
+                    2: { cellWidth: 25 },
+                    3: { cellWidth: 30 },
+                    4: { cellWidth: 30 },
+                    5: { cellWidth: 25 },
+                    6: { cellWidth: 20 },
+                    7: { cellWidth: 25 }
+                }
+            };
+    
+            doc.autoTable(tableSettings);
+    
+            yPos = doc.lastAutoTable.finalY + 10;
+    
+            if (yPos > 250) {
+                doc.addPage();
+                yPos = 20;
+            }
+        });
+    
+        doc.save('reporte-servicios-dinamico.pdf');
+    };
 
     switch (view) {
         case 'report-bitacora':
@@ -206,6 +311,16 @@ export const ReporteSection: React.FC<ReporteSectionProps> = ({ view }) => {
                     <h2 className="text-2xl font-bold">Reporte de Servicios de Veterinario</h2>
                     <BitacoraReportForm // Acá también, sólo se pide CI
                         onSubmit={handleGenerateVetServiciosReport}
+                        isLoading={isLoading}
+                    />
+                </div>
+            );
+        case 'report-dinamico':
+            return (
+                <div className="space-y-6">
+                    <h2 className="text-2xl font-bold">Reporte Dinámico de Servicios</h2>
+                    <ServicioReportForm 
+                        onSubmit={handleGenerateDynamicReport}
                         isLoading={isLoading}
                     />
                 </div>

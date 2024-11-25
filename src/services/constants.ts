@@ -12,6 +12,7 @@ export const API_CONFIG = {
         ADM_REPORTBITACORA:         '/admin/report/bitacora',
         ADM_REPORTSERVICIO:         '/admin/report/servicios',
         ADM_REPORTVETSERV:          '/admin/reporte/vetservicios',
+        ADM_REPORTDINAMICO:         '/admin/reporte/dinamico',
         CLI_MASCOTAS:               '/cliente/mascotas',
         CLI_RESERVA:                '/cliente/reservacion',
         CLI_RESERVACLI:             '/cliente/reservacion/cli',
