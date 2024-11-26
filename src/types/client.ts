@@ -60,3 +60,13 @@ export interface PendingReservation {
 export interface CancelReservationRequest {
     ReservacionID: number;
 }
+
+export interface HistorialReceta {
+    "Mascota": string;
+    "Tipo Servicio": string;
+    "Tipo Registro": "Receta" | "Análisis";
+    "Medicamento": string;
+    "Dosis": string;
+    "Indicaciones": string | null;
+    "Fecha Emisión": string;
+}

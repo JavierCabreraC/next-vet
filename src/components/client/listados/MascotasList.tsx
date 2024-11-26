@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
-import { MascotaCli } from '@/types/index.types';
-import {ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight} from "lucide-react";
+import { generateHistorialPDF } from '@/utils/index.utils';
+import { HistorialReceta, MascotaCli } from '@/types/client';
+import { API_CONFIG, ApiService } from '@/services/index.services';
+import {ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, FileText} from "lucide-react";
 
 
 interface MascotasListProps {
@@ -80,6 +82,24 @@ export const MascotasList: React.FC<MascotasListProps> = ({
         </div>
     );
 
+    const handleGenerateHistorial = async (mascotaId: number, nombreMascota: string) => {
+        try {
+            const response = await ApiService.fetch<HistorialReceta[]>(
+                `${API_CONFIG.ENDPOINTS.CLI_HISRECETAS}/${mascotaId}`,
+                { method: 'GET' }
+            );
+            
+            if (response && response.length > 0) {
+                await generateHistorialPDF(response, nombreMascota);
+            } else {
+                alert('No hay historial disponible para esta mascota');
+            }
+        } catch (error) {
+            console.error('Error al generar historial:', error);
+            alert('Error al generar el historial');
+        }
+    };
+
     // Renderizado para dispositivos móviles
     const renderMobileCard = (mascota: MascotaCli) => (
         <div key={mascota.ID} className="bg-white rounded-lg shadow-md p-4 mb-4">
@@ -103,6 +123,13 @@ export const MascotasList: React.FC<MascotasListProps> = ({
                 <span className="font-semibold text-gray-700">Raza: </span>
                 <span className="text-gray-600">{mascota.Raza}</span>
             </div>
+            <button
+                onClick={() => handleGenerateHistorial(mascota.ID, mascota.Nombre)}
+                className="w-full mt-4 inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+                <FileText className="h-4 w-4 mr-2" />
+                Ver Historial
+            </button>
         </div>
     );
 
@@ -127,6 +154,9 @@ export const MascotasList: React.FC<MascotasListProps> = ({
                         <th className="p-3 bg-gray-100 text-center font-semibold text-sm text-gray-600 uppercase tracking-wider">
                             Raza
                         </th>
+                        <th className="p-3 bg-gray-100 text-center font-semibold text-sm text-gray-600 uppercase tracking-wider">
+                            Historial
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -140,6 +170,15 @@ export const MascotasList: React.FC<MascotasListProps> = ({
                             <td className="p-3 text-center border-b border-gray-200">{`${mascota.Años} años, ${mascota.Meses} meses`}</td>
                             <td className="p-3 text-center border-b border-gray-200">{mascota.Especie}</td>
                             <td className="p-3 text-center border-b border-gray-200">{mascota.Raza}</td>
+                            <td className="p-3 text-center border-b border-gray-200">
+                                <button
+                                    onClick={() => handleGenerateHistorial(mascota.ID, mascota.Nombre)}
+                                    className="inline-flex items-center px-3 py-1 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                >
+                                    <FileText className="h-4 w-4 mr-2" />
+                                    Historial
+                                </button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
