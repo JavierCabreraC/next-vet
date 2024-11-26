@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { API_CONFIG, ApiService } from '@/services/index.services';
-import { MascotasList, ReservationForm, ReservationsList } from '../index.clientcomp';
-import { CancelReservationRequest, MascotaCli, PendingReservation, ViewStateCliente } from '@/types/client';
+import { MascotasList, ReservationForm, ReservationsList, ServiciosHistorialList } from '../index.clientcomp';
+import { CancelReservationRequest, MascotaCli, PendingReservation, ServicioHistorial, ViewStateCliente } from '@/types/client';
 
 
 interface ClientSectionProps {
@@ -12,6 +12,27 @@ export const ClientSection: React.FC<ClientSectionProps> = ({ view }) => {
     const [mascotas, setMascotas] = useState<MascotaCli[]>([]);
     const [reservations, setReservations] = useState<PendingReservation[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [servicios, setServicios] = useState<ServicioHistorial[]>([]);
+    const [isLoadingServicios, setIsLoadingServicios] = useState(false);
+            
+    useEffect(() => {
+        const loadServicios = async () => {
+            try {
+                setIsLoadingServicios(true);
+                const data = await ApiService.fetch<ServicioHistorial[]>(
+                    `${API_CONFIG.ENDPOINTS.CLI_HISSERVICIOS}`,
+                    { method: 'GET' }
+                );
+                setServicios(data);
+            } catch (error) {
+                console.error('Error al cargar el historial de servicios:', error);
+            } finally {
+                setIsLoadingServicios(false);
+            }
+        };
+
+        loadServicios();
+    }, []);
 
     useEffect(() => {
         if (view === 'list-mascotas') {
@@ -115,13 +136,17 @@ export const ClientSection: React.FC<ClientSectionProps> = ({ view }) => {
                     <p>Funcionalidad en desarrollo</p>
                 </div>
             );
-        case 'history-servicios':
-            return (
-                <div className="space-y-6">
-                    <h2 className="text-2xl font-bold">Historial de Servicios</h2>
-                    <p>Funcionalidad en desarrollo</p>
-                </div>
-            );
+            case 'history-servicios':
+                if (isLoadingServicios) {
+                    return <div className="flex justify-center items-center h-full">Cargando...</div>;
+                }
+            
+                return (
+                    <div className="space-y-6">
+                        <h2 className="text-2xl font-bold">Historial de Servicios</h2>
+                        <ServiciosHistorialList servicios={servicios} />
+                    </div>
+                );
         default:
             return null;
     }

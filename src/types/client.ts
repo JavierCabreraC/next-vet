@@ -82,6 +82,15 @@ export interface HistorialVacuna {
     "Estado": "Vigente" | "Vencida";
 }
 
+export interface ServicioHistorial {
+    TipoServicio: string;
+    Mascota: string;
+    Personal: string;
+    FechaHoraInicio: string;
+    FechaHoraFin: string;
+    "Duración (Horas)": string;
+}
+
 export interface AutoTableCell {
     text: string[];
     styles: {

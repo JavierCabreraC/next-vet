@@ -1,6 +1,6 @@
 import 'jspdf-autotable';
 import jsPDF from 'jspdf';
-import type { DidDrawCellParams, ExtendedAutoTableSettings, HistorialReceta, HistorialVacuna } from '@/types/client';
+import type { DidDrawCellParams, ExtendedAutoTableSettings, HistorialReceta, HistorialVacuna, ServicioHistorial } from '@/types/client';
 
 
 export const generateHistorialPDF = async (
@@ -128,4 +128,58 @@ export const generateVacunasPDF = async (
 
     // Descargar PDF
     doc.save(`vacunacion-${nombreMascota.toLowerCase()}.pdf`);
+};
+
+export const generateServiciosHistorialPDF = async (
+    data: ServicioHistorial[]
+): Promise<void> => {
+    const doc = new jsPDF();
+    
+    // Título
+    doc.setFontSize(16);
+    doc.text('Historial de Servicios', 20, 20);
+    
+    // Fecha de generación
+    doc.setFontSize(10);
+    doc.text(`Fecha de generación: ${new Date().toLocaleString()}`, 20, 30);
+    
+    // Preparar datos para la tabla
+    const headers = [
+        ['Servicio', 'Mascota', 'Personal', 'Inicio', 'Fin', 'Duración']
+    ];
+    
+    const rows = data.map(item => [
+        item.TipoServicio,
+        item.Mascota,
+        item.Personal,
+        new Date(item.FechaHoraInicio).toLocaleString(),
+        new Date(item.FechaHoraFin).toLocaleString(),
+        `${item["Duración (Horas)"]} h`
+    ]);
+
+    // Configuración de la tabla
+    const tableConfig: ExtendedAutoTableSettings = {
+        head: headers,
+        body: rows,
+        startY: 40,
+        theme: 'grid',
+        styles: { 
+            fontSize: 8,
+            cellPadding: 2
+        },
+        columnStyles: {
+            0: { cellWidth: 25 },  // Servicio
+            1: { cellWidth: 25 },  // Mascota
+            2: { cellWidth: 25 },  // Personal
+            3: { cellWidth: 35 },  // Inicio
+            4: { cellWidth: 35 },  // Fin
+            5: { cellWidth: 20 }   // Duración
+        }
+    };
+
+    // Generar tabla
+    doc.autoTable(tableConfig);
+
+    // Descargar PDF
+    doc.save(`historial-servicios-${new Date().toISOString().split('T')[0]}.pdf`);
 };
