@@ -9,14 +9,18 @@ interface ReciboPreviewProps {
     detalles: DetalleReciboPreview[];
     onDetalleChange: (index: number, detalle: DetalleReciboPreview) => void;
     onVolver: () => void;
-    onReciboCreado: () => void;
+    onReciboCreado: (reciboId: number) => void; // Modificado para recibir el ID
+    onPagar?: (reciboId: number) => void;
+    reciboId?: number;
 }
 
 export const ReciboPreview: React.FC<ReciboPreviewProps> = ({
     detalles,
     onDetalleChange,
     onVolver,
-    onReciboCreado
+    onReciboCreado,
+    onPagar,
+    reciboId
 }) => {
     const [isLoading, setIsLoading] = useState(false);
     const total = detalles.reduce((sum, detalle) => sum + detalle.PrecioUnitario, 0);
@@ -54,7 +58,7 @@ export const ReciboPreview: React.FC<ReciboPreviewProps> = ({
                 }))
             };
 
-            await ApiService.fetch(
+            const response = await ApiService.fetch<{ Respuesta: string; ReciboID: number }>(
                 API_CONFIG.ENDPOINTS.ADM_CREARRECIBO,
                 {
                     method: 'POST',
@@ -62,7 +66,7 @@ export const ReciboPreview: React.FC<ReciboPreviewProps> = ({
                 }
             );
 
-            onReciboCreado();
+            onReciboCreado(response.ReciboID);
         } catch (error) {
             console.error('Error al crear recibo:', error);
             // Aquí podrías mostrar un mensaje de error al usuario
@@ -129,6 +133,15 @@ export const ReciboPreview: React.FC<ReciboPreviewProps> = ({
                     >
                         {isLoading ? 'Guardando...' : 'Guardar Recibo'}
                     </Button>
+                    {reciboId && onPagar && (
+                        <Button
+                            onClick={() => onPagar(reciboId)}
+                            className="bg-green-500 hover:bg-green-600"
+                            disabled={isLoading}
+                        >
+                            Proceder al Pago
+                        </Button>
+                    )}
                 </div>
             </div>    
             <div className="bg-white rounded-lg shadow overflow-x-auto">

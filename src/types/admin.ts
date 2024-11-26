@@ -397,3 +397,21 @@ export interface DetalleReciboPreview {
     NombreCliente: string;
     isSelected?: boolean;
 }
+
+export interface Recibo {
+    ID: number;
+    Cliente: string;
+    FechaEmision: Date;
+    Total: number;
+    EstadoPago: string;
+    TransactionID: string | null;
+}
+
+export interface PaymentResponse {
+    clientSecret: string;
+}
+
+export interface PaymentConfirmationResponse {
+    message: string;
+    recibo: Recibo;
+}

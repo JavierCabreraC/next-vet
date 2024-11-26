@@ -11,7 +11,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ onLogout }) => {
                 <h1 className="text-2xl md:text-3xl font-bold text-blue-600 flex-shrink-0">
                     <span className="flex items-center">
                         <ClipboardList className="mr-2 h-6 w-6 md:h-8 md:w-8" />
-                        <span className="hidden sm:inline">Panel de Administración - Carajo</span>
+                        <span className="hidden sm:inline">Panel de Administración</span>
                         <span className="sm:hidden">Admin</span>
                     </span>
                 </h1>

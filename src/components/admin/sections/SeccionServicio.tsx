@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PaymentModal } from '../services/PaymentModal';
 import { calcularPrecioServicio } from '@/utils/index.utils';
 import { API_CONFIG, ApiService } from '@/services/index.services';
 import type { ViewState, ServicioRecibo, DetalleReciboPreview } from '@/types/admin';
@@ -12,8 +13,10 @@ interface ServicioSectionProps {
 export const ServiceSection: React.FC<ServicioSectionProps> = ({ view }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [mostrarPreview, setMostrarPreview] = useState(false);
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
     const [servicios, setServicios] = useState<ServicioRecibo[]>([]);
     const [detallesRecibo, setDetallesRecibo] = useState<DetalleReciboPreview[]>([]);
+    const [currentReciboId, setCurrentReciboId] = useState<number | undefined>(undefined);
 
     const resetearTodo = () => {
         setServicios([]);
@@ -50,6 +53,7 @@ export const ServiceSection: React.FC<ServicioSectionProps> = ({ view }) => {
     };
 
     const handleVolver = () => {
+        console.log({setCurrentReciboId});
         setMostrarPreview(false);
         // Opcionalmente, se podría mantener las selecciones previas
         // Para resetear todo, añadir: setDetallesRecibo([]);
@@ -59,6 +63,20 @@ export const ServiceSection: React.FC<ServicioSectionProps> = ({ view }) => {
         const nuevosDetalles = [...detallesRecibo];
         nuevosDetalles[index] = detalle;
         setDetallesRecibo(nuevosDetalles);
+    };
+
+    const handleReciboCreado = (reciboId: number) => {
+        setCurrentReciboId(reciboId);
+    };
+
+    const handlePagar = (reciboId: number) => {
+        console.log({reciboId});
+        setShowPaymentModal(true);
+    };
+
+    const handlePaymentSuccess = () => {
+        setShowPaymentModal(false);
+        resetearTodo();
     };
 
     switch (view) {
@@ -74,12 +92,24 @@ export const ServiceSection: React.FC<ServicioSectionProps> = ({ view }) => {
                             onServiciosSelect={handleServiciosSelect}
                         />
                     ) : (
-                        <ReciboPreview
-                            detalles={detallesRecibo}
-                            onDetalleChange={handleDetalleChange}
-                            onVolver={handleVolver}
-                            onReciboCreado={resetearTodo}
-                        />
+                        <>
+                            <ReciboPreview
+                                detalles={detallesRecibo}
+                                onDetalleChange={handleDetalleChange}
+                                onVolver={handleVolver}
+                                onReciboCreado={handleReciboCreado}
+                                onPagar={handlePagar}
+                                reciboId={currentReciboId}
+                            />
+                            {showPaymentModal && currentReciboId && (
+                                <PaymentModal
+                                    reciboId={Number(currentReciboId)}
+                                    amount={detallesRecibo.reduce((sum, d) => sum + Number(d.PrecioUnitario), 0)}
+                                    onClose={() => setShowPaymentModal(false)}
+                                    onSuccess={handlePaymentSuccess}
+                                />
+                            )}
+                        </>
                     )}
                 </div>
             );
