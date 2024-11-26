@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { calcularPrecioServicio } from '@/utils/index.utils';
 import { API_CONFIG, ApiService } from '@/services/index.services';
 import type { ViewState, ServicioRecibo, DetalleReciboPreview } from '@/types/admin';
 import { ReciboPreview, ServicioReciboForm } from '@/components/admin/index.admincomp';
@@ -10,9 +11,9 @@ interface ServicioSectionProps {
 
 export const ServiceSection: React.FC<ServicioSectionProps> = ({ view }) => {
     const [isLoading, setIsLoading] = useState(false);
+    const [mostrarPreview, setMostrarPreview] = useState(false);
     const [servicios, setServicios] = useState<ServicioRecibo[]>([]);
     const [detallesRecibo, setDetallesRecibo] = useState<DetalleReciboPreview[]>([]);
-    const [mostrarPreview, setMostrarPreview] = useState(false);
 
     const handleBuscarServicios = async (ci: string) => {
         try {
@@ -34,12 +35,18 @@ export const ServiceSection: React.FC<ServicioSectionProps> = ({ view }) => {
         const detalles: DetalleReciboPreview[] = serviciosSeleccionados.map(servicio => ({
             ServicioID: servicio.ServicioID,
             Detalle: servicio.TipoServicio,
-            PrecioUnitario: 0, // Aquí podrías poner un precio por defecto según el tipo
+            PrecioUnitario: calcularPrecioServicio(servicio.TipoServicio), // Usar precio base
             NombreCliente: servicio.NombreCliente
         }));
         
         setDetallesRecibo(detalles);
         setMostrarPreview(true);
+    };
+
+    const handleVolver = () => {
+        setMostrarPreview(false);
+        // Opcionalmente, podríamos mantener las selecciones previas
+        // Si quieres resetear todo, añade: setDetallesRecibo([]);
     };
 
     const handleDetalleChange = (index: number, detalle: DetalleReciboPreview) => {
@@ -64,6 +71,7 @@ export const ServiceSection: React.FC<ServicioSectionProps> = ({ view }) => {
                         <ReciboPreview
                             detalles={detallesRecibo}
                             onDetalleChange={handleDetalleChange}
+                            onVolver={handleVolver}
                         />
                     )}
                 </div>
