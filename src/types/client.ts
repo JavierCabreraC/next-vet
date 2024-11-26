@@ -1,12 +1,13 @@
+import { AutoTableSettings } from "./admin";
+
+
 export type ViewStateCliente = 
     // Mascotas
     | 'list-mascotas'
     // Reservaciones
-    | 'create-reservacion'
-    | 'list-reservaciones'
+    | 'create-reservacion' | 'list-reservaciones'
     // Servicios
-    | 'history-reservaciones'
-    | 'history-servicios';
+    | 'history-reservaciones' | 'history-servicios';
 
 export interface MascotaCli {
     ID: number;
@@ -69,4 +70,37 @@ export interface HistorialReceta {
     "Dosis": string;
     "Indicaciones": string | null;
     "Fecha Emisión": string;
+}
+
+export interface HistorialVacuna {
+    "Mascota": string;
+    "NombreVacuna": string;
+    "Tipo Vacuna": string;
+    "Laboratorio": string;
+    "FechaVacunacion": string;
+    "Próxima Vacunación": string;
+    "Estado": "Vigente" | "Vencida";
+}
+
+export interface AutoTableCell {
+    text: string[];
+    styles: {
+        textColor?: number[];
+        // ... otros estilos que puedas necesitar
+    };
+}
+
+export interface DidDrawCellParams {
+    cell: AutoTableCell;
+    section: 'head' | 'body';
+    column: {
+        index: number;
+    };
+    row: {
+        index: number;
+    };
+}
+
+export interface ExtendedAutoTableSettings extends AutoTableSettings {
+    didDrawCell?: (data: DidDrawCellParams) => void;
 }

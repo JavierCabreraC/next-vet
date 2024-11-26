@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import { generateHistorialPDF } from '@/utils/index.utils';
-import { HistorialReceta, MascotaCli } from '@/types/client';
 import { API_CONFIG, ApiService } from '@/services/index.services';
-import {ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, FileText} from "lucide-react";
+import { HistorialReceta, HistorialVacuna, MascotaCli } from '@/types/client';
+import { generateHistorialPDF, generateVacunasPDF } from '@/utils/index.utils';
+import {ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, FileText, Syringe} from "lucide-react";
 
 
 interface MascotasListProps {
@@ -100,6 +100,24 @@ export const MascotasList: React.FC<MascotasListProps> = ({
         }
     };
 
+    const handleGenerateVacunas = async (mascotaId: number, nombreMascota: string) => {
+        try {
+            const response = await ApiService.fetch<HistorialVacuna[]>(
+                `${API_CONFIG.ENDPOINTS.CLI_HISVACUNAS}/${mascotaId}`,
+                { method: 'GET' }
+            );
+            
+            if (response && response.length > 0) {
+                await generateVacunasPDF(response, nombreMascota);
+            } else {
+                alert('No hay historial de vacunación disponible para esta mascota');
+            }
+        } catch (error) {
+            console.error('Error al generar historial de vacunación:', error);
+            alert('Error al generar el historial de vacunación');
+        }
+    };
+
     // Renderizado para dispositivos móviles
     const renderMobileCard = (mascota: MascotaCli) => (
         <div key={mascota.ID} className="bg-white rounded-lg shadow-md p-4 mb-4">
@@ -123,13 +141,22 @@ export const MascotasList: React.FC<MascotasListProps> = ({
                 <span className="font-semibold text-gray-700">Raza: </span>
                 <span className="text-gray-600">{mascota.Raza}</span>
             </div>
-            <button
-                onClick={() => handleGenerateHistorial(mascota.ID, mascota.Nombre)}
-                className="w-full mt-4 inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-                <FileText className="h-4 w-4 mr-2" />
-                Ver Historial
-            </button>
+            <div className="grid grid-cols-2 gap-2 mt-4">
+                <button
+                    onClick={() => handleGenerateHistorial(mascota.ID, mascota.Nombre)}
+                    className="inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                    <FileText className="h-4 w-4 mr-2" />
+                    Recetas
+                </button>
+                <button
+                    onClick={() => handleGenerateVacunas(mascota.ID, mascota.Nombre)}
+                    className="inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                >
+                    <Syringe className="h-4 w-4 mr-2" />
+                    Vacunas
+                </button>
+            </div>
         </div>
     );
 
@@ -171,13 +198,22 @@ export const MascotasList: React.FC<MascotasListProps> = ({
                             <td className="p-3 text-center border-b border-gray-200">{mascota.Especie}</td>
                             <td className="p-3 text-center border-b border-gray-200">{mascota.Raza}</td>
                             <td className="p-3 text-center border-b border-gray-200">
-                                <button
-                                    onClick={() => handleGenerateHistorial(mascota.ID, mascota.Nombre)}
-                                    className="inline-flex items-center px-3 py-1 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                >
-                                    <FileText className="h-4 w-4 mr-2" />
-                                    Historial
-                                </button>
+                                <div className="flex justify-center space-x-2">
+                                    <button
+                                        onClick={() => handleGenerateHistorial(mascota.ID, mascota.Nombre)}
+                                        className="inline-flex items-center px-3 py-1 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                    >
+                                        <FileText className="h-4 w-4 mr-2" />
+                                        Recetas
+                                    </button>
+                                    <button
+                                        onClick={() => handleGenerateVacunas(mascota.ID, mascota.Nombre)}
+                                        className="inline-flex items-center px-3 py-1 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                    >
+                                        <Syringe className="h-4 w-4 mr-2" />
+                                        Vacunas
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     ))}
