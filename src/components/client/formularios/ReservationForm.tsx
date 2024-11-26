@@ -15,8 +15,8 @@ export const ReservationForm: React.FC<ReservationFormProps> = ({
 }) => {
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
-    const [motivo, setMotivo] = useState('');
     const [submitting, setSubmitting] = useState(false);
+    const [motivo, setMotivo] = useState('');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

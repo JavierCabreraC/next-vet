@@ -1,9 +1,11 @@
-export * from './ClientHeader';
+export * from './formularios/ReservationForm';
+export * from './formularios/TimeSlotSelector';
 
-export * from './MascotasList';
+export * from './layout/ClientHeader';
+export * from './layout/ClientLayout';
+export * from './layout/Sidebar';
 
-export * from './ReservationForm';
+export * from './listados/MascotasList';
+export * from './listados/ReservationsList';
 
-export * from './ReservationsList';
-
-export * from './TimeSlotSelector';
+export * from './sections/SeccionCliente';

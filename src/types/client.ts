@@ -1,3 +1,13 @@
+export type ViewStateCliente = 
+    // Mascotas
+    | 'list-mascotas'
+    // Reservaciones
+    | 'create-reservacion'
+    | 'list-reservaciones'
+    // Servicios
+    | 'history-reservaciones'
+    | 'history-servicios';
+
 export interface MascotaCli {
     ID: number;
     Nombre: string;
