@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Input } from '@/components/ui/index.ui';
+import { API_CONFIG, ApiService } from '@/services/index.services';
 import type { DetalleReciboPreview, TipoServicio } from '@/types/admin';
 import { calcularPrecioServicio, VariacionComplejidad, VariacionTamaño } from '@/utils/index.utils';
 
@@ -8,13 +9,16 @@ interface ReciboPreviewProps {
     detalles: DetalleReciboPreview[];
     onDetalleChange: (index: number, detalle: DetalleReciboPreview) => void;
     onVolver: () => void;
+    onReciboCreado: () => void;
 }
 
 export const ReciboPreview: React.FC<ReciboPreviewProps> = ({
     detalles,
     onDetalleChange,
-    onVolver
+    onVolver,
+    onReciboCreado
 }) => {
+    const [isLoading, setIsLoading] = useState(false);
     const total = detalles.reduce((sum, detalle) => sum + detalle.PrecioUnitario, 0);
 
     const handleVariacionChange = (
@@ -32,6 +36,39 @@ export const ReciboPreview: React.FC<ReciboPreviewProps> = ({
             ...detalle,
             PrecioUnitario: nuevoPrecio
         });
+    };
+
+    const handleGuardarRecibo = async () => {
+        try {
+            setIsLoading(true);
+            
+            const reciboData = {
+                Cliente: detalles[0].NombreCliente,
+                Total: total,
+                Detalles: detalles.map(detalle => ({
+                    Detalle: detalle.Detalle,
+                    ServicioID: detalle.ServicioID,
+                    Cantidad: 1,
+                    PrecioUnitario: detalle.PrecioUnitario,
+                    Subtotal: detalle.PrecioUnitario
+                }))
+            };
+
+            await ApiService.fetch(
+                API_CONFIG.ENDPOINTS.ADM_CREARRECIBO,
+                {
+                    method: 'POST',
+                    body: JSON.stringify(reciboData)
+                }
+            );
+
+            onReciboCreado();
+        } catch (error) {
+            console.error('Error al crear recibo:', error);
+            // Aquí podrías mostrar un mensaje de error al usuario
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const renderVariaciones = (detalle: DetalleReciboPreview, index: number) => {
@@ -76,14 +113,24 @@ export const ReciboPreview: React.FC<ReciboPreviewProps> = ({
 
     return (
         <div className="space-y-4">
-            <h3 className="text-lg font-medium">Vista Previa del Recibo</h3>
-            <Button
-                    onClick={onVolver}
-                    variant="outline"
-                    className="text-sm"
-                >
-                    ← Volver
-                </Button>
+            <div className="flex justify-between items-center">
+                <h3 className="text-lg font-medium">Vista Previa del Recibo</h3>
+                <div className="space-x-2">
+                    <Button
+                        onClick={onVolver}
+                        variant="outline"
+                        disabled={isLoading}
+                    >
+                        ← Volver
+                    </Button>
+                    <Button
+                        onClick={handleGuardarRecibo}
+                        disabled={isLoading || detalles.length === 0}
+                    >
+                        {isLoading ? 'Guardando...' : 'Guardar Recibo'}
+                    </Button>
+                </div>
+            </div>    
             <div className="bg-white rounded-lg shadow overflow-x-auto">
                 <table className="w-full">
                     <thead>

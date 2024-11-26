@@ -15,6 +15,12 @@ export const ServiceSection: React.FC<ServicioSectionProps> = ({ view }) => {
     const [servicios, setServicios] = useState<ServicioRecibo[]>([]);
     const [detallesRecibo, setDetallesRecibo] = useState<DetalleReciboPreview[]>([]);
 
+    const resetearTodo = () => {
+        setServicios([]);
+        setDetallesRecibo([]);
+        setMostrarPreview(false);
+    };
+
     const handleBuscarServicios = async (ci: string) => {
         try {
             setIsLoading(true);
@@ -45,8 +51,8 @@ export const ServiceSection: React.FC<ServicioSectionProps> = ({ view }) => {
 
     const handleVolver = () => {
         setMostrarPreview(false);
-        // Opcionalmente, podríamos mantener las selecciones previas
-        // Si quieres resetear todo, añade: setDetallesRecibo([]);
+        // Opcionalmente, se podría mantener las selecciones previas
+        // Para resetear todo, añadir: setDetallesRecibo([]);
     };
 
     const handleDetalleChange = (index: number, detalle: DetalleReciboPreview) => {
@@ -72,6 +78,7 @@ export const ServiceSection: React.FC<ServicioSectionProps> = ({ view }) => {
                             detalles={detallesRecibo}
                             onDetalleChange={handleDetalleChange}
                             onVolver={handleVolver}
+                            onReciboCreado={resetearTodo}
                         />
                     )}
                 </div>
