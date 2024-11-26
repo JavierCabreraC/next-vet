@@ -379,3 +379,21 @@ export interface ReservacionCliente {
     Hora: string;
     Estado: string;
 }
+
+export interface ServicioRecibo {
+    ServicioID: number;
+    TipoServicio: TipoServicio;
+    FechaHoraInicio: string;
+    FechaHoraFin: string;
+    MascotaID: number;
+    NombreMascota: string;
+    NombreCliente: string;
+}
+
+export interface DetalleReciboPreview {
+    ServicioID: number;
+    Detalle: string;
+    PrecioUnitario: number;
+    NombreCliente: string;
+    isSelected?: boolean;
+}

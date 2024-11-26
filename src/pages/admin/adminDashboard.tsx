@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { ViewState } from '@/types/admin';
 import { logout, useAuth } from '@/hooks/index.hooks';
-import { AdminLayout, UsuarioSection, MascotaSection, ReporteSection, ReservacionSection } from '@/components/admin/index.admincomp';
+import { AdminLayout, UsuarioSection, MascotaSection, ReporteSection, 
+    ReservacionSection, ServiceSection } from '@/components/admin/index.admincomp';
 
 
 const AdminDashboard = () => {
@@ -54,10 +55,11 @@ const AdminDashboard = () => {
             return <ReporteSection view={currentView} />;
         }
 
-        // // Sección de Servicios, por implementar
-        // if (currentView.includes('services') || currentView.includes('receipt')) {
-        //     return <ServiceSection view={currentView} />;
-        // }
+        // Sección de Servicios y Recibos
+        if (currentView.includes('services') || currentView.includes('receipt') || currentView.includes('list-completed-services') 
+            || currentView.includes('create-receipt') || currentView.includes('list-receipts')) {
+            return <ServiceSection view={currentView} />;
+        }
     };
 
     return (

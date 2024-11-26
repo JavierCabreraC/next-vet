@@ -4,6 +4,8 @@ export * from './card';
 
 export * from './ChangePassword';
 
+export * from './CheckboxSimple';
+
 export * from './CustomCheckbox';
 
 export * from './DataTable';

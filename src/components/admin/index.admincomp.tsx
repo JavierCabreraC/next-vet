@@ -18,7 +18,11 @@ export * from './reservaciones/ReservacionSearchForm';
 export * from './sections/SeccionMascota';
 export * from './sections/SeccionReportes';
 export * from './sections/SeccionReservacion';
+export * from './sections/SeccionServicio';
 export * from './sections/SeccionUsuario';
+
+export * from './services/ReciboPreview';
+export * from './services/ServicioReciboForm';
 
 export * from './shared/UpdateModal';
 
