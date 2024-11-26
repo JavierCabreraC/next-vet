@@ -1,7 +1,7 @@
 import '@/app/globals.css';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { ViewState } from '@/types/index.types';
+import { ViewState } from '@/types/admin';
 import { logout, useAuth } from '@/hooks/index.hooks';
 import { AdminLayout, UsuarioSection, MascotaSection, ReporteSection, ReservacionSection } from '@/components/admin/index.admincomp';
 
@@ -9,7 +9,7 @@ import { AdminLayout, UsuarioSection, MascotaSection, ReporteSection, Reservacio
 const AdminDashboard = () => {
     const router = useRouter();
     const { isAuthenticated, loading } = useAuth(['Administrador']);
-    const [currentView, setCurrentView] = useState<ViewState | null>(null);
+    const [ currentView, setCurrentView ] = useState<ViewState | null>(null);
 
     if (loading) {
         return <div className="flex justify-center items-center h-screen">Cargando...</div>;
@@ -45,7 +45,7 @@ const AdminDashboard = () => {
         }
 
         // Sección de Reservaciones
-        if (currentView.includes('reservaciones')) {
+        if (currentView.includes('reservaciones') || currentView.includes('zzzxxx')) {
             return <ReservacionSection view={currentView} />;
         }
 

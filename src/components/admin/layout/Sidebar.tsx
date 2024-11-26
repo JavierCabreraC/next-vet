@@ -49,7 +49,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView })
             title: 'Reservaciones',
             icon: <Calendar className="w-5 h-5" />,
             items: [
-                { label: 'Listar Reservaciones', value: 'list-reservaciones' }
+                { label: 'Listar Reservaciones', value: 'list-reservaciones' },
+                { label: 'Reservaciones por Cliente', value: 'zzzxxx' }
             ]
         },
         {

@@ -3,7 +3,6 @@ import { Pencil } from "lucide-react";
 import { Reservacion } from "@/types/admin";
 import { API_CONFIG, ApiService } from '@/services/index.services';
 import { Button, Column, DataTable } from '@/components/ui/index.ui';
-// import { Column, DataTable } from '@/components/ui/DataTable';
 
 
 interface ReservacionListProps {

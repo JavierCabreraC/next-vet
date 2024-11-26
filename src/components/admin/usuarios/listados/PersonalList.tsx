@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Pencil } from 'lucide-react';
-import { UpdateModal } from '@/components/admin/shared/UpdateModal';
+import { UpdateModal } from '@/components/admin/index.admincomp';
 import { Button, Column, DataTable } from '@/components/ui/index.ui';
 import { API_CONFIG, ApiService,  } from '@/services/index.services';
 import type { Personal, UpdateType, UpdateForms } from '@/types/admin';

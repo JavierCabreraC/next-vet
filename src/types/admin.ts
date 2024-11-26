@@ -11,7 +11,7 @@ export type ViewState =
     // Mascotas
     | 'list-raza' | 'create-raza' | 'create-mascota' | 'list-mascota'
     // Reservaciones
-    | 'list-reservaciones'
+    | 'list-reservaciones' | 'zzzxxx'
     // Servicios
     | 'list-completed-services' | 'create-receipt' | 'list-receipts'
     // Reportes
@@ -370,4 +370,12 @@ export interface AutoTableSettings {
     columnStyles?: {
         [key: number]: AutoTableColumnStyles;
     };
+}
+
+export interface ReservacionCliente {
+    ReservacionID: number;
+    Motivo: string;
+    Fecha: string;
+    Hora: string;
+    Estado: string;
 }
