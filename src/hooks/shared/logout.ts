@@ -1,4 +1,5 @@
 import { NextRouter } from 'next/router';
+import { API_CONFIG } from '@/services/index.services';
 
 
 export const logout = async (router: NextRouter) => {
@@ -8,7 +9,7 @@ export const logout = async (router: NextRouter) => {
         return;
     }
     try {
-        const response = await fetch('http://localhost:3333/api/auth/logout', {
+        const response = await fetch(API_CONFIG.ENDPOINTS.AUTH_LOGOUT, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,

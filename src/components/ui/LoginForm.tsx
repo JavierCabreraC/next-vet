@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { API_CONFIG } from '@/services/index.services';
 import { Button, Input } from '@/components/ui/index.ui';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
@@ -29,7 +30,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
         setError('');
 
         try {
-            const response = await fetch('http://localhost:3333/api/auth/login', {
+            const response = await fetch(API_CONFIG.ENDPOINTS.AUTH_LOGIN, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',

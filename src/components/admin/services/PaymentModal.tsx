@@ -25,6 +25,7 @@ interface PaymentIntentResponse {
 //     };
 // }
 
+// Llave pública de Stripe:
 const stripePromise = loadStripe('pk_test_51QPOkbGY4So1lVjeXOLxQtWyH8hml9PnmggeExylxboiWpdX1uIQ2TT9kPEi6Ungb2hNFko33o0JCPIPRvbsYgah00jRxw4x5H');
 
 const PaymentForm = ({ reciboId, onSuccess, onClose }: PaymentModalProps) => {
@@ -155,7 +156,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = (props) => {
 
     const appearance = {
         theme: 'stripe' as const,
-        // Puedes personalizar más la apariencia aquí
+        // Acá se puede personalizar máss la apariencia
     };
 
     const options = {
