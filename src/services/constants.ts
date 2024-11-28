@@ -17,6 +17,7 @@ export const API_CONFIG = {
         ADM_REPORTSERVICIO:             '/admin/report/servicios',
         ADM_REPORTVETSERV:              '/admin/reporte/vetservicios',
         ADM_REPORTDINAMICO:             '/admin/reporte/dinamico',
+        ADM_SERVGRAL:                   '/admin/servicios/gral',
         ADM_SERVRECIBO:                 '/admin/servicios/recibo',
         ADM_CREARRECIBO:                '/admin/recibo',
         ADM_STRIPECREAR:                '/admin/create-payment-intent',

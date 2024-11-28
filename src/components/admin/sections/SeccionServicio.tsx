@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { PaymentModal } from '../services/PaymentModal';
 import { calcularPrecioServicio } from '@/utils/index.utils';
 import { API_CONFIG, ApiService } from '@/services/index.services';
 import type { ViewState, ServicioRecibo, DetalleReciboPreview } from '@/types/admin';
-import { ReciboPreview, ServicioReciboForm } from '@/components/admin/index.admincomp';
+import { PaymentModal, ReciboPreview, ServicioReciboForm } from '@/components/admin/index.admincomp';
 
 
 interface ServicioSectionProps {

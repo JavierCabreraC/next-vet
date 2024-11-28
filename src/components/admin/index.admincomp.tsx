@@ -21,6 +21,7 @@ export * from './sections/SeccionReservacion';
 export * from './sections/SeccionServicio';
 export * from './sections/SeccionUsuario';
 
+export * from './services/PaymentModal';
 export * from './services/ReciboPreview';
 export * from './services/ServicioReciboForm';
 
