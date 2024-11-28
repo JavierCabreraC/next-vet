@@ -43,7 +43,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView })
             icon: <Briefcase className="w-5 h-5" />,
             items: [
                 { label: 'Historial de Reservaciones', value: 'history-reservaciones' },
-                { label: 'Historial de Servicios', value: 'history-servicios' }
+                { label: 'Historial de Servicios', value: 'history-servicios' },
+                { label: 'Historial de Recibos', value: 'history-recibos' }
             ]
         }
     ];

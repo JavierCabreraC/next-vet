@@ -7,7 +7,7 @@ export type ViewStateCliente =
     // Reservaciones
     | 'create-reservacion' | 'list-reservaciones'
     // Servicios
-    | 'history-reservaciones' | 'history-servicios';
+    | 'history-reservaciones' | 'history-servicios' | 'history-recibos';;
 
 export interface MascotaCli {
     ID: number;
@@ -112,4 +112,12 @@ export interface DidDrawCellParams {
 
 export interface ExtendedAutoTableSettings extends AutoTableSettings {
     didDrawCell?: (data: DidDrawCellParams) => void;
+}
+
+export interface ReciboCli {
+    ReciboID: number;
+    FechaEmision: string;
+    Total: string;
+    ServicioID: number;
+    TipoServicio: string;
 }

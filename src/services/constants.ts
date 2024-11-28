@@ -30,6 +30,7 @@ export const API_CONFIG = {
         CLI_HISVACUNAS:                 '/cliente/historial/vacunas',
         CLI_HISSERVICIOS:               '/cliente/historial/servicios',
         CLI_HISDIAGNOS:                 '/cliente/historial/diagnosticos',
+        CLI_HISRECIBOS:                 '/cliente/recibo',
         DOC_VACUNAS:                    '/vetdoc/vacunas',
         DOC_REGVAC:                     '/vetdoc/regvac',
         DOC_RESERVPEN:                  '/vetdoc/reservaciones',

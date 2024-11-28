@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { API_CONFIG, ApiService } from '@/services/index.services';
-import { MascotasList, ReservationForm, ReservationsList, ServiciosHistorialList } from '../index.clientcomp';
-import { CancelReservationRequest, MascotaCli, PendingReservation, ServicioHistorial, ViewStateCliente } from '@/types/client';
+import { MascotasList, RecibosHistorialList, ReservationForm, ReservationsList, 
+    ServiciosHistorialList } from '../index.clientcomp';
+import { CancelReservationRequest, MascotaCli, PendingReservation, ReciboCli, ServicioHistorial, 
+    ViewStateCliente } from '@/types/client';
 
 
 interface ClientSectionProps {
@@ -14,6 +16,8 @@ export const ClientSection: React.FC<ClientSectionProps> = ({ view }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [servicios, setServicios] = useState<ServicioHistorial[]>([]);
     const [isLoadingServicios, setIsLoadingServicios] = useState(false);
+    const [recibos, setRecibos] = useState<ReciboCli[]>([]);
+    const [isLoadingRecibos, setIsLoadingRecibos] = useState(false);
             
     useEffect(() => {
         const loadServicios = async () => {
@@ -33,6 +37,27 @@ export const ClientSection: React.FC<ClientSectionProps> = ({ view }) => {
 
         loadServicios();
     }, []);
+
+    useEffect(() => {
+        const loadRecibos = async () => {
+            try {
+                setIsLoadingRecibos(true);
+                const data = await ApiService.fetch<ReciboCli[]>(
+                    `${API_CONFIG.ENDPOINTS.CLI_HISRECIBOS}`,
+                    { method: 'GET' }
+                );
+                setRecibos(data);
+            } catch (error) {
+                console.error('Error al cargar el historial de recibos:', error);
+            } finally {
+                setIsLoadingRecibos(false);
+            }
+        };
+    
+        if (view === 'history-recibos') {
+            loadRecibos();
+        }
+    }, [view]);
 
     useEffect(() => {
         if (view === 'list-mascotas') {
@@ -109,6 +134,7 @@ export const ClientSection: React.FC<ClientSectionProps> = ({ view }) => {
                     <MascotasList mascotas={mascotas} />
                 </div>
             );
+
         case 'create-reservacion':
             return (
                 <div className="space-y-6">
@@ -119,6 +145,7 @@ export const ClientSection: React.FC<ClientSectionProps> = ({ view }) => {
                     />
                 </div>
             );
+
         case 'list-reservaciones':
             return (
                 <div className="space-y-6">
@@ -129,6 +156,7 @@ export const ClientSection: React.FC<ClientSectionProps> = ({ view }) => {
                     />
                 </div>
             );
+
         case 'history-reservaciones':
             return (
                 <div className="space-y-6">
@@ -136,17 +164,31 @@ export const ClientSection: React.FC<ClientSectionProps> = ({ view }) => {
                     <p>Funcionalidad en desarrollo</p>
                 </div>
             );
-            case 'history-servicios':
-                if (isLoadingServicios) {
-                    return <div className="flex justify-center items-center h-full">Cargando...</div>;
-                }
-            
-                return (
-                    <div className="space-y-6">
-                        <h2 className="text-2xl font-bold">Historial de Servicios</h2>
-                        <ServiciosHistorialList servicios={servicios} />
-                    </div>
-                );
+
+        case 'history-servicios':
+            if (isLoadingServicios) {
+                return <div className="flex justify-center items-center h-full">Cargando...</div>;
+            }
+        
+            return (
+                <div className="space-y-6">
+                    <h2 className="text-2xl font-bold">Historial de Servicios</h2>
+                    <ServiciosHistorialList servicios={servicios} />
+                </div>
+            );
+
+        case 'history-recibos':
+            if (isLoadingRecibos) {
+                return <div className="flex justify-center items-center h-full">Cargando...</div>;
+            }
+        
+            return (
+                <div className="space-y-6">
+                    <h2 className="text-2xl font-bold">Historial de Recibos</h2>
+                    <RecibosHistorialList recibos={recibos} />
+                </div>
+            );
+        
         default:
             return null;
     }

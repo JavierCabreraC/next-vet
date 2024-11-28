@@ -1,7 +1,7 @@
 import 'jspdf-autotable';
 import jsPDF from 'jspdf';
 import type { DidDrawCellParams, ExtendedAutoTableSettings, 
-    HistorialReceta, HistorialVacuna, ServicioHistorial } from '@/types/client';
+    HistorialReceta, HistorialVacuna, ReciboCli, ServicioHistorial } from '@/types/client';
 
 
 export const generateHistorialPDF = async (
@@ -183,4 +183,39 @@ export const generateServiciosHistorialPDF = async (
 
     // Descargar PDF
     doc.save(`historial-servicios-${new Date().toISOString().split('T')[0]}.pdf`);
+};
+
+export const generateRecibosPDF = async (data: ReciboCli[]): Promise<void> => {
+    const doc = new jsPDF();
+    
+    doc.setFontSize(16);
+    doc.text('Historial de Recibos', 20, 20);
+    
+    doc.setFontSize(10);
+    doc.text(`Fecha de generación: ${new Date().toLocaleString()}`, 20, 30);
+    
+    const headers = [['Recibo #', 'Servicio', 'Fecha Emisión', 'Total']];
+    
+    const rows = data.map(item => [
+        item.ReciboID.toString(),
+        item.TipoServicio,
+        new Date(item.FechaEmision).toLocaleString(),
+        `BOB/. ${parseFloat(item.Total).toFixed(2)}`
+    ]);
+
+    doc.autoTable({
+        head: headers,
+        body: rows,
+        startY: 40,
+        theme: 'grid',
+        styles: { fontSize: 8, cellPadding: 2 },
+        columnStyles: {
+            0: { cellWidth: 20 },
+            1: { cellWidth: 30 },
+            2: { cellWidth: 40 },
+            3: { cellWidth: 25 }
+        }
+    });
+
+    doc.save(`historial-recibos-${new Date().toISOString().split('T')[0]}.pdf`);
 };
