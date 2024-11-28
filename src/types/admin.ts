@@ -424,3 +424,12 @@ export interface ServicioGeneral {
     Cliente: string;
     Mascota: string;
 }
+
+export interface ReciboGeneral {
+    ID: number;
+    FechaEmision: string;
+    EstadoPago: string;
+    Total: string;
+    Cliente: string;
+    Mascota: string;
+}

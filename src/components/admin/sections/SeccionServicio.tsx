@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { calcularPrecioServicio } from '@/utils/index.utils';
 import { API_CONFIG, ApiService } from '@/services/index.services';
-import type { ViewState, ServicioRecibo, DetalleReciboPreview, ServicioGeneral } from '@/types/admin';
-import { PaymentModal, ReciboPreview, ServicioReciboForm, ServiciosCompletadosForm } from '@/components/admin/index.admincomp';
+import type { ViewState, ServicioRecibo, DetalleReciboPreview, ServicioGeneral, ReciboGeneral } from '@/types/admin';
+import { ListaRecibosForm, PaymentModal, ReciboPreview, ServicioReciboForm, ServiciosCompletadosForm } from '@/components/admin/index.admincomp';
 
 
 interface ServicioSectionProps {
@@ -14,6 +14,7 @@ export const ServiceSection: React.FC<ServicioSectionProps> = ({ view }) => {
     const [mostrarPreview, setMostrarPreview] = useState(false);
     const [showPaymentModal, setShowPaymentModal] = useState(false);
     const [servicios, setServicios] = useState<ServicioRecibo[]>([]);
+    const [recibosLista, setRecibosLista] = useState<ReciboGeneral[]>([]);
     const [detallesRecibo, setDetallesRecibo] = useState<DetalleReciboPreview[]>([]);
     const [currentReciboId, setCurrentReciboId] = useState<number | undefined>(undefined);
     const [serviciosCompletados, setServiciosCompletados] = useState<ServicioGeneral[]>([]);
@@ -94,6 +95,21 @@ export const ServiceSection: React.FC<ServicioSectionProps> = ({ view }) => {
         }
     };
 
+    const handleBuscarRecibos = async (ci: string) => {
+        try {
+            setIsLoading(true);
+            const data = await ApiService.fetch<ReciboGeneral[]>(
+                `${API_CONFIG.ENDPOINTS.ADM_CREARRECIBO}/${ci}`,
+                { method: 'GET' }
+            );
+            setRecibosLista(data);
+        } catch (error) {
+            console.error('Error al buscar recibos:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     switch (view) {
         case 'create-receipt':
             return (
@@ -137,6 +153,18 @@ export const ServiceSection: React.FC<ServicioSectionProps> = ({ view }) => {
                         isLoading={isLoading}
                         onSubmit={handleBuscarServiciosCompletados}
                         servicios={serviciosCompletados}
+                    />
+                </div>
+            );
+
+        case 'list-receipts':
+            return (
+                <div className="space-y-6">
+                    <h2 className="text-2xl font-bold mb-6">Lista de Recibos</h2>
+                    <ListaRecibosForm
+                        isLoading={isLoading}
+                        onSubmit={handleBuscarRecibos}
+                        recibos={recibosLista}
                     />
                 </div>
             );
