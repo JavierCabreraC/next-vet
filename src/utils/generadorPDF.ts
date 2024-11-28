@@ -1,6 +1,7 @@
 import 'jspdf-autotable';
 import jsPDF from 'jspdf';
-import type { DidDrawCellParams, ExtendedAutoTableSettings, HistorialReceta, HistorialVacuna, ServicioHistorial } from '@/types/client';
+import type { DidDrawCellParams, ExtendedAutoTableSettings, 
+    HistorialReceta, HistorialVacuna, ServicioHistorial } from '@/types/client';
 
 
 export const generateHistorialPDF = async (
