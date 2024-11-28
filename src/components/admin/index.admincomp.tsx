@@ -24,6 +24,7 @@ export * from './sections/SeccionUsuario';
 export * from './services/PaymentModal';
 export * from './services/ReciboPreview';
 export * from './services/ServicioReciboForm';
+export * from './services/ServiciosCompletadosForm';
 
 export * from './shared/UpdateModal';
 

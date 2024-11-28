@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { calcularPrecioServicio } from '@/utils/index.utils';
 import { API_CONFIG, ApiService } from '@/services/index.services';
-import type { ViewState, ServicioRecibo, DetalleReciboPreview } from '@/types/admin';
-import { PaymentModal, ReciboPreview, ServicioReciboForm } from '@/components/admin/index.admincomp';
+import type { ViewState, ServicioRecibo, DetalleReciboPreview, ServicioGeneral } from '@/types/admin';
+import { PaymentModal, ReciboPreview, ServicioReciboForm, ServiciosCompletadosForm } from '@/components/admin/index.admincomp';
 
 
 interface ServicioSectionProps {
@@ -16,6 +16,7 @@ export const ServiceSection: React.FC<ServicioSectionProps> = ({ view }) => {
     const [servicios, setServicios] = useState<ServicioRecibo[]>([]);
     const [detallesRecibo, setDetallesRecibo] = useState<DetalleReciboPreview[]>([]);
     const [currentReciboId, setCurrentReciboId] = useState<number | undefined>(undefined);
+    const [serviciosCompletados, setServiciosCompletados] = useState<ServicioGeneral[]>([]);
 
     const resetearTodo = () => {
         setServicios([]);
@@ -78,6 +79,21 @@ export const ServiceSection: React.FC<ServicioSectionProps> = ({ view }) => {
         resetearTodo();
     };
 
+    const handleBuscarServiciosCompletados = async (ci: string) => {
+        try {
+            setIsLoading(true);
+            const data = await ApiService.fetch<ServicioGeneral[]>(
+                `${API_CONFIG.ENDPOINTS.ADM_SERVGRAL}/${ci}`,
+                { method: 'GET' }
+            );
+            setServiciosCompletados(data);
+        } catch (error) {
+            console.error('Error al buscar servicios:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     switch (view) {
         case 'create-receipt':
             return (
@@ -110,6 +126,18 @@ export const ServiceSection: React.FC<ServicioSectionProps> = ({ view }) => {
                             )}
                         </>
                     )}
+                </div>
+            );
+
+        case 'list-completed-services':
+            return (
+                <div className="space-y-6">
+                    <h2 className="text-2xl font-bold mb-6">Servicios Completados</h2>
+                    <ServiciosCompletadosForm
+                        isLoading={isLoading}
+                        onSubmit={handleBuscarServiciosCompletados}
+                        servicios={serviciosCompletados}
+                    />
                 </div>
             );
             

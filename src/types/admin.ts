@@ -415,3 +415,12 @@ export interface PaymentConfirmationResponse {
     message: string;
     recibo: Recibo;
 }
+
+export interface ServicioGeneral {
+    ID: number;
+    Tipo: TipoServicio;
+    FechaHoraInicio: string;
+    FechaHoraFin: string;
+    Cliente: string;
+    Mascota: string;
+}
