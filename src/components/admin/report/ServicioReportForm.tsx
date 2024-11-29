@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Input } from '@/components/ui/index.ui';
-import { Agrupacion, CampoOrdenamiento, EstadoServicio, FiltrosServicio, TipoServicio } from '@/types/admin';
+import { Agrupacion, CampoOrdenamiento, FiltrosServicio, TipoServicio } from '@/types/admin';
 
 
 interface ServicioReportFormProps {
@@ -9,16 +9,13 @@ interface ServicioReportFormProps {
 }
 
 const tiposServicio: TipoServicio[] = ['Consulta', 'Peluqueria', 'Internacion', 'Cirugia'];
-const agrupaciones: Agrupacion[] = ['dia', 'semana', 'mes', 'veterinario', 'tipoServicio'];
-const estadosServicio: EstadoServicio[] = ['En Proceso', 'Completado'];
+const agrupaciones: Agrupacion[] = ['semana', 'mes', 'veterinario', 'tipoServicio'];
 
 export const ServicioReportForm: React.FC<ServicioReportFormProps> = ({ onSubmit, isLoading }) => {
     const [filtros, setFiltros] = useState<FiltrosServicio>({
         fechaInicio: undefined,
         fechaFin: undefined,
         tipoServicio: [],
-        estado: [],
-        veterinarioId: undefined,
         agruparPor: [],
         ordenarPor: {
             campo: 'fecha',
@@ -89,33 +86,6 @@ export const ServicioReportForm: React.FC<ServicioReportFormProps> = ({ onSubmit
 
             <div>
                 <label className="block text-sm font-medium mb-1">
-                    Estado
-                </label>
-                <div className="grid grid-cols-2 gap-2">
-                    {estadosServicio.map((estado) => (
-                        <div key={estado} className="flex items-center">
-                            <input
-                                type="checkbox"
-                                id={`estado-${estado}`}
-                                className="rounded border-gray-300"
-                                checked={filtros.estado?.includes(estado)}
-                                onChange={(e) => {
-                                    setFiltros({
-                                        ...filtros,
-                                        estado: e.target.checked 
-                                            ? [...(filtros.estado || []), estado]
-                                            : filtros.estado?.filter(e => e !== estado) || []
-                                    });
-                                }}
-                            />
-                            <label htmlFor={`estado-${estado}`} className="ml-2">{estado}</label>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            <div>
-                <label className="block text-sm font-medium mb-1">
                     Agrupar Por
                 </label>
                 <div className="grid grid-cols-2 gap-2">
@@ -136,7 +106,8 @@ export const ServicioReportForm: React.FC<ServicioReportFormProps> = ({ onSubmit
                                 }}
                             />
                             <label htmlFor={`agrupar-${agrupacion}`} className="ml-2">
-                                {agrupacion.charAt(0).toUpperCase() + agrupacion.slice(1)}
+                                {agrupacion === 'tipoServicio' ? 'Tipo de Servicio' : 
+                                 agrupacion.charAt(0).toUpperCase() + agrupacion.slice(1)}
                             </label>
                         </div>
                     ))}
@@ -160,10 +131,6 @@ export const ServicioReportForm: React.FC<ServicioReportFormProps> = ({ onSubmit
                 >
                     <option value="fecha-DESC">Fecha (Más reciente)</option>
                     <option value="fecha-ASC">Fecha (Más antiguo)</option>
-                    <option value="tipo-ASC">Tipo (A-Z)</option>
-                    <option value="tipo-DESC">Tipo (Z-A)</option>
-                    <option value="veterinario-ASC">Veterinario (A-Z)</option>
-                    <option value="veterinario-DESC">Veterinario (Z-A)</option>
                     <option value="cantidad-DESC">Cantidad (Mayor a menor)</option>
                     <option value="cantidad-ASC">Cantidad (Menor a mayor)</option>
                 </select>
