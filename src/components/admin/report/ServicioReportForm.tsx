@@ -9,8 +9,8 @@ interface ServicioReportFormProps {
 }
 
 const tiposServicio: TipoServicio[] = ['Consulta', 'Peluqueria', 'Internacion', 'Cirugia'];
-const estadosServicio: EstadoServicio[] = ['En Proceso', 'Completado'];
 const agrupaciones: Agrupacion[] = ['dia', 'semana', 'mes', 'veterinario', 'tipoServicio'];
+const estadosServicio: EstadoServicio[] = ['En Proceso', 'Completado'];
 
 export const ServicioReportForm: React.FC<ServicioReportFormProps> = ({ onSubmit, isLoading }) => {
     const [filtros, setFiltros] = useState<FiltrosServicio>({
