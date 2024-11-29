@@ -3,8 +3,8 @@ import { jsPDF } from 'jspdf';
 import { useState } from "react";
 import { API_CONFIG, ApiService } from '@/services/index.services';
 import { BitacoraReportForm, ServicioReportForm } from "../index.admincomp";
-import { AutoTableSettings, BitacoraReport, FiltrosServicio, ResultadoReporteDinamico, 
-    ServicioReport, VetServicioReport, ViewState } from "@/types/admin";
+import { AutoTableSettings, BitacoraReport, FiltrosServicio, ReporteDinamico, ServicioReport, 
+    VetServicioReport, ViewState } from "@/types/admin";
 
 
 declare module 'jspdf' {
@@ -79,7 +79,7 @@ export const ReporteSection: React.FC<ReporteSectionProps> = ({ view }) => {
     const handleGenerateDynamicReport = async (filtros: FiltrosServicio) => {
         try {
             setIsLoading(true);
-            const data = await ApiService.fetch<ResultadoReporteDinamico>(
+            const data = await ApiService.fetch<ReporteDinamico>(
                 `${API_CONFIG.ENDPOINTS.ADM_REPORTDINAMICO}`,
                 {
                     method: 'POST',
@@ -200,80 +200,102 @@ export const ReporteSection: React.FC<ReporteSectionProps> = ({ view }) => {
         doc.save(`reporte-servicios-vet-${ci}.pdf`);
     };
     
-    const generateDynamicPDF = async (data: ResultadoReporteDinamico, filtros: FiltrosServicio) => {
+    const generateDynamicPDF = async (data: ReporteDinamico, filtros: FiltrosServicio) => {
         const doc = new jsPDF();
         
+        // Título principal
         doc.setFontSize(16);
         doc.text('Reporte Dinámico de Servicios', 20, 20);
         
-        doc.setFontSize(10);
         let yPos = 30;
+        doc.setFontSize(10);
         
+        // Información de filtros
         if (filtros.fechaInicio || filtros.fechaFin) {
             const fechaInicio = filtros.fechaInicio ? new Date(filtros.fechaInicio).toLocaleDateString() : 'No especificada';
             const fechaFin = filtros.fechaFin ? new Date(filtros.fechaFin).toLocaleDateString() : 'No especificada';
             doc.text(`Período: ${fechaInicio} - ${fechaFin}`, 20, yPos);
             yPos += 10;
         }
-
+    
         if (filtros.tipoServicio?.length) {
             doc.text(`Tipos de servicio: ${filtros.tipoServicio.join(', ')}`, 20, yPos);
             yPos += 10;
         }
-
-        if (filtros.estado?.length) {
-            doc.text(`Estados: ${filtros.estado.join(', ')}`, 20, yPos);
-            yPos += 10;
-        }
-
+    
         doc.text(`Generado el: ${new Date().toLocaleString()}`, 20, yPos);
-        yPos += 10;
-
-        data.forEach((grupo) => {
-            yPos += 10;
+        yPos += 15;
+    
+        // Procesar cada grupo
+        data.grupos.forEach(grupo => {
             doc.setFontSize(12);
-            doc.text(`${grupo.grupo} (Total: ${grupo.cantidad})`, 20, yPos);
-            yPos += 10;
-
-            // Tabla de servicios del grupo
+            let titulo = '';
+            let subtitulo = '';
+    
+            if (grupo.tipo === 'semana') {
+                const inicioSemana = new Date(grupo.inicio_semana).toLocaleDateString();
+                const finSemana = new Date(grupo.fin_semana).toLocaleDateString();
+                titulo = `Semana ${grupo.semana} del ${grupo.año} - Total: ${grupo.cantidad}`;
+                subtitulo = `(${inicioSemana} - ${finSemana})`;
+            } else if (grupo.tipo === 'veterinario') {
+                titulo = `${grupo.nombreVeterinario} - Total: ${grupo.cantidad}`;
+            }
+    
+            doc.text(titulo, 20, yPos);
+            yPos += 7;
+            
+            if (subtitulo) {
+                doc.setFontSize(10);
+                doc.text(subtitulo, 20, yPos);
+                yPos += 7;
+            }
+    
+            // Filtrar servicios para este grupo
+            const serviciosGrupo = data.servicios.filter(servicio => {
+                if (grupo.tipo === 'semana') {
+                    const fechaServicio = new Date(servicio.FechaHoraInicio);
+                    const inicioSemana = new Date(grupo.inicio_semana);
+                    const finSemana = new Date(grupo.fin_semana);
+                    return fechaServicio >= inicioSemana && fechaServicio <= finSemana;
+                } else if (grupo.tipo === 'veterinario') {
+                    return servicio.NombreVeterinario === grupo.nombreVeterinario;
+                }
+                return false;
+            });
+    
+            // Tabla de servicios
             const headers = [
-                ['ID', 'Tipo', 'Estado', 'Inicio', 'Fin', 'Veterinario', 'Mascota', 'Cliente']
+                ['ID', 'Tipo', 'Inicio', 'Fin', 'Veterinario', 'Mascota', 'Cliente']
             ];
-
-            const rows = grupo.servicios.map(servicio => [
+    
+            const rows = serviciosGrupo.map(servicio => [
                 servicio.ServicioID.toString(),
                 servicio.TipoServicio,
-                servicio.Estado,
                 new Date(servicio.FechaHoraInicio).toLocaleString(),
-                servicio.FechaHoraFin ? new Date(servicio.FechaHoraFin).toLocaleString() : '-',
+                new Date(servicio.FechaHoraFin).toLocaleString(),
                 servicio.NombreVeterinario,
                 servicio.NombreMascota,
                 servicio.NombreCliente
             ]);
-
-            const tableSettings: AutoTableSettings = {
+    
+            doc.autoTable({
                 head: headers,
                 body: rows,
                 startY: yPos,
                 theme: 'grid',
-                styles: { 
-                    fontSize: 8 
-                },
+                styles: { fontSize: 8 },
                 columnStyles: {
                     0: { cellWidth: 15 },
                     1: { cellWidth: 25 },
-                    2: { cellWidth: 25 },
-                    3: { cellWidth: 30 },
+                    2: { cellWidth: 35 },
+                    3: { cellWidth: 35 },
                     4: { cellWidth: 30 },
                     5: { cellWidth: 25 },
-                    6: { cellWidth: 20 },
-                    7: { cellWidth: 25 }
+                    6: { cellWidth: 25 }
                 }
-            };
+            });
     
-            doc.autoTable(tableSettings);
-    
-            yPos = doc.lastAutoTable.finalY + 10;
+            yPos = doc.lastAutoTable.finalY + 15;
     
             if (yPos > 250) {
                 doc.addPage();

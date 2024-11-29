@@ -433,3 +433,66 @@ export interface ReciboGeneral {
     Cliente: string;
     Mascota: string;
 }
+
+// Nuevas interfaces para el reporte dinámico
+export interface ServicioBase {
+    ServicioID: number;
+    TipoServicio: TipoServicio;
+    FechaHoraInicio: string;
+    FechaHoraFin: string | null;
+    NombreVeterinario: string;
+    NombreMascota: string;
+    NombreCliente: string;
+}
+
+export interface GrupoSemana {
+    año: number;
+    semana: number;
+    inicio_semana: string;
+    fin_semana: string;
+    cantidad: number;
+    tipo: 'semana';
+}
+
+export interface GrupoMes {
+    año: number;
+    mes: number;
+    inicio_mes: string;
+    fin_mes: string;
+    cantidad: number;
+}
+
+export interface GrupoVeterinario {
+    PersonalID: number;
+    nombreVeterinario: string;
+    cantidad: number;
+    tipo: 'veterinario';
+}
+
+type GrupoDinamico = GrupoSemana | GrupoVeterinario;
+
+export interface GrupoTipoServicio {
+    TipoServicio: TipoServicio;
+    cantidad: number;
+}
+
+// export type GrupoDinamico = 
+//     | (GrupoSemana & { tipo: 'semana' })
+//     | (GrupoMes & { tipo: 'mes' })
+//     | (GrupoVeterinario & { tipo: 'veterinario' })
+//     | (GrupoTipoServicio & { tipo: 'tipoServicio' });
+
+export interface ReporteDinamico {
+    grupos: GrupoDinamico[];
+    servicios: ServicioDinamico[];
+}
+
+interface ServicioDinamico {
+    ServicioID: number;
+    TipoServicio: TipoServicio;
+    FechaHoraInicio: string;
+    FechaHoraFin: string;
+    NombreVeterinario: string;
+    NombreMascota: string;
+    NombreCliente: string;
+}
