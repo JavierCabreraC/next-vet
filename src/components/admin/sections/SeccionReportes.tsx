@@ -267,12 +267,12 @@ export const ReporteSection: React.FC<ReporteSectionProps> = ({ view }) => {
             const headers = [
                 ['ID', 'Tipo', 'Inicio', 'Fin', 'Veterinario', 'Mascota', 'Cliente']
             ];
-    
+
             const rows = serviciosGrupo.map(servicio => [
                 servicio.ServicioID.toString(),
                 servicio.TipoServicio,
-                new Date(servicio.FechaHoraInicio).toLocaleString(),
-                new Date(servicio.FechaHoraFin).toLocaleString(),
+                new Date(servicio.FechaHoraInicio).toLocaleDateString(),
+                new Date(servicio.FechaHoraFin).toLocaleDateString(),
                 servicio.NombreVeterinario,
                 servicio.NombreMascota,
                 servicio.NombreCliente
