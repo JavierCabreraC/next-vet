@@ -267,11 +267,23 @@ export const ReporteSection: React.FC<ReporteSectionProps> = ({ view }) => {
                 ['ID', 'Tipo', 'Inicio', 'Fin', 'Veterinario', 'Mascota', 'Cliente']
             ];
 
+            const formatDateTime = (dateTime: string): string => {
+                const date = new Date(dateTime);
+                const options: Intl.DateTimeFormatOptions = {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                };
+                return date.toLocaleString('es-ES', options); // ajusta según la localización
+            };
+
             const rows = serviciosGrupo.map(servicio => [
                 servicio.ServicioID.toString(),
                 servicio.TipoServicio,
-                new Date(servicio.FechaHoraInicio).toLocaleDateString(),
-                new Date(servicio.FechaHoraFin).toLocaleDateString(),
+                formatDateTime(servicio.FechaHoraInicio),
+                formatDateTime(servicio.FechaHoraFin),
                 servicio.NombreVeterinario,
                 servicio.NombreMascota,
                 servicio.NombreCliente,
