@@ -28,6 +28,24 @@ export const ServicioReportForm: React.FC<ServicioReportFormProps> = ({ onSubmit
         await onSubmit(filtros);
     };
 
+    const handleAgrupacionChange = (agrupacion: Agrupacion, checked: boolean) => {
+        let nuevasAgrupaciones = [...(filtros.agruparPor || [])];
+        
+        if (checked) {
+            if (agrupacion === 'semana' || agrupacion === 'mes') {
+                nuevasAgrupaciones = nuevasAgrupaciones.filter(a => a !== 'semana' && a !== 'mes');
+            }
+            nuevasAgrupaciones.push(agrupacion);
+        } else {
+            nuevasAgrupaciones = nuevasAgrupaciones.filter(a => a !== agrupacion);
+        }
+
+        setFiltros({
+            ...filtros,
+            agruparPor: nuevasAgrupaciones
+        });
+    };
+
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
@@ -96,16 +114,23 @@ export const ServicioReportForm: React.FC<ServicioReportFormProps> = ({ onSubmit
                                 id={`agrupar-${agrupacion}`}
                                 className="rounded border-gray-300"
                                 checked={filtros.agruparPor?.includes(agrupacion)}
-                                onChange={(e) => {
-                                    setFiltros({
-                                        ...filtros,
-                                        agruparPor: e.target.checked 
-                                            ? [...(filtros.agruparPor || []), agrupacion]
-                                            : filtros.agruparPor?.filter(a => a !== agrupacion) || []
-                                    });
-                                }}
+                                disabled={
+                                    // Deshabilita mes si semana está seleccionado
+                                    (agrupacion === 'mes' && filtros.agruparPor?.includes('semana')) ||
+                                    // Deshabilita semana si mes está seleccionado
+                                    (agrupacion === 'semana' && filtros.agruparPor?.includes('mes'))
+                                }
+                                onChange={(e) => handleAgrupacionChange(agrupacion, e.target.checked)}
                             />
-                            <label htmlFor={`agrupar-${agrupacion}`} className="ml-2">
+                            <label 
+                                htmlFor={`agrupar-${agrupacion}`} 
+                                className={`ml-2 ${
+                                    ((agrupacion === 'mes' && filtros.agruparPor?.includes('semana')) ||
+                                    (agrupacion === 'semana' && filtros.agruparPor?.includes('mes')))
+                                    ? 'text-gray-400'
+                                    : ''
+                                }`}
+                            >
                                 {agrupacion === 'tipoServicio' ? 'Tipo de Servicio' : 
                                  agrupacion.charAt(0).toUpperCase() + agrupacion.slice(1)}
                             </label>
