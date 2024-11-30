@@ -123,7 +123,6 @@ export const ReporteSection: React.FC<ReporteSectionProps> = ({ view }) => {
             theme: 'grid'
         });
     
-        // Descargar PDF
         doc.save(`reporte-bitacora-${ci}.pdf`); // incluimos el CI en el nombre del archivo
     };
 
@@ -275,8 +274,11 @@ export const ReporteSection: React.FC<ReporteSectionProps> = ({ view }) => {
                 new Date(servicio.FechaHoraFin).toLocaleDateString(),
                 servicio.NombreVeterinario,
                 servicio.NombreMascota,
-                servicio.NombreCliente
+                servicio.NombreCliente,
             ]);
+
+            console.log({data});
+            console.log({rows});
     
             doc.autoTable({
                 head: headers,

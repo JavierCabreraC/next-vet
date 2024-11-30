@@ -291,7 +291,7 @@ export interface AutoTableColumn {
     tableWidth?: 'auto' | number;
     tableLineColor?: number[];
     tableLineWidth?: number;
- }
+}
 
 export interface BitacoraReport {
     FechaHora: string;
