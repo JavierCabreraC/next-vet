@@ -41,7 +41,6 @@ export interface Cliente extends Record<string, unknown> {
     ClienteID: number;
     NombreCompleto: string;
     CI: string;
-    Contacto: string;
     Telefono: string;
     Direccion: string;
     Email: string;
@@ -165,7 +164,6 @@ export type ClienteForm = {
     NombreCompleto: string;
     Telefono: string;
     Direccion: string;
-    Contacto: string;
     Email: string;
     NumeroCI: number;
 };
@@ -211,7 +209,6 @@ export interface UpdateForms {
         ClienteID?: number;
         NombreCompleto?: string;
         Telefono?: string;
-        Contacto?: string;
         Direccion?: string;
     };
     mascotaUpdate: {

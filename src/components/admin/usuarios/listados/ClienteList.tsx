@@ -24,9 +24,8 @@ export const ClienteList: React.FC<ClientListProps> = ({ isLoading, setIsLoading
     });
 
     const clientColumns: Column<Cliente>[] = [
-        { key: 'ClienteID', header: 'ID' },
+        { key: 'ID', header: 'ID' },
         { key: 'NombreCompleto', header: 'Nombre Completo' },
-        { key: 'Contacto', header: 'Contacto' },
         { key: 'CI', header: 'Número Carnet' },
         { key: 'Telefono', header: 'Teléfono' },
         { key: 'Direccion', header: 'Dirección' },
@@ -55,10 +54,6 @@ export const ClienteList: React.FC<ClientListProps> = ({ isLoading, setIsLoading
             <div className="mb-2">
                 <span className="font-semibold">Nombre: </span>
                 <span>{cliente.NombreCompleto}</span>
-            </div>
-            <div className="mb-2">
-                <span className="font-semibold">Contacto: </span>
-                <span>{cliente.Contacto}</span>
             </div>
             <div className="mb-2">
                 <span className="font-semibold">Carnet: </span>
@@ -107,7 +102,6 @@ export const ClienteList: React.FC<ClientListProps> = ({ isLoading, setIsLoading
             clienteUpdate: { 
                 ClienteID: cliente.ClienteID,
                 NombreCompleto: cliente.NombreCompleto,
-                Contacto: cliente.Contacto,
                 Telefono: cliente.Telefono,
                 Direccion: cliente.Direccion
             }

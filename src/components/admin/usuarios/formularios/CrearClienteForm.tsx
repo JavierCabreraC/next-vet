@@ -12,7 +12,6 @@ export const CreateClienteForm: React.FC = () => {
         NombreCompleto: '',
         Telefono: '',
         Direccion: '',
-        Contacto: '',
         Email: '',
         NumeroCI: 0
     });
@@ -31,15 +30,14 @@ export const CreateClienteForm: React.FC = () => {
                 Telefono: '',
                 Direccion: '',
                 Email: '',
-                Contacto: '',
                 NumeroCI: 0
             });
             setSuccessMessage("El cliente ha sido registrado exitosamente");
-            setTimeout(() => setSuccessMessage(null), 2000);
+            setTimeout(() => setSuccessMessage(null), 5000);
         } catch (error) {
             console.error('Error al registrar cliente:', error);
             setErrorMessage("Hubo un error al registrar el cliente");
-            setTimeout(() => setErrorMessage(null), 2000);
+            setTimeout(() => setErrorMessage(null), 5000);
         } finally {
             setIsLoading(false);
         }
@@ -70,20 +68,6 @@ export const CreateClienteForm: React.FC = () => {
                             NombreCompleto: e.target.value
                         })}
                         placeholder="Nombre Completo"
-                        required
-                    />
-                </div>
-                <div>
-                    <label className="block text-sm font-medium mb-1">
-                        Contacto
-                    </label>
-                    <Input
-                        value={clienteForm.Contacto}
-                        onChange={(e) => setClienteForm({
-                            ...clienteForm,
-                            Contacto: e.target.value
-                        })}
-                        placeholder="Contacto"
                         required
                     />
                 </div>
