@@ -23,7 +23,7 @@ export type EstadoServicio = 'En Proceso' | 'Completado';
 
 export type CampoOrdenamiento = 'fecha' | 'tipo' | 'veterinario' | 'cantidad';
 
-export type Agrupacion = 'dia' | 'semana' | 'mes' | 'veterinario' | 'tipoServicio';
+export type Agrupacion = 'veterinario' | 'tipoServicio';
 
 export interface Personal extends Record<string, unknown> {
     ID: number;
