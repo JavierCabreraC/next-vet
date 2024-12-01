@@ -9,8 +9,14 @@ export * from './mascotas/formularios/CrearRazaForm';
 export * from './mascotas/listados/MascotaList';
 export * from './mascotas/listados/RazaList';
 
-export * from './report/BitacoraReportForm';
-export * from './report/ServicioReportForm';
+export * from './report/formularios/BitacoraReportForm';
+export * from './report/formularios/ServicioReportForm';
+export * from './report/generadores/bitacoraPdfGenerator';
+export * from './report/generadores/dynamicPdfGenerator';
+export * from './report/generadores/serviciosPdfGenerator';
+export * from './report/generadores/vetServiciosPdfGenerator';
+export * from './report/handlers/reportHandlers';
+export * from './report/types/pdfTypes';
 
 export * from './reservaciones/ReservacionesList';
 export * from './reservaciones/ReservacionSearchForm';
