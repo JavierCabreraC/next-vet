@@ -4,7 +4,7 @@ import { LogOut, Stethoscope } from "lucide-react";
 
 export const VetHeader: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
     return (
-        <header className="bg-white shadow-md p-4">
+        <header className="bg-gray-150 shadow-md p-4">
             <div className="container mx-auto flex justify-between items-center">
                 <h1 className="text-3xl font-bold text-blue-600">
                     <span className="flex items-center">

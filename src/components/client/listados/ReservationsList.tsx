@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
-import { format } from 'date-fns'; // añadir addHours en localhost
+import { format } from 'date-fns'; // añadir addHours para cuando esté en la nube
 import { es } from 'date-fns/locale';
 import { PendingReservation } from '@/types/index.types';
 

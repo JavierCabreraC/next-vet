@@ -18,12 +18,12 @@ const NavButton: React.FC<NavButtonProps> = ({ icon, text, active, onClick }) =>
             w-full flex items-center px-4 py-2 rounded-lg
             transition-colors duration-150 ease-in-out
             ${active 
-                ? 'bg-blue-50 text-blue-600' 
-                : 'text-gray-600 hover:bg-gray-50'}
+                ? 'bg-blue-500 text-white' // Color de fondo azul y texto blanco cuando está activo
+                : 'text-gray-600 hover:bg-gray-200 hover:text-blue-600'} // Color de texto y fondo hover en estado inactivo
         `}
     >
-        {icon}
-        <span className="ml-3">{text}</span>
+            {icon}
+            <span className="ml-3">{text}</span>
     </button>
 );
 
@@ -41,7 +41,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     onServiceClear,
 }) => {
     return (
-        <aside className="w-75 bg-white shadow-lg border-r border-gray-400">
+        <aside className="w-75 bg-blue-200 shadow-lg border-r border-gray-400">
             <nav className="p-4">
                 <div className="space-y-2">
                     <NavButton
