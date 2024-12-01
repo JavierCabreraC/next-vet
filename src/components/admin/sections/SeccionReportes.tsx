@@ -229,35 +229,22 @@ export const ReporteSection: React.FC<ReporteSectionProps> = ({ view }) => {
         data.grupos.forEach(grupo => {
             doc.setFontSize(12);
             let titulo = '';
-            let subtitulo = '';
     
-            if (grupo.tipo === 'semana') {
-                const inicioSemana = new Date(grupo.inicio_semana).toLocaleDateString();
-                const finSemana = new Date(grupo.fin_semana).toLocaleDateString();
-                titulo = `Semana ${grupo.semana} del ${grupo.año} - Total: ${grupo.cantidad}`;
-                subtitulo = `(${inicioSemana} - ${finSemana})`;
-            } else if (grupo.tipo === 'veterinario') {
-                titulo = `${grupo.nombreVeterinario} - Total: ${grupo.cantidad}`;
+            if (grupo.tipo === 'veterinario') {
+                titulo = `Veterinario: ${grupo.nombreVeterinario} - Total: ${grupo.cantidad}`;
+            } else if (grupo.tipo === 'tipoServicio') {
+                titulo = `Tipo de Servicio: ${grupo.TipoServicio} - Total: ${grupo.cantidad}`;
             }
     
             doc.text(titulo, 20, yPos);
-            yPos += 7;
-            
-            if (subtitulo) {
-                doc.setFontSize(10);
-                doc.text(subtitulo, 20, yPos);
-                yPos += 7;
-            }
+            yPos += 10;
     
             // Filtrar servicios para este grupo
             const serviciosGrupo = data.servicios.filter(servicio => {
-                if (grupo.tipo === 'semana') {
-                    const fechaServicio = new Date(servicio.FechaHoraInicio);
-                    const inicioSemana = new Date(grupo.inicio_semana);
-                    const finSemana = new Date(grupo.fin_semana);
-                    return fechaServicio >= inicioSemana && fechaServicio <= finSemana;
-                } else if (grupo.tipo === 'veterinario') {
+                if (grupo.tipo === 'veterinario') {
                     return servicio.NombreVeterinario === grupo.nombreVeterinario;
+                } else if (grupo.tipo === 'tipoServicio') {
+                    return servicio.TipoServicio === grupo.TipoServicio;
                 }
                 return false;
             });
@@ -266,7 +253,7 @@ export const ReporteSection: React.FC<ReporteSectionProps> = ({ view }) => {
             const headers = [
                 ['ID', 'Tipo', 'Inicio', 'Fin', 'Veterinario', 'Mascota', 'Cliente']
             ];
-
+    
             const formatDateTime = (dateTime: string): string => {
                 const date = new Date(dateTime);
                 const options: Intl.DateTimeFormatOptions = {
@@ -276,21 +263,18 @@ export const ReporteSection: React.FC<ReporteSectionProps> = ({ view }) => {
                     hour: '2-digit',
                     minute: '2-digit',
                 };
-                return date.toLocaleString('es-ES', options); // ajusta según la localización
+                return date.toLocaleString('es-ES', options);
             };
-
+    
             const rows = serviciosGrupo.map(servicio => [
                 servicio.ServicioID.toString(),
                 servicio.TipoServicio,
                 formatDateTime(servicio.FechaHoraInicio),
-                formatDateTime(servicio.FechaHoraFin),
+                servicio.FechaHoraFin ? formatDateTime(servicio.FechaHoraFin) : '',
                 servicio.NombreVeterinario,
                 servicio.NombreMascota,
                 servicio.NombreCliente,
             ]);
-
-            console.log({data});
-            console.log({rows});
     
             doc.autoTable({
                 head: headers,

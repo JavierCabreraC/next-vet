@@ -1,5 +1,3 @@
-import React from 'react';
-import { ApiResponse } from './index.types';
 
 
 export type ViewState = 
@@ -80,63 +78,17 @@ export interface Usuario extends Record<string, unknown> {
     Estado: string;
 }
 
-export interface AdminActionsProps {
-    onViewList: (type: 'personal' | 'clientes' | 'mascotas' | 'bitacora' | 'reservacion' | 'usuarios') => void;
-}
-
 export interface ServiceCardProps {
     icon: React.ReactNode;
     title: string;
     description: string;
 }
 
-export interface AdminCardsProps {
-    onShowPersonalForm: () => void;
-    onShowClienteForm: () => void;
-    onShowMascotaForm: () => void;
-}
-
 export interface AdminHeaderProps {
     onLogout: () => void;
 }
 
-export interface RenderFormProps<T extends FormTypes> {
-    title: string;
-    form: T;
-    setForm: React.Dispatch<React.SetStateAction<T>>;
-    onClose: () => void;
-    handleSubmit: (formType: 'personal' | 'cliente' | 'mascota') => void;
-}
-
-export interface UpdateableRecord {
-    PersonalID?: number;
-    ClienteID?: number;
-    MascotaID?: number;
-}
-
-export interface RenderModalProps<T extends Record<string, unknown>> {
-    title: string;
-    data: T[];
-    onClose: () => void;
-    currentPage: number;
-    setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-    itemsPerPage?: number;
-    onEdit?: (record: T) => void;
-}
-
-export interface AdminCardProps {
-    icon: React.ReactNode;
-    title: string;
-    description: string;
-    onClick: () => void;
-}
-
-export interface ResponseModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    response: ApiResponse | null;
-    title: string;
-}
+export type UpdateType = 'personal' | 'cliente' | 'mascota' | 'reservacion' | 'usuario';
 
 export interface UpdateModalProps {
     isOpen: boolean;
@@ -196,8 +148,6 @@ export interface ReservacionUpdate extends Record<string, unknown> {
 export interface UsuarioUpdate extends Record<string, unknown> {
     UsuarioID: number;
 }
-
-export type UpdateType = 'personal' | 'cliente' | 'mascota' | 'reservacion' | 'usuario';
 
 export interface UpdateForms {
     personalUpdate: {
@@ -444,23 +394,6 @@ export interface ServicioBase {
     NombreCliente: string;
 }
 
-export interface GrupoSemana {
-    año: number;
-    semana: number;
-    inicio_semana: string;
-    fin_semana: string;
-    cantidad: number;
-    tipo: 'semana';
-}
-
-export interface GrupoMes {
-    año: number;
-    mes: number;
-    inicio_mes: string;
-    fin_mes: string;
-    cantidad: number;
-}
-
 export interface GrupoVeterinario {
     PersonalID: number;
     nombreVeterinario: string;
@@ -471,9 +404,10 @@ export interface GrupoVeterinario {
 export interface GrupoTipoServicio {
     TipoServicio: TipoServicio;
     cantidad: number;
+    tipo: 'tipoServicio';
 }
 
-type GrupoDinamico = GrupoSemana | GrupoVeterinario;
+type GrupoDinamico = GrupoVeterinario | GrupoTipoServicio; 
 
 interface ServicioDinamico {
     ServicioID: number;
