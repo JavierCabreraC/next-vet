@@ -1,3 +1,4 @@
+import { API_CONFIG } from '@/services/constants';
 import { NextRouter } from 'next/router';
 
 
@@ -8,7 +9,9 @@ export const logout = async (router: NextRouter) => {
         return;
     }
     try {
-        const response = await fetch('https://neon-demo-production.up.railway.app/api/auth/logout', {
+        // const response = await fetch('https://neon-demo-production.up.railway.app/api/auth/logout', {
+        const response = await fetch(API_CONFIG.BASE_URL + '/auth/logout', {
+        
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
