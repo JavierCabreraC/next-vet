@@ -132,7 +132,9 @@ export const ServiciosActivos: React.FC = () => {
                             <div className="flex items-center gap-2 text-sm text-gray-600">
                                 <Clock size={16} />
                                 <span>
-                                    {new Date(servicio["HoraInicio"]).toLocaleString()}
+                                    {new Date(new Date(servicio["HoraInicio"]).setHours(
+                                        new Date(servicio["HoraInicio"]).getHours() - 4
+                                    )).toLocaleString()}
                                 </span>
                             </div>
 
