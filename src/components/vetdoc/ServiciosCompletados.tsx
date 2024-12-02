@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import { Column, DataTable } from './common/DataTable';
 import { Button } from '@/components/ui/index.ui';
 import type { ServicioCompletado } from '@/types/vetdoc';
 import { ApiService, API_CONFIG } from '@/services/index.services';

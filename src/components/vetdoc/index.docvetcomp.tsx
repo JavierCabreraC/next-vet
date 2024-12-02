@@ -14,6 +14,7 @@ export * from './formularios/VacunaForm';
 export * from './formularios/VacunationForm';
 
 export * from './listados/Analisis';
+export * from './listados/MascotasHistorial';
 export * from './listados/Receta';
 export * from './listados/VacunaList';
 export * from './listados/VacunationList';

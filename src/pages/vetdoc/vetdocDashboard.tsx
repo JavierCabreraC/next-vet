@@ -3,11 +3,11 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button } from '@/components/ui/index.ui';
 import { logout, useAuth } from '@/hooks/index.hooks';
-import { Stethoscope, LogOut, Search, Plus } from 'lucide-react';
+import { Stethoscope, LogOut, Plus } from 'lucide-react';
 import type { MainView, ReservacionV, ServiceType } from '@/types/vetdoc';
 import { ReservacionesPendientes, ConsultaForm, PeluqueriaForm, ServiciosCompletados, ServicioSelection, Sidebar, 
     ServiciosActivosView, RecetasView, AnalisisView, CirugiaForm, VacunaList, VacunaForm, VacunacionForm, VacunacionList, 
-    AgendarCirugiaForm, ReservacionesCirugia} from '@/components/vetdoc/index.docvetcomp';
+    AgendarCirugiaForm, ReservacionesCirugia, HistorialMascotas} from '@/components/vetdoc/index.docvetcomp';
 
 
 const VeterinarioPage: React.FC = () => {
@@ -225,27 +225,7 @@ const VeterinarioPage: React.FC = () => {
                 );
 
             case 'historial':
-                return (
-                    <div className="p-6">
-                        <h2 className="text-2xl font-bold mb-6">Historial Clínico</h2>
-                        <div className="bg-white rounded-lg shadow-md p-6">
-                            <div className="mb-6">
-                                <div className="flex gap-4 mb-4">
-                                    <input
-                                        type="text"
-                                        placeholder="Buscar mascota..."
-                                        className="flex-1 p-2 border rounded-md"
-                                    />
-                                    <Button>
-                                        <Search size={20} className="mr-2" />
-                                        Buscar
-                                    </Button>
-                                </div>
-                            </div>
-                            {/* Resultados de búsqueda y historial se renderizarán aquí */}
-                        </div>
-                    </div>
-                );
+                return <HistorialMascotas />;
 
             case 'historialVacunas': return < VacunacionList />;
             

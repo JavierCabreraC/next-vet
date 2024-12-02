@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Loader2, Search, X } from "lucide-react";
 import { Receta } from "@/types/vetdoc";
-// import { Column, DataTable } from "../../ui/DataTable";
 import { API_CONFIG, ApiService } from "@/services/index.services";
 import { Button, Column, DataTable, Input } from "@/components/ui/index.ui";
 

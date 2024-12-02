@@ -40,6 +40,7 @@ export const API_CONFIG = {
         DOC_SERVINTER:                  '/vetdoc/servicios/internacion',
         DOC_SERVCIRU:                   '/vetdoc/servicios/cirugia',
         DOC_MASCOTAS:                   '/vetdoc/mascotas',
+        DOC_CLIENTE:                    '/vetdoc/cliente',
         DOC_SERVACT:                    '/vetdoc/servicios/active',
         DOC_SERVEND:                    '/vetdoc/servicios/peluqueria',
         DOC_SERVCOM:                    '/vetdoc/servicios/completed',
