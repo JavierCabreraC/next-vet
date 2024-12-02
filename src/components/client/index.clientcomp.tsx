@@ -7,6 +7,7 @@ export * from './layout/Sidebar';
 
 export * from './listados/MascotasList';
 export * from './listados/RecibosHistorialList';
+export * from './listados/ReservacionesHistorialList';
 export * from './listados/ReservationsList';
 export * from './listados/ServiciosHistorialList';
 

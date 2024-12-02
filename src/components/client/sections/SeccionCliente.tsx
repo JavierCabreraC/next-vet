@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { API_CONFIG, ApiService } from '@/services/index.services';
-import { MascotasList, RecibosHistorialList, ReservationForm, ReservationsList, 
-    ServiciosHistorialList } from '../index.clientcomp';
-import { CancelReservationRequest, MascotaCli, PendingReservation, ReciboCli, ServicioHistorial, 
+import { CancelReservationRequest, HistorialReservacion, MascotaCli, PendingReservation, ReciboCli, ServicioHistorial, 
     ViewStateCliente } from '@/types/client';
+import { MascotasList, RecibosHistorialList, ReservacionesHistorialList, ReservationForm, ReservationsList, 
+    ServiciosHistorialList } from '../index.clientcomp';
 
 
 interface ClientSectionProps {
@@ -18,6 +18,8 @@ export const ClientSection: React.FC<ClientSectionProps> = ({ view }) => {
     const [isLoadingServicios, setIsLoadingServicios] = useState(false);
     const [recibos, setRecibos] = useState<ReciboCli[]>([]);
     const [isLoadingRecibos, setIsLoadingRecibos] = useState(false);
+    const [reservaciones, setReservaciones] = useState<HistorialReservacion[]>([]);
+    const [isLoadingReservaciones, setIsLoadingReservaciones] = useState(false);
             
     useEffect(() => {
         const loadServicios = async () => {
@@ -67,6 +69,27 @@ export const ClientSection: React.FC<ClientSectionProps> = ({ view }) => {
         }
     }, [view]);
 
+    useEffect(() => {
+        const loadReservaciones = async () => {
+            try {
+                setIsLoadingReservaciones(true);
+                const data = await ApiService.fetch<HistorialReservacion[]>(
+                    `${API_CONFIG.ENDPOINTS.CLI_RESERVS}`,
+                    { method: 'GET' }
+                );
+                setReservaciones(data);
+            } catch (error) {
+                console.error('Error al cargar el historial de reservaciones:', error);
+            } finally {
+                setIsLoadingReservaciones(false);
+            }
+        };
+    
+        if (view === 'history-reservaciones') {
+            loadReservaciones();
+        }
+    }, [view]);
+
     const loadMascotas = async () => {
         try {
             setIsLoading(true);
@@ -98,7 +121,7 @@ export const ClientSection: React.FC<ClientSectionProps> = ({ view }) => {
 
     const handleReservationSuccess = () => {
         loadReservations();
-        // Implementar notificación de éxito
+        // Se podría implementar acá una notificación de éxito
     };
 
     const handleCancelReservation = async (reservationId: number): Promise<void> => {
@@ -141,7 +164,7 @@ export const ClientSection: React.FC<ClientSectionProps> = ({ view }) => {
                     <h2 className="text-2xl font-bold">Agendar Nueva Cita</h2>
                     <ReservationForm
                         onSuccess={handleReservationSuccess}
-                        onCancel={() => {}} // No necesitamos esta funcionalidad en el nuevo diseño
+                        onCancel={() => {}} 
                     />
                 </div>
             );
@@ -158,10 +181,14 @@ export const ClientSection: React.FC<ClientSectionProps> = ({ view }) => {
             );
 
         case 'history-reservaciones':
+            if (isLoadingReservaciones) {
+                return <div className="flex justify-center items-center h-full">Cargando...</div>;
+            }
+        
             return (
                 <div className="space-y-6">
                     <h2 className="text-2xl font-bold">Historial de Reservaciones</h2>
-                    <p>Funcionalidad en desarrollo</p>
+                    <ReservacionesHistorialList reservaciones={reservaciones} />
                 </div>
             );
 

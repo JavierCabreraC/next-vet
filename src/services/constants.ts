@@ -24,6 +24,7 @@ export const API_CONFIG = {
         ADM_STRIPECONFIRM:              '/admin/confirm-payment',
         CLI_MASCOTAS:                   '/cliente/mascotas',
         CLI_RESERVA:                    '/cliente/reservacion',
+        CLI_RESERVS:                    '/cliente/reserva',
         CLI_RESERVACLI:                 '/cliente/reservacion/cli',
         CLI_RESERVAGRAL:                '/cliente/reservacion/gral',
         CLI_HISRECETAS:                 '/cliente/historial/recetas',

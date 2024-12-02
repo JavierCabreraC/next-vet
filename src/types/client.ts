@@ -121,3 +121,11 @@ export interface ReciboCli {
     ServicioID: number;
     TipoServicio: string;
 }
+
+export interface HistorialReservacion {
+    ReservacionID: number;
+    Motivo: string;
+    Fecha_y_Hora: string;
+    Estado: string;
+    Cliente: string;
+}
