@@ -1,8 +1,30 @@
+import { useEffect, useState } from 'react';
 import type { Vacuna } from '@/types/index.types';
-import { Column, DataTable } from '../common/DataTable';
+import { Column, DataTable } from '@/components/ui/index.ui';
+import { API_CONFIG, ApiService } from '@/services/index.services';
 
 
-export const VacunaList: React.FC<{ vacunas: Vacuna[] }> = ({ vacunas }) => {
+export const VacunaList: React.FC = () => {
+    const [vacunas, setVacunas] = useState<Vacuna[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        const cargarVacunas = async () => {
+            try {
+                const data = await ApiService.fetch<Vacuna[]>(
+                    `${API_CONFIG.ENDPOINTS.DOC_VACUNAS}`,
+                    { method: 'GET' }
+                );
+                setVacunas(data);
+            } catch (error) {
+                console.error('Error al obtener vacunas:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        cargarVacunas();
+    }, []);
     const columns: Column<Vacuna>[] = [
         { key: 'Vacuna', header: 'Nombre' },
         { key: 'Descripcion', header: 'Descripción' },
@@ -39,6 +61,10 @@ export const VacunaList: React.FC<{ vacunas: Vacuna[] }> = ({ vacunas }) => {
           </div>      
       </div>
     );
+
+    if (isLoading) {
+        return <div className="text-center py-8">Cargando vacunas...</div>;
+    }
 
     return (
         <DataTable<Vacuna>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader } from './card';
+import { API_CONFIG } from '@/services/index.services';
 import { Button, Input } from '@/components/ui/index.ui';
 
 
@@ -16,7 +17,7 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({ onClose 
         e.preventDefault();
         setMessage('');   
         try {
-            const response = await fetch('https://neon-demo-production.up.railway.app/api/auth/updateHash', {
+            const response = await fetch(API_CONFIG.ENDPOINTS.AUTH_UPDATEHASH, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

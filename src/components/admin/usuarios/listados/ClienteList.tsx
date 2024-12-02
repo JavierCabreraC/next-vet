@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Pencil } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { UpdateModal } from '@/components/admin/shared/UpdateModal';
+import { UpdateModal } from '@/components/admin/index.admincomp';
+import { Button, Column, DataTable } from '@/components/ui/index.ui';
 import { API_CONFIG, ApiService,  } from '@/services/index.services';
 import type { Cliente, UpdateType, UpdateForms } from '@/types/admin';
-import { Column, DataTable } from '@/components/vetdoc/common/DataTable';
 
 
 interface ClientListProps {
@@ -27,6 +26,7 @@ export const ClienteList: React.FC<ClientListProps> = ({ isLoading, setIsLoading
     const clientColumns: Column<Cliente>[] = [
         { key: 'ClienteID', header: 'ID' },
         { key: 'NombreCompleto', header: 'Nombre Completo' },
+        { key: 'Contacto', header: 'Contacto' },
         { key: 'CI', header: 'Número Carnet' },
         { key: 'Telefono', header: 'Teléfono' },
         { key: 'Direccion', header: 'Dirección' },
@@ -55,6 +55,10 @@ export const ClienteList: React.FC<ClientListProps> = ({ isLoading, setIsLoading
             <div className="mb-2">
                 <span className="font-semibold">Nombre: </span>
                 <span>{cliente.NombreCompleto}</span>
+            </div>
+            <div className="mb-2">
+                <span className="font-semibold">Contacto: </span>
+                <span>{cliente.Contacto}</span>
             </div>
             <div className="mb-2">
                 <span className="font-semibold">Carnet: </span>
@@ -103,6 +107,7 @@ export const ClienteList: React.FC<ClientListProps> = ({ isLoading, setIsLoading
             clienteUpdate: { 
                 ClienteID: cliente.ClienteID,
                 NombreCompleto: cliente.NombreCompleto,
+                Contacto: cliente.Contacto,
                 Telefono: cliente.Telefono,
                 Direccion: cliente.Direccion
             }

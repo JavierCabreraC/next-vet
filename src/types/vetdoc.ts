@@ -249,3 +249,21 @@ export interface MascotaCirugia {
     raza: string;
     edad_meses: number;
 }
+
+export interface MascotaCliVet {
+    ID: number;
+    Nombre: string;
+    Sexo: string;
+    Fecha_De_Nacimiento: string;
+    Años: string;
+    Meses: string;
+    Especie: string;
+    Raza: string;
+}
+
+export interface BusquedaHistorialState {
+    mascotas: MascotaCliVet[];
+    searchCI: string;
+    isLoading: boolean;
+    error: string | null;
+}

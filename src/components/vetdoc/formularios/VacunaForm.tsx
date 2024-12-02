@@ -1,10 +1,13 @@
 import { useState } from 'react';
+import { Loader2 } from 'lucide-react';
 import { Button, Input } from '@/components/ui/index.ui';
 import { VacunacionFormProps } from '@/types/index.types';
 import { API_CONFIG, ApiService } from '@/services/index.services';
 
 
 export const VacunaForm: React.FC<VacunacionFormProps> = ({ onSuccess }) => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    
     const [formData, setFormData] = useState({
         NombreVacuna: '',
         Descripcion: '',
@@ -13,9 +16,19 @@ export const VacunaForm: React.FC<VacunacionFormProps> = ({ onSuccess }) => {
         Tipo: ''
     });
 
+    const [ alertInfo, setAlertInfo ] = useState<{
+        type: 'success' | 'error' | null;
+        message: string;
+    }>({ type: null, message: '' });
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsSubmitting(true);
+        console.log({alertInfo});
+        setAlertInfo({ type: null, message: '' });
+
         try {
+            // Registrar la nueva vacuna
             await ApiService.fetch(`${API_CONFIG.ENDPOINTS.DOC_VACUNAS}`, {
                 method: 'POST',
                 body: JSON.stringify({
@@ -23,9 +36,21 @@ export const VacunaForm: React.FC<VacunacionFormProps> = ({ onSuccess }) => {
                     EdadMinima: parseInt(formData.EdadMinima)
                 })
             });
+
+            // Notificar éxito y redirigir
+            setTimeout(() => {
+                onSuccess();
+            }, 1500);
+            
             onSuccess();
         } catch (error) {
             console.error('Error al registrar vacuna:', error);
+            setAlertInfo({
+                type: 'error',
+                message: 'No se pudo registrar la vacuna'
+            });
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -38,6 +63,7 @@ export const VacunaForm: React.FC<VacunacionFormProps> = ({ onSuccess }) => {
                         value={formData.NombreVacuna}
                         onChange={(e) => setFormData({...formData, NombreVacuna: e.target.value})}
                         required
+                        disabled={isSubmitting}
                     />
                 </div>
                 
@@ -47,6 +73,7 @@ export const VacunaForm: React.FC<VacunacionFormProps> = ({ onSuccess }) => {
                         value={formData.Descripcion}
                         onChange={(e) => setFormData({...formData, Descripcion: e.target.value})}
                         required
+                        disabled={isSubmitting}
                     />
                 </div>
                 
@@ -56,6 +83,7 @@ export const VacunaForm: React.FC<VacunacionFormProps> = ({ onSuccess }) => {
                         value={formData.Laboratorio}
                         onChange={(e) => setFormData({...formData, Laboratorio: e.target.value})}
                         required
+                        disabled={isSubmitting}
                     />
                 </div>
                 
@@ -66,6 +94,7 @@ export const VacunaForm: React.FC<VacunacionFormProps> = ({ onSuccess }) => {
                         value={formData.EdadMinima}
                         onChange={(e) => setFormData({...formData, EdadMinima: e.target.value})}
                         required
+                        disabled={isSubmitting}
                     />
                 </div>
                 
@@ -76,16 +105,28 @@ export const VacunaForm: React.FC<VacunacionFormProps> = ({ onSuccess }) => {
                         value={formData.Tipo}
                         onChange={(e) => setFormData({...formData, Tipo: e.target.value})}
                         required
+                        disabled={isSubmitting}
                     >
                         <option value="">Seleccione un tipo</option>
                         <option value="Canina">Canina</option>
                         <option value="Felina">Felina</option>
-                        <option value="Felina">General</option>
+                        <option value="General">General</option>
                     </select>
                 </div>
 
-                <Button type="submit" className="w-full">
-                    Registrar Vacuna
+                <Button 
+                    type="submit" 
+                    className="w-full"
+                    disabled={isSubmitting}
+                >
+                    {isSubmitting ? (
+                        <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Registrando...
+                        </>
+                    ) : (
+                        'Registrar Vacuna'
+                    )}
                 </Button>
             </form>
         </div>

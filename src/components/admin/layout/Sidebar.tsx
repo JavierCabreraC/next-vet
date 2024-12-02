@@ -49,7 +49,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView })
             title: 'Reservaciones',
             icon: <Calendar className="w-5 h-5" />,
             items: [
-                { label: 'Listar Reservaciones', value: 'list-reservaciones' }
+                { label: 'Listar Reservaciones', value: 'list-reservaciones' }, // muestra todas las reservaciones pendientes
+                { label: 'Reservaciones por Cliente', value: 'zzzxxx' } // muestra el historial de reservaciones de un cliente
             ]
         },
         {
@@ -66,7 +67,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView })
             icon: <FileText className="w-5 h-5" />,
             items: [
                 { label: 'Reporte de Bitácora', value: 'report-bitacora' },
-                { label: 'Servicios por Cliente', value: 'report-servicios' }
+                { label: 'Servicios por Cliente', value: 'report-servicios' },
+                { label: 'Servicios de Veterinario', value: 'report-vet-servicios' },
+                { label: 'Reporte Dinámico de Servicios', value: 'report-dinamico' }
             ]
         }
     ];

@@ -28,7 +28,6 @@ export const MascotaSection: React.FC<MascotaSectionProps> = ({ view, setCurrent
         case 'create-raza':
             return < CrearRazaForm setCurrentView={setCurrentView} />;
             
-        // Implementar otros casos...
         default:
             return null;
     }

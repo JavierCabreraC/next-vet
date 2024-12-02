@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { API_CONFIG } from '@/services/index.services';
 import { Button, Input } from '@/components/ui/index.ui';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
@@ -29,7 +30,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
         setError('');
 
         try {
-            const response = await fetch('https://neon-demo-production.up.railway.app/api/auth/login', {
+            const response = await fetch(API_CONFIG.ENDPOINTS.AUTH_LOGIN, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
@@ -49,13 +50,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onClose }) => {
           
             switch (data.rol) {
                 case 'Administrador':
-                    router.push('/admin/dashboard');
+                    router.push('/admin/adminDashboard');
                     break;
                 case 'Veterinario':
-                    router.push('/vetdoc/dashboard');
+                    router.push('/vetdoc/vetdocDashboard');
                     break;
                 case 'Cliente':
-                    router.push('/client/dashboard');
+                    router.push('/client/clienteDashboard');
                     break;
                 default:
                     setError('Unknown role');

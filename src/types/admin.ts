@@ -1,6 +1,27 @@
-import React from 'react';
-import { ApiResponse } from './index.types';
 
+
+export type ViewState = 
+    // Usuarios
+    | 'create-personal' | 'list-personal' 
+    | 'create-cliente' | 'list-cliente'
+    | 'list-usuarios-activos' | 'list-usuarios-inactivos'
+    | 'list-logs'
+    // Mascotas
+    | 'list-raza' | 'create-raza' | 'create-mascota' | 'list-mascota'
+    // Reservaciones
+    | 'list-reservaciones' | 'zzzxxx'
+    // Servicios
+    | 'list-completed-services' | 'create-receipt' | 'list-receipts'
+    // Reportes
+    | 'report-bitacora' | 'report-servicios' | 'report-vet-servicios' | 'report-dinamico';
+
+export type TipoServicio = 'Consulta' | 'Peluqueria' | 'Internacion' | 'Cirugia';
+
+export type EstadoServicio = 'En Proceso' | 'Completado';
+
+export type CampoOrdenamiento = 'fecha' | 'tipo' | 'veterinario' | 'cantidad';
+
+export type Agrupacion = 'veterinario' | 'tipoServicio';
 
 export interface Personal extends Record<string, unknown> {
     ID: number;
@@ -18,6 +39,7 @@ export interface Cliente extends Record<string, unknown> {
     ClienteID: number;
     NombreCompleto: string;
     CI: string;
+    Contacto: string;
     Telefono: string;
     Direccion: string;
     Email: string;
@@ -56,63 +78,17 @@ export interface Usuario extends Record<string, unknown> {
     Estado: string;
 }
 
-export interface AdminActionsProps {
-    onViewList: (type: 'personal' | 'clientes' | 'mascotas' | 'bitacora' | 'reservacion' | 'usuarios') => void;
-}
-
 export interface ServiceCardProps {
     icon: React.ReactNode;
     title: string;
     description: string;
 }
 
-export interface AdminCardsProps {
-    onShowPersonalForm: () => void;
-    onShowClienteForm: () => void;
-    onShowMascotaForm: () => void;
-}
-
 export interface AdminHeaderProps {
     onLogout: () => void;
 }
 
-export interface RenderFormProps<T extends FormTypes> {
-    title: string;
-    form: T;
-    setForm: React.Dispatch<React.SetStateAction<T>>;
-    onClose: () => void;
-    handleSubmit: (formType: 'personal' | 'cliente' | 'mascota') => void;
-}
-
-export interface UpdateableRecord {
-    PersonalID?: number;
-    ClienteID?: number;
-    MascotaID?: number;
-}
-
-export interface RenderModalProps<T extends Record<string, unknown>> {
-    title: string;
-    data: T[];
-    onClose: () => void;
-    currentPage: number;
-    setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-    itemsPerPage?: number;
-    onEdit?: (record: T) => void;
-}
-
-export interface AdminCardProps {
-    icon: React.ReactNode;
-    title: string;
-    description: string;
-    onClick: () => void;
-}
-
-export interface ResponseModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    response: ApiResponse | null;
-    title: string;
-}
+export type UpdateType = 'personal' | 'cliente' | 'mascota' | 'reservacion' | 'usuario';
 
 export interface UpdateModalProps {
     isOpen: boolean;
@@ -141,6 +117,7 @@ export type ClienteForm = {
     NombreCompleto: string;
     Telefono: string;
     Direccion: string;
+    Contacto: string;
     Email: string;
     NumeroCI: number;
 };
@@ -172,8 +149,6 @@ export interface UsuarioUpdate extends Record<string, unknown> {
     UsuarioID: number;
 }
 
-export type UpdateType = 'personal' | 'cliente' | 'mascota' | 'reservacion' | 'usuario';
-
 export interface UpdateForms {
     personalUpdate: {
         ID?: number;
@@ -186,6 +161,7 @@ export interface UpdateForms {
         ClienteID?: number;
         NombreCompleto?: string;
         Telefono?: string;
+        Contacto?: string;
         Direccion?: string;
     };
     mascotaUpdate: {
@@ -240,6 +216,20 @@ export interface AutoTableColumn {
         fontStyle?: 'normal' | 'bold' | 'italic';
         fontSize?: number;
     };
+    styles?: {
+        fontSize?: number;
+        cellPadding?: number;
+        font?: string;
+        textColor?: number[];
+        fontStyle?: string;
+    };
+    columnStyles?: {
+        [key: number]: {
+            cellWidth?: number;
+            fontSize?: number;
+            fontStyle?: string;
+        };
+    };
     bodyStyles?: {
         fillColor?: number[];
         textColor?: number[];
@@ -251,7 +241,7 @@ export interface AutoTableColumn {
     tableWidth?: 'auto' | number;
     tableLineColor?: number[];
     tableLineWidth?: number;
- }
+}
 
 export interface BitacoraReport {
     FechaHora: string;
@@ -264,17 +254,172 @@ export interface ServicioReport {
     "Total Servicios": number;
 }
 
-export type ViewState = 
-    // Usuarios
-    | 'create-personal' | 'list-personal' 
-    | 'create-cliente' | 'list-cliente'
-    | 'list-usuarios-activos' | 'list-usuarios-inactivos'
-    | 'list-logs'
-    // Mascotas
-    | 'list-raza' | 'create-raza' | 'create-mascota' | 'list-mascota'
-    // Reservaciones
-    | 'list-reservaciones'
-    // Servicios
-    | 'list-completed-services' | 'create-receipt' | 'list-receipts'
-    // Reportes
-    | 'report-bitacora' | 'report-servicios';
+export interface VetServicioReport {
+    TipoServicio: string;
+    "Nombre Mascota": string;
+    NombreRaza: string;
+    "Nombre Dueño": string;
+    FechaHoraInicio: string;
+    FechaHoraFin: string;
+}
+
+export interface OrdenServicio {
+    campo: CampoOrdenamiento;
+    direccion: 'ASC' | 'DESC';
+}
+
+export interface FiltrosServicio {
+    fechaInicio?: Date;
+    fechaFin?: Date;
+    tipoServicio?: TipoServicio[];
+    estado?: EstadoServicio[];
+    veterinarioId?: number;
+    agruparPor?: Agrupacion[];
+    ordenarPor: OrdenServicio;
+}
+
+export interface ServicioDinamicoReport {
+    ServicioID: number;
+    TipoServicio: TipoServicio;
+    Estado: EstadoServicio;
+    FechaHoraInicio: string;
+    FechaHoraFin: string | null;
+    NombreVeterinario: string;
+    NombreMascota: string;
+    NombreCliente: string;
+}
+
+export interface ServicioAgrupado {
+    grupo: string;
+    cantidad: number;
+    servicios: ServicioDinamicoReport[];
+}
+
+export type ResultadoReporteDinamico = ServicioAgrupado[];
+
+export interface AutoTableColumnStyles {
+    cellWidth?: number;
+    fontSize?: number;
+    fontStyle?: string;
+}
+
+export interface AutoTableStyles {
+    fontSize?: number;
+    cellPadding?: number;
+    font?: string;
+    textColor?: number[];
+    fontStyle?: string;
+}
+
+export interface AutoTableSettings {
+    head: string[][];
+    body: string[][];
+    startY?: number;
+    theme?: 'striped' | 'grid' | 'plain';
+    styles?: AutoTableStyles;
+    columnStyles?: {
+        [key: number]: AutoTableColumnStyles;
+    };
+}
+
+export interface ReservacionCliente {
+    ReservacionID: number;
+    Motivo: string;
+    Fecha: string;
+    Hora: string;
+    Estado: string;
+}
+
+export interface ServicioRecibo {
+    ServicioID: number;
+    TipoServicio: TipoServicio;
+    FechaHoraInicio: string;
+    FechaHoraFin: string;
+    MascotaID: number;
+    NombreMascota: string;
+    NombreCliente: string;
+}
+
+export interface DetalleReciboPreview {
+    ServicioID: number;
+    Detalle: string;
+    PrecioUnitario: number;
+    NombreCliente: string;
+    isSelected?: boolean;
+}
+
+export interface Recibo {
+    ID: number;
+    Cliente: string;
+    FechaEmision: Date;
+    Total: number;
+    EstadoPago: string;
+    TransactionID: string | null;
+}
+
+export interface PaymentResponse {
+    clientSecret: string;
+}
+
+export interface PaymentConfirmationResponse {
+    message: string;
+    recibo: Recibo;
+}
+
+export interface ServicioGeneral {
+    ID: number;
+    Tipo: TipoServicio;
+    FechaHoraInicio: string;
+    FechaHoraFin: string;
+    Cliente: string;
+    Mascota: string;
+}
+
+export interface ReciboGeneral {
+    ID: number;
+    FechaEmision: string;
+    EstadoPago: string;
+    Total: string;
+    Cliente: string;
+    Mascota: string;
+}
+
+export interface ServicioBase {
+    ServicioID: number;
+    TipoServicio: TipoServicio;
+    FechaHoraInicio: string;
+    FechaHoraFin: string | null;
+    NombreVeterinario: string;
+    NombreMascota: string;
+    NombreCliente: string;
+}
+
+export interface GrupoVeterinario {
+    PersonalID: number;
+    nombreVeterinario: string;
+    cantidad: number;
+    tipo: 'veterinario';
+}
+
+export interface GrupoTipoServicio {
+    TipoServicio: TipoServicio;
+    cantidad: number;
+    tipo: 'tipoServicio';
+}
+
+type GrupoDinamico = GrupoVeterinario | GrupoTipoServicio; 
+
+interface ServicioDinamico {
+    ServicioID: number;
+    TipoServicio: TipoServicio;
+    FechaHoraInicio: string;
+    FechaHoraFin: string;
+    NombreVeterinario: string;
+    NombreMascota: string;
+    NombreCliente: string;
+}
+
+export interface ReporteDinamico {
+    grupos: GrupoDinamico[];
+    servicios: ServicioDinamico[];
+}

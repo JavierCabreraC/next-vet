@@ -1,40 +1,21 @@
 import '@/app/globals.css';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { logout } from '@/utils/index.utils';
-import { useAuth } from '@/hooks/index.hooks';
 import { Button } from '@/components/ui/index.ui';
-import { Stethoscope, LogOut, Search, Plus } from 'lucide-react';
-import { API_CONFIG, ApiService } from '@/services/index.services';
-import type { MainView, ReservacionV, ServiceType, Vacuna } from '@/types/vetdoc';
+import { logout, useAuth } from '@/hooks/index.hooks';
+import { Stethoscope, LogOut, Plus } from 'lucide-react';
+import type { MainView, ReservacionV, ServiceType } from '@/types/vetdoc';
 import { ReservacionesPendientes, ConsultaForm, PeluqueriaForm, ServiciosCompletados, ServicioSelection, Sidebar, 
     ServiciosActivosView, RecetasView, AnalisisView, CirugiaForm, VacunaList, VacunaForm, VacunacionForm, VacunacionList, 
-    AgendarCirugiaForm, ReservacionesCirugia} from '@/components/vetdoc/index.docvetcomp';
+    AgendarCirugiaForm, ReservacionesCirugia, HistorialMascotas} from '@/components/vetdoc/index.docvetcomp';
 
 
 const VeterinarioPage: React.FC = () => {
     const router = useRouter();
-    const { isAuthenticated, loading } = useAuth(['Veterinario']);
     const [mainView, setMainView] = useState<MainView>('nuevo');
+    const { isAuthenticated, loading } = useAuth(['Veterinario']);
     const [selectedService, setSelectedService] = useState<ServiceType | null>(null);
     const [selectedReservacion, setSelectedReservacion] = useState<ReservacionV | null>(null);
-    const [vacunas, setVacunas] = useState<Vacuna[]>([]);
-
-    useEffect(() => {
-        const cargarVacunas = async () => {
-            if (mainView === 'vacunas') {
-                try {
-                    const data = await ApiService.fetch<Vacuna[]>(`${API_CONFIG.ENDPOINTS.DOC_VACUNAS}`, {
-                        method: 'GET',
-                    });
-                    setVacunas(data);
-                } catch (error) {
-                    console.error('Error al obtener vacunas:', error);
-                }
-            }
-        };
-        cargarVacunas();
-    }, [mainView]);
     
     if (loading) {
         return <div className="flex justify-center items-center h-screen">Cargando...</div>;
@@ -44,18 +25,6 @@ const VeterinarioPage: React.FC = () => {
     }
     const handleLogout = () => {
         logout(router);
-    };
-
-    const handleVacunasClick = async () => {
-        try {
-            const data = await ApiService.fetch<Vacuna[]>(`${API_CONFIG.ENDPOINTS.DOC_VACUNAS}`, {
-                method: 'GET',
-            });
-            setVacunas(data);
-            setMainView('vacunas');
-        } catch (error) {
-            console.error('Error al obtener vacunas:', error);
-        }
     };
 
     const renderMainContent = () => {
@@ -235,7 +204,7 @@ const VeterinarioPage: React.FC = () => {
                                 Nueva Vacuna
                             </Button>
                         </div>
-                        <VacunaList vacunas={vacunas} />
+                        <VacunaList />
                     </div>
                 );
 
@@ -243,10 +212,7 @@ const VeterinarioPage: React.FC = () => {
                 return (
                     <>
                         <h2 className="text-2xl font-bold mb-4">Registrar Nueva Vacuna</h2>
-                        <VacunaForm onSuccess={() => {
-                            handleVacunasClick();
-                            setMainView('vacunas');
-                        }} />
+                        <VacunaForm onSuccess={() => setMainView('vacunas')} />
                     </>
                 );
             
@@ -259,27 +225,7 @@ const VeterinarioPage: React.FC = () => {
                 );
 
             case 'historial':
-                return (
-                    <div className="p-6">
-                        <h2 className="text-2xl font-bold mb-6">Historial Clínico</h2>
-                        <div className="bg-white rounded-lg shadow-md p-6">
-                            <div className="mb-6">
-                                <div className="flex gap-4 mb-4">
-                                    <input
-                                        type="text"
-                                        placeholder="Buscar mascota..."
-                                        className="flex-1 p-2 border rounded-md"
-                                    />
-                                    <Button>
-                                        <Search size={20} className="mr-2" />
-                                        Buscar
-                                    </Button>
-                                </div>
-                            </div>
-                            {/* Resultados de búsqueda y historial se renderizarán aquí */}
-                        </div>
-                    </div>
-                );
+                return <HistorialMascotas />;
 
             case 'historialVacunas': return < VacunacionList />;
             

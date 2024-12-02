@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Pencil } from 'lucide-react';
 import type { Usuario } from '@/types/admin';
-import { Button } from '@/components/ui/button';
+import { Button, Column, DataTable } from '@/components/ui/index.ui';
 import { API_CONFIG, ApiService,  } from '@/services/index.services';
-import { Column, DataTable } from '@/components/vetdoc/common/DataTable';
+// import { Column, DataTable } from '@/components/ui/DataTable';
 
 
 interface UsuarioListProps {

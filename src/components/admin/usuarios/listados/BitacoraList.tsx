@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Bitacora } from '@/types/admin';
-import { API_CONFIG, ApiService,  } from '@/services/index.services';
-import { Column, DataTable } from '@/components/vetdoc/common/DataTable';
+import { Column, DataTable } from '@/components/ui/DataTable';
+import { API_CONFIG, ApiService } from '@/services/index.services';
 
 
 interface BitacoraListProps {

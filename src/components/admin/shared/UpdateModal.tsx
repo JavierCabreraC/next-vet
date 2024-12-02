@@ -96,6 +96,18 @@ export const UpdateModal: React.FC<UpdateModalProps> = ({
                         />
                         <Input
                             type="text"
+                            placeholder="Contacto"
+                            value={updateForm.clienteUpdate.Contacto || ''}
+                            onChange={(e) => setUpdateForm({
+                                ...updateForm,
+                                clienteUpdate: {
+                                    ...updateForm.clienteUpdate,
+                                    Contacto: e.target.value
+                                }
+                            })}
+                        />
+                        <Input
+                            type="text"
                             placeholder="Dirección"
                             value={updateForm.clienteUpdate.Direccion || ''}
                             onChange={(e) => setUpdateForm({
