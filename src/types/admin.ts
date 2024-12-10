@@ -1,5 +1,3 @@
-
-
 export type ViewState = 
     // Usuarios
     | 'create-personal' | 'list-personal' 
@@ -11,7 +9,7 @@ export type ViewState =
     // Reservaciones
     | 'list-reservaciones' | 'zzzxxx'
     // Servicios
-    | 'list-completed-services' | 'create-receipt' | 'list-receipts'
+    | 'list-completed-services' | 'create-receipt' | 'list-receipts' | 'list-pending-receipts'
     // Reportes
     | 'report-bitacora' | 'report-servicios' | 'report-vet-servicios' | 'report-dinamico';
 
@@ -422,4 +420,14 @@ interface ServicioDinamico {
 export interface ReporteDinamico {
     grupos: GrupoDinamico[];
     servicios: ServicioDinamico[];
+}
+
+export interface ReciboPendiente {
+    ReciboID: number;
+    FechaEmision: string;
+    Total: string;
+    EstadoPago: string;
+    TransaccionID: string | null;
+    NombreCliente: string;
+    Detalles: string[];
 }

@@ -30,6 +30,7 @@ export * from './sections/SeccionUsuario';
 export * from './services/ListaRecibosForm';
 export * from './services/PaymentModal';
 export * from './services/ReciboPreview';
+export * from './services/RecibosPendientesForm';
 export * from './services/ServicioReciboForm';
 export * from './services/ServiciosCompletadosForm';
 
