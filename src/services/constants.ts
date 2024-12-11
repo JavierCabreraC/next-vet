@@ -1,9 +1,9 @@
 export const API_CONFIG = {
-    BASE_URL: 'neon-demo-production.up.railway.app/api',
+    BASE_URL: 'https://neon-demo-production.up.railway.app/api',
     ENDPOINTS: {
-        AUTH_LOGIN:                     'neon-demo-production.up.railway.app/api/auth/login',
-        AUTH_LOGOUT:                    'neon-demo-production.up.railway.app/api/auth/logout',
-        AUTH_UPDATEHASH:                'neon-demo-production.up.railway.app/api/auth/updateHash',
+        AUTH_LOGIN:                     'https://neon-demo-production.up.railway.app/api/auth/login',
+        AUTH_LOGOUT:                    'https://neon-demo-production.up.railway.app/api/auth/logout',
+        AUTH_UPDATEHASH:                'https://neon-demo-production.up.railway.app/api/auth/updateHash',
         ADM_PERSONAL:                   '/admin/personal',
         ADM_CLIENTES:                   '/admin/clientes',
         ADM_MASCOTAS:                   '/admin/mascotas',
