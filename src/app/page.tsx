@@ -122,144 +122,255 @@ export default VetClinicWelcomePage;
 // VERSIÓN NUEVA:
 // *************************************************************************************
 
+// "use client";
+// import React, { useState } from 'react';
+// import { AnimatePresence, motion } from 'framer-motion';
+// import { Button, Card, Input } from '@/components/ui/index.ui';
+// import { PawPrint, Calendar, Stethoscope, ChevronRight, User, Heart, X } from 'lucide-react';
 
-// import { motion } from 'framer-motion';
-// import React, { useState, useEffect } from 'react';
-// import { LoginForm } from '@/components/ui/index.ui';
-// import { PawPrint, Stethoscope, Calendar, ChevronDown, ArrowRight } from 'lucide-react';
 
+// interface ServiceItem {
+//   title: string;
+//   icon: React.ReactNode;
+//   description: string;
+//   items: string[];
+// }
 
-// export default function ModernVetClinic() {
-// //   const [activeSection, setActiveSection] = useState('home');
-//   const [isScrolled, setIsScrolled] = useState(false);
-//   const [showLogin, setShowLogin] = useState(false);
+// const services: ServiceItem[] = [
+//   {
+//     title: "Gestionar Usuario",
+//     icon: <Stethoscope className="w-6 h-6 text-blue-600" />,
+//     description: "Consultas y tratamientos especializados para todo tipo de mascotas",
+//     items: [
+//       "Iniciar Sesion",
+//       "Cerrar Sesion",
+//       "Gestionar Personal",
+//       "Gestionar Rol",
+//       "Gestionar Cliente",
+//       "Cambiar Contraseña",
+//       "Gestionar bitacora",
+//       "Editar Perfil de Usuario"
+//     ]
+//   },
+//   {
+//     title: "Reservacion",
+//     icon: <Calendar className="w-6 h-6 text-blue-600" />,
+//     description: "Reserve su cita de forma rápida y sencilla a través de nuestra plataforma",
+//     items: [
+//       "Gestionar Horario",
+//       "Gestionar Reservacion"
+//     ]
+//   },
+//   {
+//     title: "Servicio",
+//     icon: <PawPrint className="w-6 h-6 text-blue-600" />,
+//     description: "Servicios de peluquería, spa y cuidados especiales para su mascota",
+//     items: [
+//       "Peluqueria",
+//       "Consulta Medica",
+//       "Internacion",
+//       "Cirujia"
+//     ]
+//   },
+//   {
+//     title: "Gestionar Mascota",
+//     icon: <PawPrint className="w-6 h-6 text-blue-600" />,
+//     description: "Servicios de peluquería, spa y cuidados especiales para su mascota",
+//     items: [
+//       "Gestionar Mascota",
+//       "Reguistro de vacunacion",
+//       "Gestionar receta",
+//       "Gestionar Analisis",
+//       "Historia Clinico"
+//     ]
+//   }
+// ];
 
-//   useEffect(() => {
-//     const handleScroll = () => setIsScrolled(window.scrollY > 20);
-//     window.addEventListener('scroll', handleScroll);
-//     return () => window.removeEventListener('scroll', handleScroll);
-//   }, []);
+// const ModernVetClinicPage: React.FC = () => {
+//   const [showLogin, setShowLogin] = useState<boolean>(false);
 
 //   return (
-//     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
-//       {/* Header Moderno */}
-//       <header className={`fixed w-full transition-all duration-300 ${
-//         isScrolled ? 'bg-white/90 backdrop-blur-md shadow-md py-2' : 'bg-transparent py-4'
-//       }`}>
-//         <div className="container mx-auto px-4 flex justify-between items-center">
-//           <div className="flex items-center space-x-2">
+//     <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-blue-50">
+//       {/* Hero Section with Animated Navigation */}
+//       <nav className="fixed w-full bg-white/80 backdrop-blur-sm z-50 shadow-sm">
+//         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+//           <motion.div
+//             initial={{ opacity: 0, x: -20 }}
+//             animate={{ opacity: 1, x: 0 }}
+//             className="flex items-center space-x-2"
+//           >
 //             <PawPrint className="h-8 w-8 text-blue-600" />
 //             <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
 //               Zoo-Life
 //             </span>
-//           </div>
-//           <nav className="hidden md:flex space-x-6">
-//             {['Inicio', 'Servicios', 'Reservas', 'Contacto'].map(item => (
-//               <button key={item} className="text-gray-600 hover:text-blue-600 transition-colors">
-//                 {item}
-//               </button>
-//             ))}
-//           </nav>
-//           <div className="flex space-x-3">
-//     {!showLogin ? (
-//         <button 
-//             onClick={() => setShowLogin(true)} 
-//             className="px-4 py-2 text-sm rounded-full border border-blue-600 text-blue-600 hover:bg-blue-50 transition-colors"
-//         >
-//             Iniciar Sesión
-//         </button>
-//     ) : (
-//         <LoginForm onClose={() => setShowLogin(false)} />
-//     )}
-// </div>
-//         </div>
-//       </header>
-
-//       {/* Hero Section */}
-//       <section className="pt-32 pb-20 px-4">
-//         <div className="container mx-auto max-w-6xl">
-//           <motion.div
-//             initial={{ opacity: 0, y: 20 }}
-//             animate={{ opacity: 1, y: 0 }}
-//             className="text-center"
-//           >
-//             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-//               Cuidado Experto para Tu Mascota
-//             </h1>
-//             <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-//               Brindamos atención veterinaria de calidad con tecnología avanzada y un equipo profesional dedicado al bienestar de tu mascota.
-//             </p>
-//             <div className="flex flex-col md:flex-row gap-4 justify-center">
-//               <button className="px-8 py-3 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors flex items-center justify-center">
-//                 Agendar Cita <ArrowRight className="ml-2 h-4 w-4" />
-//               </button>
-//               <button className="px-8 py-3 rounded-full border border-blue-600 text-blue-600 hover:bg-blue-50 transition-colors">
-//                 Conocer Servicios
-//               </button>
-//             </div>
 //           </motion.div>
+//           <div className="flex items-center space-x-4">
+//             <Button 
+//               variant="ghost" 
+//               className="hidden md:flex items-center hover:bg-blue-50"
+//               onClick={() => {}}
+//             >
+//               Servicios
+//               <ChevronRight className="ml-2 h-4 w-4" />
+//             </Button>
+//             <Button 
+//               variant="outline"
+//               className="hidden md:flex items-center border-blue-200 hover:bg-blue-50"
+//               onClick={() => setShowLogin(true)}
+//             >
+//               <User className="mr-2 h-4 w-4" />
+//               Iniciar Sesión
+//             </Button>
+//           </div>
 //         </div>
-//       </section>
+//       </nav>
 
-//       {/* Servicios Grid */}
-//       <section className="py-20 px-4 bg-gradient-to-b from-white to-blue-50">
-//         <div className="container mx-auto max-w-6xl">
-//           <h2 className="text-3xl font-bold text-center mb-12">Nuestros Servicios</h2>
-//           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-//             {[
-//               { icon: <Stethoscope className="h-8 w-8" />, title: "Consultas Médicas" },
-//               { icon: <PawPrint className="h-8 w-8" />, title: "Peluquería" },
-//               { icon: <Calendar className="h-8 w-8" />, title: "Vacunación" },
-//             ].map((service, index) => (
-//               <motion.div
-//                 key={index}
-//                 whileHover={{ y: -5 }}
-//                 className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+//       {/* Main Content */}
+//       <main className="pt-20">
+//         {/* Hero Section */}
+//         <section className="container mx-auto px-4 py-12 md:py-24">
+//           <div className="grid md:grid-cols-2 gap-8 items-center">
+//             <motion.div
+//               initial={{ opacity: 0, y: 20 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               className="text-center md:text-left"
+//             >
+//               <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
+//                 Cuidamos a tus mascotas con 
+//                 <span className="text-blue-600"> amor</span>
+//               </h1>
+//               <p className="text-lg text-gray-600 mb-8">
+//                 Brindamos atención veterinaria de calidad con profesionales expertos y tecnología de vanguardia.
+//               </p>
+//               <Button 
+//                 size="lg"
+//                 className="bg-blue-600 hover:bg-blue-700 text-white"
+//                 onClick={() => setShowLogin(true)}
 //               >
-//                 <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center text-blue-600 mb-4">
-//                   {service.icon}
-//                 </div>
-//                 <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-//                 <p className="text-gray-600">Servicio profesional con atención personalizada para el cuidado de tu mascota.</p>
-//                 <button className="mt-4 text-blue-600 hover:text-blue-700 flex items-center">
-//                   Más información <ChevronDown className="ml-1 h-4 w-4" />
-//                 </button>
-//               </motion.div>
-//             ))}
+//                 Reserva tu cita
+//                 <Heart className="ml-2 h-5 w-5" />
+//               </Button>
+//             </motion.div>
+//             <div className="hidden md:block">
+//               <img 
+//                 src="https://www.pexels.com/photo/tricolor-maltese-puppy-1458925/" 
+//                 alt="Maltese" 
+//                 className="rounded-lg shadow-xl"
+//               />
+//             </div>
 //           </div>
-//         </div>
-//       </section>
+//         </section>
 
-//       {/* Footer Moderno */}
-//       <footer className="bg-blue-900 text-white py-12">
-//         <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
-//           <div>
-//             <div className="flex items-center space-x-2 mb-4">
-//               <PawPrint className="h-6 w-6" />
-//               <span className="text-xl font-bold">Zoo-Life</span>
-//             </div>
-//             <p className="text-blue-200">Cuidando a tus mascotas como parte de nuestra familia desde 2024.</p>
-//           </div>
-//           <div>
-//             <h4 className="font-semibold mb-4">Enlaces Rápidos</h4>
-//             <nav className="flex flex-col space-y-2">
-//               {['Servicios', 'Reservas', 'Emergencias', 'Contacto'].map(item => (
-//                 <a key={item} href="#" className="text-blue-200 hover:text-white transition-colors">
-//                   {item}
-//                 </a>
+//         {/* Services Grid */}
+//         <section className="bg-white py-16">
+//           <div className="container mx-auto px-4">
+//             <h2 className="text-3xl font-bold text-center mb-12">Nuestros Servicios</h2>
+//             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+//               {services.map((service: ServiceItem, index: number) => (
+//                 <motion.div
+//                   key={service.title}
+//                   initial={{ opacity: 0, y: 20 }}
+//                   animate={{ opacity: 1, y: 0 }}
+//                   transition={{ delay: index * 0.1 }}
+//                   className="bg-blue-50 rounded-xl p-6 hover:shadow-lg transition-all duration-300"
+//                 >
+//                   <div className="bg-white rounded-full w-12 h-12 flex items-center justify-center mb-4">
+//                     {service.icon}
+//                   </div>
+//                   <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+//                   <p className="text-gray-600">{service.description}</p>
+//                   <ul className="mt-4 space-y-2">
+//                     {service.items.map((item: string, i: number) => (
+//                       <li key={i} className="flex items-center text-sm text-gray-500">
+//                         <ChevronRight className="h-4 w-4 mr-2 text-blue-400" />
+//                         {item}
+//                       </li>
+//                     ))}
+//                   </ul>
+//                 </motion.div>
 //               ))}
-//             </nav>
-//           </div>
-//           <div>
-//             <h4 className="font-semibold mb-4">Contacto</h4>
-//             <div className="text-blue-200 space-y-2">
-//               <p>Tel: (591) 123-456789</p>
-//               <p>Email: info@zoo-life.com</p>
-//               <p>Dirección: Av. Principal #123</p>
 //             </div>
 //           </div>
+//         </section>
+//       </main>
+
+//       {/* Login Modal */}
+//       <AnimatePresence>
+//         {showLogin && (
+//           <motion.div
+//             initial={{ opacity: 0 }}
+//             animate={{ opacity: 1 }}
+//             exit={{ opacity: 0 }}
+//             className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+//           >
+//             <motion.div
+//               initial={{ scale: 0.9, opacity: 0 }}
+//               animate={{ scale: 1, opacity: 1 }}
+//               exit={{ scale: 0.9, opacity: 0 }}
+//               className="w-full max-w-md"
+//             >
+//               <Card className="bg-white/90 backdrop-blur-lg shadow-xl border-0">
+//                 <div className="p-6">
+//                   <div className="flex justify-between items-center mb-6">
+//                     <div className="flex items-center space-x-3">
+//                       <div className="bg-blue-100 rounded-full p-2">
+//                         <PawPrint className="h-6 w-6 text-blue-600" />
+//                       </div>
+//                       <h2 className="text-2xl font-semibold text-gray-800">Bienvenido</h2>
+//                     </div>
+//                     <Button
+//                       variant="ghost"
+//                       size="icon"
+//                       onClick={() => setShowLogin(false)}
+//                       className="hover:bg-blue-50"
+//                     >
+//                       <X className="h-5 w-5" />
+//                     </Button>
+//                   </div>
+//                   <form className="space-y-4">
+//                     <div>
+//                       <Input
+//                         type="email"
+//                         placeholder="Correo electrónico"
+//                         className="w-full p-3 bg-white/70"
+//                       />
+//                     </div>
+//                     <div>
+//                       <Input
+//                         type="password"
+//                         placeholder="Contraseña"
+//                         className="w-full p-3 bg-white/70"
+//                       />
+//                     </div>
+//                     <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+//                       Iniciar Sesión
+//                     </Button>
+//                   </form>
+//                   <p className="text-center mt-4 text-sm text-gray-600">
+//                     ¿Olvidaste tu contraseña?{' '}
+//                     <button className="text-blue-600 hover:underline">
+//                       Recupérala aquí
+//                     </button>
+//                   </p>
+//                 </div>
+//               </Card>
+//             </motion.div>
+//           </motion.div>
+//         )}
+//       </AnimatePresence>
+
+//       {/* Footer */}
+//       <footer className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-8">
+//         <div className="container mx-auto px-4 text-center">
+//           <div className="flex justify-center items-center space-x-2 mb-4">
+//             <PawPrint className="h-6 w-6" />
+//             <span className="text-xl font-bold">Zoo-Life</span>
+//           </div>
+//           <p className="text-blue-100">© 2024 Clínica Veterinaria Zoo-Life. Todos los derechos reservados.</p>
 //         </div>
 //       </footer>
 //     </div>
 //   );
-// }
+// };
+
+// export default ModernVetClinicPage;
