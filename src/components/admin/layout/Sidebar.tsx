@@ -59,7 +59,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView })
             items: [
                 { label: 'Servicios Completados', value: 'list-completed-services' },
                 { label: 'Crear Recibo', value: 'create-receipt' },
-                { label: 'Listar Recibos', value: 'list-receipts' }
+                { label: 'Listar Recibos', value: 'list-receipts' },
+                { label: 'Recibos Pendientes', value: 'list-pending-receipts' }
             ]
         },
         {

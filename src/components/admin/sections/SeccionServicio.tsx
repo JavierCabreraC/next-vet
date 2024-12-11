@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { calcularPrecioServicio } from '@/utils/index.utils';
 import { API_CONFIG, ApiService } from '@/services/index.services';
-import type { ViewState, ServicioRecibo, DetalleReciboPreview, ServicioGeneral, ReciboGeneral } from '@/types/admin';
-import { ListaRecibosForm, PaymentModal, ReciboPreview, ServicioReciboForm, ServiciosCompletadosForm } from '@/components/admin/index.admincomp';
+import type { ViewState, ServicioRecibo, DetalleReciboPreview, ServicioGeneral, ReciboGeneral, ReciboPendiente } from '@/types/admin';
+import { ListaRecibosForm, PaymentModal, ReciboPreview, RecibosPendientesForm, ServicioReciboForm, ServiciosCompletadosForm } from '@/components/admin/index.admincomp';
 
 
 interface ServicioSectionProps {
@@ -18,7 +18,8 @@ export const ServiceSection: React.FC<ServicioSectionProps> = ({ view }) => {
     const [detallesRecibo, setDetallesRecibo] = useState<DetalleReciboPreview[]>([]);
     const [currentReciboId, setCurrentReciboId] = useState<number | undefined>(undefined);
     const [serviciosCompletados, setServiciosCompletados] = useState<ServicioGeneral[]>([]);
-
+    const [recibosPendientes, setRecibosPendientes] = useState<ReciboPendiente[]>([]);
+    
     const resetearTodo = () => {
         setServicios([]);
         setDetallesRecibo([]);
@@ -58,6 +59,21 @@ export const ServiceSection: React.FC<ServicioSectionProps> = ({ view }) => {
         setMostrarPreview(false);
         // Opcionalmente, se podría mantener las selecciones previas
         // Para resetear todo, añadir: setDetallesRecibo([]);
+    };
+
+    const handleBuscarRecibosPendientes = async (ci: string) => {
+        try {
+            setIsLoading(true);
+            const data = await ApiService.fetch<ReciboPendiente[]>(
+                `${API_CONFIG.ENDPOINTS.ADM_SERVPENDIENTE}/${ci}`,
+                { method: 'GET' }
+            );
+            setRecibosPendientes(data);
+        } catch (error) {
+            console.error('Error al buscar recibos pendientes:', error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleDetalleChange = (index: number, detalle: DetalleReciboPreview) => {
@@ -165,6 +181,18 @@ export const ServiceSection: React.FC<ServicioSectionProps> = ({ view }) => {
                         isLoading={isLoading}
                         onSubmit={handleBuscarRecibos}
                         recibos={recibosLista}
+                    />
+                </div>
+            );
+
+        case 'list-pending-receipts':
+            return (
+                <div className="space-y-6">
+                    <h2 className="text-2xl font-bold mb-6">Recibos Pendientes</h2>
+                    <RecibosPendientesForm
+                        isLoading={isLoading}
+                        onSubmit={handleBuscarRecibosPendientes}
+                        recibos={recibosPendientes}
                     />
                 </div>
             );
